@@ -15,6 +15,6 @@
         <li><a href="#marketing_automation">MARKETING AUTOMATION</a></li>
         <li><a href="#digital_art">DIGITAL ART</a></li>
     </ul>
-    <?php include( ROOT_PATH . '/includes/login.php') ?>
+    <?php include( ROOT_PATH . '/login.php') ?>
 </div>
 <!-- // navbar -->

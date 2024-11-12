@@ -14,3 +14,5 @@
 
     <!-- linking to the stylesheet for the index.php -->
     <link rel="stylesheet" type="text/css" href="static/css/home.css">
+
+    <?php require_once('config.php'); ?>

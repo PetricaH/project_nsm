@@ -1,7 +1,6 @@
 <?php 
-    session_start();
 
-    // connect to database
+// connect to database
     $conn = mysqli_connect("localhost", "root", "", "project_nsm", 3310);
     
     if (!$conn) {

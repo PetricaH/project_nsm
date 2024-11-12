@@ -3,5 +3,43 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: red;
+}
+
+@media (max-width: 768px) {
+    ul {
+        display: none; /*hide items by default*/
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: rgb(15, 20, 19);
+        padding: 10px;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .5s ease;
+    }
+
+    ul.active {
+        display: flex;
+        max-height: 500px;
+        gap: 10px;
+    }
+
+    .menu_toggle {
+        display: block;
+    }
+}
+
+/* navbar when tablet or desktop */
+.navbar {
+    background-image: linear-gradient(
+  to bottom, 
+  rgba(15, 20, 19, 1), 
+  rgba(15, 20, 19, 0.8), 
+  rgba(15, 20, 19, 0.4), 
+  rgba(15, 20, 19, 0.2), 
+  rgba(15, 20, 19, 0)
+);
 }
