@@ -1,7 +1,7 @@
 <!-- navbar -->
 <div class="navbar">
     <div class="logo_div">
-        <a href="index.php"><img src="static/images/hreniuc_logo.php" id="hreniuc_logo" alt="Logo"></a>
+        <a href="index.php"><img src="static\images\hreniuc_logo.png" id="logo_image" alt="Logo"></a>
     </div>
     <button class="menu_toggle" id="menu_toggle">
         <div class="bar bar1"></div>
