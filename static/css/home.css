@@ -178,17 +178,42 @@ body {
 #programming_section {
     position: relative;
     height: 50vh;
+    background-color: #0F1413;
 }
 
 .programming_logos_part {
     position: relative;
     top: 50%;
-    left: 50%;
+    left: 70%;
     transform: translate(-50%, -50%);
-
+    filter: blur(3px);
+    display: flex;
+    padding: 20px; /* Add padding to give it some space */
+    height: 100%; /* Set a minimum height */
 }
-.programming_techs_container {
+
+.programming_logos_part::after {
+    content: '';
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        to top,
+        rgba(15, 20, 19, 1),
+        rgba(15, 20, 19, 0.8),
+        rgba(15, 20, 19, 0.4),
+        rgba(15, 20, 19, 0.2),
+        rgba(15, 20, 19, 0)
+    );
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.programming_techs_container {
+    position: relative;
+    z-index: -1;
 }
 
 .programming_tech_img {
@@ -196,33 +221,43 @@ body {
 }
 
 .white_pattern {
-    height: 530px;
+    height: 350px;
+    rotate: 90deg;
     width: auto;
     z-index: -1;
     position: absolute;
 }
 
 .git_img {
-    height: 100px;
-    top: 150px;
+    height: 80px;
+    top: 50px;
+    left: 70px;
 }
 
 .github_img {
-    height: 50px;
+    height: 40px;
+    top: 130px;
 }
 
 .php_img {
-    height: 100px;
+    height: 70px;
+    top: 100px;
+    left: 160px;
 }
 
 .js_img {
-    height: 100px;
+    height: 70px;
+    top: 210px;
 }
 
 .css_img {
+    top: 210px;
     height: 100px;
+    left: 100px;
 }
 
 .html_img {
+    top: 210px;
     height: 100px;
+    left: 200px;
 }
