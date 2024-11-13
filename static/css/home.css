@@ -5,6 +5,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body {
+    background-color: #0F1413;
+}
+
 @media (max-width: 768px) {
     ul {
         display: none; /*hide items by default*/
@@ -167,4 +171,58 @@
     background-repeat: no-repeat;
     position: relative;
     z-index: 999;
+}
+
+/* programming techs logos container styling */
+
+#programming_section {
+    position: relative;
+    height: 50vh;
+}
+
+.programming_logos_part {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.programming_techs_container {
+    position: absolute;
+}
+
+.programming_tech_img {
+    position: absolute;
+}
+
+.white_pattern {
+    height: 530px;
+    width: auto;
+    z-index: -1;
+    position: absolute;
+}
+
+.git_img {
+    height: 100px;
+    top: 150px;
+}
+
+.github_img {
+    height: 50px;
+}
+
+.php_img {
+    height: 100px;
+}
+
+.js_img {
+    height: 100px;
+}
+
+.css_img {
+    height: 100px;
+}
+
+.html_img {
+    height: 100px;
 }
