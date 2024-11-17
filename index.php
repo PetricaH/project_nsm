@@ -29,6 +29,10 @@
                 <img src="static/images/programming_techs_logos/html-5.svg" class="programming_tech_img html_img" alt="">
             </div>
         </div>
+        <div class="programming_text_part">
+            <h2>GOODLOOKING</h2>
+            <span>MONEYMAKER</span>
+        </div>
     </section>
 </body>
 </html>
