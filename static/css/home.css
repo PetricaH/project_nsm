@@ -350,3 +350,18 @@ body {
         margin-top: 5%; /* Overlap effect for smaller screens */
     }
 }
+
+@media (min-width: 769px) {
+    .programming_techs_container::after {
+        display: none;
+    }
+
+    .programming_techs_container {
+        filter: blur(0px);
+    }
+
+    .white_pattern {
+        filter: blur(3px);
+    }
+
+}
