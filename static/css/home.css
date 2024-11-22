@@ -173,22 +173,27 @@ body {
     z-index: 999;
 }
 
-/* programming techs logos container styling */
-
+/* Programming Section */
 #programming_section {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Side-by-side layout for wide screens */
+    grid-gap: 20px;
     background-color: #0F1413;
+    padding: 20px;
+    align-items: center; /* Center-align items vertically */
 }
 
-.programming_logos_part {
+.programming_techs_container {
     position: relative;
     filter: blur(3px);
+    padding: 20px;
     display: flex;
-    padding: 20px; /* Add padding to give it some space */
-    height: 100%; /* Set a minimum height */
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
-.programming_logos_part::after {
+.programming_techs_container::after {
     content: '';
     position: absolute;
     top: 0;
@@ -205,11 +210,6 @@ body {
     );
     z-index: 9999;
     pointer-events: none;
-}
-
-.programming_techs_container {
-    position: relative;
-    z-index: -1;
 }
 
 .programming_tech_img {
@@ -265,13 +265,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2; /* Ensure text is above logos */
+    z-index: 2;
 }
 
 .programming_text_part h2 {
     font-size: 3rem;
     color: #f2f2f2;
-    position: relative;
     margin: 0;
 }
 
@@ -280,7 +279,7 @@ body {
     color: #de4c36;
     font-size: 3rem;
     position: absolute;
-    top: 18%;
+    top: 12%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
@@ -296,4 +295,35 @@ body {
 
 .service_copy_container p {
     padding-bottom: 15px;
+}
+
+/* Buttons */
+.buttons_services_containers {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.buttons_services_containers button {
+    padding: 10px 20px;
+    background-color: #de4c36;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttons_services_containers button:hover {
+    background-color: #c43c2a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #programming_section {
+        grid-template-columns: 1fr; /* Stacked layout for small screens */
+    }
+
+    .programming_text_part {
+        margin-top: 45%; /* Overlap effect */
+    }
 }

@@ -18,7 +18,6 @@
         <div class="hero_bg_top_layer"></div>
     </section>
     <section id="programming_section">
-        <div class="programming_logos_part">
             <div class="programming_techs_container">
                 <img src="static/images/square-pattern-white-v2.png" class="white_pattern" alt="">
                 <img src="static/images/programming_techs_logos/git-icon.svg" class="programming_tech_img git_img" alt="">
@@ -28,7 +27,6 @@
                 <img src="static/images/programming_techs_logos/css-3.svg" class="programming_tech_img css_img" alt="">
                 <img src="static/images/programming_techs_logos/html-5.svg" class="programming_tech_img html_img" alt="">
             </div>
-        </div>
         <div class="programming_text_part">
             <h2>GOODLOOKING</h2>
             <span>MONEYMAKER</span>
