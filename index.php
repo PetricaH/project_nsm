@@ -32,6 +32,15 @@
         <div class="programming_text_part">
             <h2>GOODLOOKING</h2>
             <span>MONEYMAKER</span>
+            <div class="service_copy_container">
+                <p>Have you ever felt the need to be seen by more people?</p>
+                <p>You can do just that with minimal investment compared to the possible return, all through a website.</p>
+                <p>If you have a business, or want to start a business, or want to establish yourself as a powerful brand on the market, a professional website can be your bnest choice.</p>
+            </div>
+            <div class="buttons_services_containers">
+                <button>BOOK A CALL</button>
+                <button>see my projects</button>
+            </div>
         </div>
     </section>
 </body>
