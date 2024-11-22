@@ -309,12 +309,17 @@ body {
 }
 
 .buttons_services_containers button {
-    padding: 10px 20px;
+    padding: 10px 35px;
     background-color: #de4c36;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.buttons_services_containers button:nth-child(2) {
+    background-color: transparent;
+    border: 1px solid #f2f2f2;
 }
 
 .buttons_services_containers button:hover {
