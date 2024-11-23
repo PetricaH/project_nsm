@@ -41,6 +41,31 @@
             </div>
         </div>
     </section>
+    <section id="automation_section">
+        <div class="background_images">
+            <img src="static/images/brevo_screenshot.png" class="automation_bg brevo_bg" alt="Brevo Automation Example">
+            <img src="static/images/zapier_screenshot.png" class="automation_bg zapier_bg" alt="Zapier Automation Example">
+        </div>
+        <div class="automation_content">
+            <img src="static/images/automation_programs_logos/Brevo-Logo-1.svg" alt="Brevo Logo">
+            <img src="static/images/automation_programs_logos/Make-Logo-RGB.svg" alt="Make Logo">
+            <img src="static/images/automation_programs_logos/n8n_io.svg" alt="n8n.io Logo">
+            <img src="static/images/automation_programs_logos/zapier.svg" alt="Zapier Logo">
+        </div>
+        <div class="automation_text_part">
+            <h2>GOODLOOKING</h2>
+            <span>MONEYMAKER</span>
+            <div class="service_copy_container">
+                <p>Have you ever felt the need to be seen by more people?</p>
+                <p>You can do just that with minimal investment compared to the possible return, all through a website.</p>
+                <p>If you have a business, or want to start a business, or want to establish yourself as a powerful brand on the market, a professional website can be your bnest choice.</p>
+            </div>
+            <div class="buttons_services_containers">
+                <button>BOOK A CALL</button>
+                <button>see my projects</button>
+            </div>
+        </div>
+    </section>
     
 </body>
 </html>

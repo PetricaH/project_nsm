@@ -369,3 +369,142 @@ body {
     }
 
 }
+
+/* Automation Section */
+#automation_section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #0F1413;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.background_images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.background_images::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        to top,
+        rgba(15, 20, 19, 1),
+        rgba(15, 20, 19, 0.8),
+        rgba(15, 20, 19, 0.4),
+        rgba(15, 20, 19, 0.2),
+        rgba(15, 20, 19, 0)
+    );
+    z-index: 3;
+    pointer-events: none;
+}
+
+.automation_bg {
+    position: absolute;
+    width: 400px; 
+    height: 600px; 
+    filter: blur(3px);
+    transform-origin: center;
+}
+
+.brevo_bg {
+    transform: rotate(-15deg); 
+    left: 20%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.zapier_bg {
+    transform: rotate(15deg); /* Inclined to the right */
+    right: 20%; /* Adjust position as needed */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+    z-index: 2; /* Above Brevo background */
+}
+
+.automation_content {
+    position: relative;
+    z-index: 3; /* Above background images */
+    display: flex;
+    gap: 20px; /* Space between logos */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.automation_content img {
+    width: 80px; /* Adjust size as needed */
+    height: auto;
+}
+
+/* Automation Text Part */
+.automation_text_part {
+    position: relative;
+    z-index: 4; /* Ensure text is above all other layers */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #FFFFFF;
+    max-width: 600px; /* Limit width for better readability */
+    margin-top: 20px;
+}
+
+.automation_text_part h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #f2f2f2;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.automation_text_part span {
+    font-family: "Reenie Beanie", cursive;
+    font-size: 2rem;
+    color: #de4c36;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #automation_section {
+        flex-direction: column;
+    }
+
+    .brevo_bg {
+        transform: rotate(15deg);
+        left: 10%;
+    }
+
+    .zapier_bg {
+        transform: rotate(-15deg);
+        right: 10%;
+    }
+
+    .automation_content img {
+        width: 60px; /* Reduce logo size for smaller screens */
+    }
+
+    .automation_text_part h2 {
+        font-size: 2rem;
+    }
+
+    .automation_text_part span {
+        font-size: 1.5rem;
+    }
+}
