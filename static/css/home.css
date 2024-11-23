@@ -54,6 +54,7 @@ body {
     justify-content: space-between;
     position: fixed;
     width: 100%;
+    z-index: 9999;
 }
 
 .menu_toggle {
@@ -403,8 +404,8 @@ body {
     background-image: linear-gradient(
         to top,
         rgba(15, 20, 19, 1),
+        rgba(15, 20, 19, 1),
         rgba(15, 20, 19, 0.8),
-        rgba(15, 20, 19, 0.4),
         rgba(15, 20, 19, 0.2),
         rgba(15, 20, 19, 0)
     );
@@ -428,17 +429,17 @@ body {
 }
 
 .zapier_bg {
-    transform: rotate(15deg); /* Inclined to the right */
-    right: 20%; /* Adjust position as needed */
+    transform: rotate(15deg);
+    right: 20%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
-    z-index: 2; /* Above Brevo background */
+    z-index: 2; 
 }
 
 .automation_content {
     position: relative;
-    z-index: 3; /* Above background images */
+    z-index: 3;
     display: flex;
-    gap: 20px; /* Space between logos */
+    gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -446,21 +447,21 @@ body {
 }
 
 .automation_content img {
-    width: 80px; /* Adjust size as needed */
+    width: 80px;
     height: auto;
 }
 
 /* Automation Text Part */
 .automation_text_part {
     position: relative;
-    z-index: 4; /* Ensure text is above all other layers */
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: #FFFFFF;
-    max-width: 600px; /* Limit width for better readability */
+    max-width: 600px;
     margin-top: 20px;
 }
 
@@ -487,17 +488,15 @@ body {
     }
 
     .brevo_bg {
-        transform: rotate(15deg);
         left: 10%;
     }
 
     .zapier_bg {
-        transform: rotate(-15deg);
         right: 10%;
     }
 
     .automation_content img {
-        width: 60px; /* Reduce logo size for smaller screens */
+        width: 75px;
     }
 
     .automation_text_part h2 {
