@@ -195,7 +195,6 @@ body {
     justify-content: center;
     align-items: center;
     grid-area: logos;
-    margin-top: 150px;
     width: 350px; /* Set the size of the canvas */
     height: 350px;
 }
@@ -277,6 +276,7 @@ body {
     justify-content: center;
     z-index: 2;
     grid-area: text;
+    top: -30%;
 }
 
 .programming_text_part h2 {
@@ -311,7 +311,7 @@ body {
 /* Buttons */
 .buttons_services_containers {
     display: flex;
-    gap: 10px;
+    gap: 4vw;
     margin-top: 20px;
 }
 
@@ -362,6 +362,10 @@ body {
 
     .white_pattern {
         filter: blur(3px);
+    }
+
+    .programming_text_part {
+        top: 0;
     }
 
 }
