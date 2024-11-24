@@ -54,7 +54,7 @@
         </div>
         <div class="automation_text_part">
             <h2>AUTOMATE IT</h2>
-            <span>MONEYMAKER</span>
+            <span>NOW</span>
             <div class="service_copy_container">
                 <p>There are many steps in the relationship you have with your clients</p>
                 <p>And many of those steps are repetitive.</p>
@@ -63,7 +63,7 @@
             </div>
             <div class="buttons_services_containers">
                 <button>BOOK A CALL</button>
-                <button>learn to automate</button>
+                <button class="learn_to_automate_btn">learn to automate</button>
             </div>
         </div>
     </section>

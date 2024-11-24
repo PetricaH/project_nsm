@@ -314,7 +314,7 @@ body {
 /* Buttons */
 .buttons_services_containers {
     display: flex;
-    gap: 4vw;
+    gap: 2vw;
     margin-top: 20px;
 }
 
@@ -483,4 +483,27 @@ body {
     .automation_content img {
         width: 75px;
     }
+}
+
+.learn_to_automate_btn {
+    position: relative;
+}
+
+.learn_to_automate_btn:hover {
+    background-color: transparent !important;
+}
+
+.learn_to_automate_btn::after {
+    content: "Coming Soon";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity .3s ease;
+    color: #de4c36;
+}
+
+.learn_to_automate_btn:hover::after {
+    opacity: 1;
 }
