@@ -281,7 +281,8 @@ body {
 }
 
 .programming_text_part h2,
-.automation_text_part h2 {
+.automation_text_part h2,
+.digital_art_text_part h2 {
     font-size: 3rem;
     color: #f2f2f2;
     margin: 0;
@@ -295,6 +296,17 @@ body {
     position: absolute;
     top: 12%;
     left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.digital_art_text_part span {
+    font-family: "Reenie Beanie", cursive !important;
+    color: #de4c36;
+    font-size: 3rem;
+    position: absolute;
+    top: 40%;
+    left: 40%;
     transform: translate(-50%, -50%);
     z-index: 3;
 }
@@ -454,7 +466,8 @@ body {
 }
 
 /* Automation Text Part */
-.automation_text_part {
+.automation_text_part,
+.digital_art_text_part {
     position: relative;
     z-index: 4;
     display: flex;
@@ -464,7 +477,6 @@ body {
     text-align: center;
     color: #FFFFFF;
     max-width: 600px;
-    margin-top: 20px;
 }
 
 @media (max-width: 768px) {
@@ -506,4 +518,12 @@ body {
 
 .learn_to_automate_btn:hover::after {
     opacity: 1;
+}
+
+#digital_art_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 100px;
 }

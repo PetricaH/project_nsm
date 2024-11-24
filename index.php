@@ -67,6 +67,19 @@
             </div>
         </div>
     </section>
-    
+    <section id="digital_art_section">
+    <div class="digital_art_title_images">
+        <div class="digital_art_text_part">
+            <h2>A STORY</h2>
+            <span>NICE</span>
+            <div class="buttons_services_containers">
+                <button>SEE ALL</button>
+            </div>
+        </div>
+    </div>
+    <div class="most_recent_art_works">
+        
+    </div>
+    </section>
 </body>
 </html>
