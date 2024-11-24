@@ -53,16 +53,17 @@
             <img src="static/images/automation_programs_logos/zapier.svg" alt="Zapier Logo">
         </div>
         <div class="automation_text_part">
-            <h2>GOODLOOKING</h2>
+            <h2>AUTOMATE IT</h2>
             <span>MONEYMAKER</span>
             <div class="service_copy_container">
-                <p>Have you ever felt the need to be seen by more people?</p>
-                <p>You can do just that with minimal investment compared to the possible return, all through a website.</p>
-                <p>If you have a business, or want to start a business, or want to establish yourself as a powerful brand on the market, a professional website can be your bnest choice.</p>
+                <p>There are many steps in the relationship you have with your clients</p>
+                <p>And many of those steps are repetitive.</p>
+                <p>And spending very valuable time doing something repetitive is counterproductive.</p>
+                <p>Depending on what you need to automate, there are different programs that can help you.</p>
             </div>
             <div class="buttons_services_containers">
                 <button>BOOK A CALL</button>
-                <button>see my projects</button>
+                <button>learn to automate</button>
             </div>
         </div>
     </section>
