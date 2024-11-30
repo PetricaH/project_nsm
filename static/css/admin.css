@@ -82,12 +82,15 @@ body {
     text-align: center;
     cursor: pointer;
     background-color: #f9f9f9;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 #drop_zone.dragging {
     background-color: #e3e3e3;
     border-color: #333;
+    transform: scale(1.05); /* Slight zoom effect */
 }
+
 
 #preview img {
     margin-top: 10px;
@@ -97,4 +100,42 @@ body {
     border: 1px solid #ddd;
     padding: 5px;
     background: #fff;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50; /* Success color */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notification.error {
+    background-color: #f44336; /* Error color */
+}
+
+.notification .close {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.hidden {
+    display: none;
 }

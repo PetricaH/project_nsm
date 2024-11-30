@@ -22,4 +22,10 @@
     </div>
 
     <button type="submit" name="submit">Post Artwork</button>
+
+    <div id="notification" class="notification hidden">
+        <span class="close" onclick="closeNotification()">×</span>
+        <span id="notificationMessage"></span>
+    </div>
+
 </form>

@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fileName.style.fontSize = ".9em";
             fileName.style.color = "#333";
             preview.appendChild(fileName);
-            
+
             // clear button
             const clearBtn = document.createElement("button");
             clearBtn.textContent = "Delete Image";
@@ -90,4 +90,59 @@ document.addEventListener("DOMContentLoaded", () => {
             preview.innerHTML = "<p>Invalid file</p>"
         }
     }
+
+    // Notification Functions
+    function showNotification(message, isError = false) {
+        const notification = document.getElementById("notification");
+        const messageElement = document.getElementById("notificationMessage");
+
+        // Set notification style based on success or error
+        notification.classList.remove("hidden", "error", "show");
+        notification.style.backgroundColor = isError ? "#f44336" : "#4caf50"; // Red for error, green for success
+        messageElement.textContent = message;
+
+        // Display the notification smoothly
+        setTimeout(() => {
+            notification.classList.add("show");
+        }, 10);
+
+        // Auto-hide notification after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove("show");
+        }, 5000);
+    }
+
+    // Close notification manually
+    function closeNotification() {
+        const notification = document.getElementById("notification");
+        notification.classList.remove("show");
+    }
+});
+
+document.getElementById("manage_artwork_form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    const formData = new FormData(this);
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "./admin_includes/post_artwork.php", true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    showNotification("Artwork uploaded successfully!");
+                    document.getElementById("manage_artwork_form").reset(); // Reset the form
+                    document.getElementById("preview").innerHTML = ""; // Clear the preview
+                } else {
+                    showNotification("Failed to upload artwork: " + response.message, true);
+                }
+            } catch (error) {
+                showNotification("An unexpected error occurred.", true);
+            }
+        } else {
+            showNotification("An error occurred while uploading.", true);
+        }
+    };
+    xhr.send(formData);
 });
