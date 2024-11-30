@@ -1,5 +1,5 @@
 <h2 id="manage_artwork_h2">Manage Artwork</h2>
-<form action="post_artwork.php" method="POST" enctype="multipart/form-data" id="manage_artwork_form">
+<form action="./admin_includes/post_artwork.php" method="POST" enctype="multipart/form-data" id="manage_artwork_form">
     <div class="first_manage_artwork_form_input">  
         <label for="title">Artwork Title:</label>
         <input type="text" name="title" id="title" required>

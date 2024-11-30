@@ -18,13 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     mainContent.innerHTML = data; // inject the fetched HTML into the main content area
                 })
                 .catch(error => {
-                    mainContent.innerHTML = <h1>${error.messagge}</h1>; // display an error message
+                    mainContent.innerHTML = `<h1>${error.messagge}</h1>`; // display an error message
                 });
         });
     });
 
     // code for making drag and drop images doable
-
     const dropZone = document.getElementById("drop_zone");
     const fileInput = document.getElementById("image");
     const preview = document.getElementById("preview");
@@ -63,15 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
         preview.innerHTML = ""; // clear previous preview
         if (file && file.type.startsWith("image/")) {
             const img = document.createElement("img");
-            img.src = URL.createObjectURL(file); // create a temporary URL for the image
+            img.src = URL.createObjectURL(file);
             img.alt = "Preview";
             img.style.maxWidth = "100%";
             img.style.maxHeight = "200px";
             preview.appendChild(img);
+
+            // show file name
+
+            const fileName = document.createElement("p");
+            fileName.textContent = `Selected file: ${file.name}`;
+            fileName.style.marginTop = "10px";
+            fileName.style.fontSize = ".9em";
+            fileName.style.color = "#333";
+            preview.appendChild(fileName);
+            
+            // clear button
+            const clearBtn = document.createElement("button");
+            clearBtn.textContent = "Delete Image";
+            clearBtn.style.marginTop = "10px";
+            clearBtn.addEventListener("click", () => {
+                fileInput.value = "";
+                preview.innerHTML = "";
+            });
+            preview.appendChild(clearBtn);
         } else {
-            preview.innerHTML = "<p>Invalid file type. Please select an image.</p>";
+            preview.innerHTML = "<p>Invalid file</p>"
         }
     }
-
-    // code for making drag and drop images doable ||
-}); 
+});
