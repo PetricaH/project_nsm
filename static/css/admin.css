@@ -1,0 +1,100 @@
+/* Add your CSS to make the interface visually appealing */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background: #333;
+    color: #fff;
+    height: 100vh; /* Full height */
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 15px;
+    border-bottom: 1px solid #444;
+    transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background: #555;
+}
+
+.main_content {
+    margin-left: 200px; /* Leave space for the sidebar */
+    padding: 20px;
+    width: calc(100% - 200px);
+}
+
+#manage_artwork_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    max-width: 450px;
+    gap: 30px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+#manage_artwork_form button {
+    background-color: #de4c36;
+    width: fit-content;
+    align-self: center;
+    padding: 10px 35px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+#manage_artwork_form button:hover {
+    background-color: #c43c2a;
+}
+
+#drop_zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+#drop_zone.dragging {
+    background-color: #e3e3e3;
+    border-color: #333;
+}
+
+#preview img {
+    margin-top: 10px;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: #fff;
+}

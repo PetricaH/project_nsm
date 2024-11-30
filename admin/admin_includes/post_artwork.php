@@ -1,5 +1,5 @@
 <?php 
-include 'config.php';
+include 'configuration.php';
 
 if (isset($_POST['submit'])) {
     $title = $_POST['title'];
