@@ -91,6 +91,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    document.getElementById("manage_artwork_form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const xhr = new XMLHttpRequest();
+    
+        xhr.open("POST", "./admin_includes/post_artwork.php", true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Show notification
+                        showNotification("Artwork uploaded successfully!");
+    
+                        // Reset individual fields manually (but keep the notification visible)
+                        document.getElementById("title").value = "";
+                        document.getElementById("image").value = "";
+                        document.getElementById("date").value = "";
+                        document.getElementById("preview").innerHTML = ""; // Clear the preview
+                    } else {
+                        showNotification("Failed to upload artwork: " + response.message, true);
+                    }
+                } catch (error) {
+                    showNotification("An unexpected error occurred.", true);
+                }
+            } else {
+                showNotification("An error occurred while uploading.", true);
+            }
+        };
+    
+        xhr.send(formData);
+    });
+    
     // Notification Functions
     function showNotification(message, isError = false) {
         const notification = document.getElementById("notification");
@@ -117,32 +150,4 @@ document.addEventListener("DOMContentLoaded", () => {
         const notification = document.getElementById("notification");
         notification.classList.remove("show");
     }
-});
-
-document.getElementById("manage_artwork_form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form from refreshing the page
-
-    const formData = new FormData(this);
-    const xhr = new XMLHttpRequest();
-
-    xhr.open("POST", "./admin_includes/post_artwork.php", true);
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                const response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    showNotification("Artwork uploaded successfully!");
-                    document.getElementById("manage_artwork_form").reset(); // Reset the form
-                    document.getElementById("preview").innerHTML = ""; // Clear the preview
-                } else {
-                    showNotification("Failed to upload artwork: " + response.message, true);
-                }
-            } catch (error) {
-                showNotification("An unexpected error occurred.", true);
-            }
-        } else {
-            showNotification("An error occurred while uploading.", true);
-        }
-    };
-    xhr.send(formData);
 });
