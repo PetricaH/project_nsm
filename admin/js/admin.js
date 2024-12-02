@@ -91,38 +91,114 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    document.getElementById("manage_artwork_form").addEventListener("submit", function (event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        const xhr = new XMLHttpRequest();
-    
-        xhr.open("POST", "./admin_includes/post_artwork.php", true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        // Show notification
-                        showNotification("Artwork uploaded successfully!");
-    
-                        // Reset individual fields manually (but keep the notification visible)
-                        document.getElementById("title").value = "";
-                        document.getElementById("image").value = "";
-                        document.getElementById("date").value = "";
-                        document.getElementById("preview").innerHTML = ""; // Clear the preview
-                    } else {
-                        showNotification("Failed to upload artwork: " + response.message, true);
-                    }
-                } catch (error) {
-                    showNotification("An unexpected error occurred.", true);
+     fetchArtworks();
+
+     function fetchArtworks() {
+        fetch("./admin_includes/get_artworks.php")
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    const container = document.getElementById("artworks_container");
+                    container.innerHTML = ""; // Clear existing content
+                    data.artworks.forEach((artwork) => {
+                        addArtworkToGallery(artwork.title, artwork.image, artwork.id);
+                    });
+                } else {
+                    console.error(data.message);
                 }
-            } else {
-                showNotification("An error occurred while uploading.", true);
-            }
-        };
+            })
+            .catch((error) => {
+                console.error("Error fetching artworks:", error);
+            });
+    }
     
-        xhr.send(formData);
-    });
+ 
+    function addArtworkToGallery(title, imageUrl, id) {
+        const container = document.getElementById("artworks_container");
+    
+        const artworkCard = document.createElement("div");
+        artworkCard.classList.add("artwork_card");
+    
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = title;
+    
+        const titleElem = document.createElement("div");
+        titleElem.classList.add("artwork_title");
+        titleElem.textContent = title;
+    
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.classList.add("delete_button");
+        deleteBtn.addEventListener("click", () => deleteArtwork(id, artworkCard));
+    
+        artworkCard.appendChild(img);
+        artworkCard.appendChild(titleElem);
+        artworkCard.appendChild(deleteBtn);
+    
+        container.appendChild(artworkCard);
+    }
+    
+    function deleteArtwork(id, cardElement) {
+        if (confirm("Are you sure you want to delete this artwork?")) {
+            fetch("./admin_includes/delete_artwork.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `id=${id}`, // Send the artwork ID
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert(data.message);
+                        cardElement.remove(); // Remove the artwork card from the DOM
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error deleting artwork:", error);
+                });
+        }
+    }
+    
+
+     // Attach the addArtworkToGallery function to the form submission
+     document.getElementById("manage_artwork_form").addEventListener("submit", function (event) {
+         event.preventDefault();
+         const formData = new FormData(this);
+         const xhr = new XMLHttpRequest();
+ 
+         xhr.open("POST", "./admin_includes/post_artwork.php", true);
+         xhr.onload = function () {
+             if (xhr.status === 200) {
+                 try {
+                     const response = JSON.parse(xhr.responseText);
+                     if (response.success) {
+                         showNotification("Artwork uploaded successfully!");
+ 
+                         // Add the new artwork to the gallery
+                         addArtworkToGallery(formData.get("title"), response.imageUrl);
+ 
+                         // Reset fields manually
+                         document.getElementById("title").value = "";
+                         document.getElementById("image").value = "";
+                         document.getElementById("date").value = "";
+                         document.getElementById("preview").innerHTML = ""; // Clear the preview
+                     } else {
+                         showNotification("Failed to upload artwork: " + response.message, true);
+                     }
+                 } catch (error) {
+                     showNotification("An unexpected error occurred.", true);
+                 }
+             } else {
+                 showNotification("An error occurred while uploading.", true);
+             }
+         };
+ 
+         xhr.send(formData);
+     });
     
     // Notification Functions
     function showNotification(message, isError = false) {
@@ -150,4 +226,5 @@ document.addEventListener("DOMContentLoaded", () => {
         const notification = document.getElementById("notification");
         notification.classList.remove("show");
     }
+   
 });

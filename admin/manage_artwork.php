@@ -26,3 +26,4 @@
         <span id="notificationMessage"></span>
     </div>
 </form>
+<div id="artworks_container"></div>
