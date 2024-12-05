@@ -176,7 +176,6 @@ body {
     height: 300px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
     overflow: hidden;
     display: flex;
     flex-direction: column;

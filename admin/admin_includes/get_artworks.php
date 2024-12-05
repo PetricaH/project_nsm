@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 require_once '../../config.php';
 
-$artworksWebPath = '../static/artworks/';
+$artworksWebPath = '/project_nsm/static/artworks/';
 $query = "SELECT id, title, image FROM artworks ORDER BY created_at DESC";
 $result = $conn->query($query);
 

@@ -77,9 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="most_recent_art_works">
-        
-    </div>
+    <div class="most_recent_art_works" id="artworksGrid"></div>
     </section>
-</body>
-</html>
+
+    <?php include( ROOT_PATH . '/includes/footer.php'); ?>
