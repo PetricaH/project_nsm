@@ -1,4 +1,5 @@
 <!-- navbar -->
+<script src="static/js/public_script.js"></script>
 <div class="navbar">
     <div class="logo_div">
         <a href="index.php"><img src="static\images\hreniuc_logo.png" id="logo_image" alt="Logo"></a>

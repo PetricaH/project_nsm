@@ -1,12 +1,15 @@
 // handel toggle functionality of the menu
 document.addEventListener('DOMContentLoaded', () => {
+    // Handle menu toggle functionality
     const menuToggle = document.getElementById('menu_toggle');
     const navMenu = document.getElementById('nav_menu');
 
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        menuToggle.classList.toggle('open');
-    });
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('open');
+        });
+    }
 
     async function loadArtworks() {
         try {

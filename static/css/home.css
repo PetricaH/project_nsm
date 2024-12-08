@@ -311,6 +311,11 @@ body {
     z-index: 3;
 }
 
+.digital_art_text_part a {
+    text-decoration: none; 
+    color: inherit;
+}
+
 .service_copy_container {
     text-align: left;
     color: #f2f2f2;
@@ -337,6 +342,10 @@ body {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.buttons_services_containers button a {
+    text-decoration: none !important;
 }
 
 .buttons_services_containers button:nth-child(2) {

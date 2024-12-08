@@ -73,7 +73,7 @@
             <h2>A STORY</h2>
             <span>NICE</span>
             <div class="buttons_services_containers">
-                <button>SEE ALL</button>
+                <button><a href="artworks.php">SEE ALL</a></button>
             </div>
         </div>
     </div>

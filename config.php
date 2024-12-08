@@ -10,4 +10,4 @@
     // define global constants 
     define ('ROOT_PATH', realpath(dirname(__FILE__)));
     define ('BASE_URL', 'https://localhost/project_nsm'); 
-?>
+?> 
