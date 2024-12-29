@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
 
-            const url = 'admin/admin_includes/get_artworks.php'; // Corrected path to get_artworks.php
+            const url = '../admin/admin_includes/get_artworks.php'; // Corrected path to get_artworks.php
 
             console.log(`Fetching artworks from: ${url}`);
 
