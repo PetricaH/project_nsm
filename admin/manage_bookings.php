@@ -38,3 +38,14 @@
         </tbody>
     </table>
 </div>
+
+<div id="notification" class="notification hidden">
+    <span class="close" onclick="closeNotification()">X</span>
+    <span id="notificationMessage"></span>
+</div>
+
+<script>
+function closeNotification() {
+    document.getElementById('notification').classList.add('hidden');
+}
+</script>
