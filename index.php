@@ -103,10 +103,8 @@
                 <div class="booking-form-group">
                     <label for="booking-service">Service:</label>
                     <select id="booking-service" name="service" required>
-                        <option value="Consultation">Consultation</option>
-                        <option value="Repair">Repair</option>
-                        <option value="Installation">Installation</option>
-                        <option value="Other">Other</option>
+                        <option value="Automation">Automation</option>
+                        <option value="Web Development">Web Development</option>
                     </select>
                 </div>
                 <div class="booking-form-group">
