@@ -27,6 +27,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
     exit;
 }
-
+// happy new year :D bye 2024, welcome 2025. lets fulfill those goals and meet new awesome people :D last update on 2024 
 echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
 ?>
