@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
             const page = link.getAttribute("href").split("=")[1];
+            console.log(`Fetching page: ${page}`);
 
-            fetch(`admin/${page}.php`)
+            fetch(`../${page}.php`) // Corrected URL
                 .then(response => {
                     if (!response.ok) throw new Error("Page not found");
                     return response.text();
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(error => {
                     mainContent.innerHTML = `<h1>${error.message}</h1>`;
+                    console.error(error);
                 });
         });
     });
@@ -203,4 +205,5 @@ document.addEventListener("DOMContentLoaded", () => {
         const notification = document.getElementById("notification");
         notification.classList.remove("show");
     }
+    
 });
