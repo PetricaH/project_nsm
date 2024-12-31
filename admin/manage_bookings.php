@@ -10,6 +10,8 @@
                 <th>Service</th>
                 <th>Description</th>
                 <th>Submission Date</th>
+                <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,17 +24,28 @@
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
+                    echo "<tr data-id='" . $row['id'] . "'>";
                     echo "<td>" . htmlspecialchars($row['id']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['service']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['description']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['created_at']) . "</td>";
+                    echo "<td>
+                        <select class='status-select' data-id='" . $row['id'] . "'>
+                            <option value='Pending' " . ($row['status'] === 'Pending' ? 'selected' : '') . ">Pending</option>
+                            <option value='Approved' " . ($row['status'] === 'Approved' ? 'selected' : '') . ">Approved</option>
+                            <option value='Completed' " . ($row['status'] === 'Completed' ? 'selected' : '') . ">Completed</option>
+                            <option value='Canceled' " . ($row['status'] === 'Canceled' ? 'selected' : '') . ">Canceled</option>
+                        </select>
+                    </td>";
+                    echo "<td>
+                        <button class='delete-btn' data-id='" . $row['id'] . "'>Delete</button>
+                    </td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='6'>No bookings found.</td></tr>";
+                echo "<tr><td colspan='8'>No bookings found.</td></tr>";
             }
             ?>
         </tbody>
@@ -43,9 +56,3 @@
     <span class="close" onclick="closeNotification()">X</span>
     <span id="notificationMessage"></span>
 </div>
-
-<script>
-function closeNotification() {
-    document.getElementById('notification').classList.add('hidden');
-}
-</script>
