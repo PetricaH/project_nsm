@@ -41,4 +41,4 @@ if (array_key_exists($page, $allowed_pages)) {
     <?php echo $content; ?>
 </div>
 
-<?php include '../admin/admin_includes/admin_footer.php'; ?>
+<?php include ('../admin/admin_includes/admin_footer.php'); ?>
