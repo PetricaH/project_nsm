@@ -1,5 +1,5 @@
 <?php
-require_once('../config.php');
+require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
 
 header('Content-Type: application/json');
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to update status.']);
+        echo json_encode(['success' => false, 'message' => $stmt->error]);
     }
 
     $stmt->close();
