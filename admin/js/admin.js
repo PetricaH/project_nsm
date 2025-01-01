@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const BASE_URL = `${window.location.origin}${window.location.pathname.split('/').slice(0, -1).join('/')}/`;
     const links = document.querySelectorAll(".tab");
     const mainContent = document.querySelector(".main_content");
 
@@ -6,9 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
             const page = link.getAttribute("href").split("=")[1];
-            console.log(`Fetching page: ${page}`);
-
-            fetch(`../${page}.php`) // Corrected URL
+            fetch(`${BASE_URL}${page}.php`)
                 .then(response => {
                     if (!response.ok) throw new Error("Page not found");
                     return response.text();
@@ -22,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         });
     });
+    
 
     const dropZone = document.getElementById("drop_zone");
     const fileInput = document.getElementById("image");

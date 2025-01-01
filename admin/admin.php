@@ -5,9 +5,9 @@ require_once('../admin/admin_includes/admin_navbar.php');
 
 // Define allowed pages and their paths
 $allowed_pages = [
-    'manage_artwork' => '../admin/manage_artwork.php',
-    'manage_blog' => '../admin/manage_blog.php',
-    'manage_bookings' => '../admin/manage_bookings.php',
+    'manage_artwork' => 'manage_artwork.php',
+    'manage_blog' => 'manage_blog.php',
+    'manage_bookings' => 'manage_bookings.php',
 ];
 
 // Get the requested page from the query string or default to 'manage_artwork'
@@ -20,6 +20,7 @@ $content = "<h1>Invalid page request</h1>";
 if (array_key_exists($page, $allowed_pages)) {
     $pagePath = $allowed_pages[$page];
     if (file_exists($pagePath)) {
+        error_log("Resolved Path: " . $pagePath);
         ob_start(); // Start output buffering
         include $pagePath;
         $content = ob_get_clean(); // Get the included file's output
