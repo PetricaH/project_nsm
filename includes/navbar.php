@@ -31,7 +31,6 @@
         <li><a href="#automation_section">MARKETING AUTOMATION</a></li>
 
         <li><a href="#digital_art_section">DIGITAL ART</a></li>
-
     </ul>
 
     <?php include( ROOT_PATH . '/login.php') ?>

@@ -561,3 +561,41 @@ body {
 .booking-submit-btn:hover {
     background-color: #c43c2a;
 }
+
+/* Navbar Styling */
+.auth_form {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.auth_form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.auth_form button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff6347;
+    color: #fff;
+    cursor: pointer;
+}
+
+.auth_form button:hover {
+    background-color: #e5533d;
+}
+
+/* Welcome and Logout Styling */
+.logout {
+    margin-left: 10px;
+    color: #ff6347;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout:hover {
+    color: #e5533d;
+}
