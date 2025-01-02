@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" type="text/css" href="../admin/admin_styles/admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_artworks.css">
     <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_users.css">
     
     <?php require_once('../config.php'); ?>

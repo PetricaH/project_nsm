@@ -52,7 +52,7 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
     <!-- Add New User Form -->
     <div class="user-form">
         <h3>Create New User</h3>
-        <form method="POST" action="manage_users.php">
+        <form id="createUserForm">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
@@ -68,6 +68,7 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
 
             <button type="submit">Create User</button>
         </form>
+        <div id="formMessage" class="message hidden"></div>
     </div>
 
     <!-- Display Existing Users -->
