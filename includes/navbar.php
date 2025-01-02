@@ -31,9 +31,33 @@
         <li><a href="#automation_section">MARKETING AUTOMATION</a></li>
 
         <li><a href="#digital_art_section">DIGITAL ART</a></li>
-    </ul>
 
-    <?php include( ROOT_PATH . '/login.php') ?>
+        <li><a href="#" onclick="toggleRegisterModal()">REGISTER</a></li>
+
+        <div id="registerModal" class="modal hidden">
+            <form id="registerForm">
+                <label>Email</label>
+                <input type="email" name="email" required>
+                <label>Password</label>
+                <input type="password" name="password" required>
+                <button type="submit">Register</button>
+            </form>
+            <span class="close" onclick="toggleRegisterModal()">X</span>
+        </div>
+
+        <li><a href="#" onclick="toggleLoginModal()">LOGIN</a></li>
+        
+        <div id="loginModal" class="modal hidden">
+            <form id="loginForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <span class="close" onclick="toggleLoginModal()">X</span>
+        </div>
+    </ul>
 
 </div>
 
