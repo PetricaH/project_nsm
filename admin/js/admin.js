@@ -44,25 +44,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadPageCSS(page) {
+        // Map page names to specific CSS file names if they don't match directly
+        const cssFileMap = {
+            manage_artwork: "manage_artworks.css",
+            manage_bookings: "manage_bookings.css",
+            manage_users: "manage_users.css",
+            manage_blog: "manage_blog.css",
+        };
+
         // Remove any existing page-specific CSS
         const existingCSS = document.getElementById("page-specific-css");
         if (existingCSS) {
             existingCSS.remove();
         }
 
+        // Determine the correct CSS file name
+        const cssFileName = cssFileMap[page] || `${page}.css`;
+
         // Add the new page-specific CSS
         const linkElement = document.createElement("link");
         linkElement.id = "page-specific-css";
         linkElement.rel = "stylesheet";
         linkElement.type = "text/css";
-        linkElement.href = `../admin/admin_styles/${page}.css`; // Update the path to match your structure
+        linkElement.href = `../admin/admin_styles/${cssFileName}`;
 
         document.head.appendChild(linkElement);
     }
 
     function initializePageScripts(page) {
         switch (page) {
-            case "manage_artwork":
+            case "manage_artworks":
                 initializeArtworkManagement();
                 break;
             case "manage_bookings":
