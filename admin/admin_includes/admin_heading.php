@@ -14,10 +14,22 @@
     <!-- Google Icons -->
 
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <!-- Stylesheet -->
+
+    <!-- Common Styles -->
     <link rel="stylesheet" type="text/css" href="../admin/admin_styles/admin.css">
-    <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_artworks.css">
-    <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_users.css">
+
+    <!-- Dynamic Page-Specific Styles -->
+    <?php if (isset($page)): ?>
+        <?php if ($page === 'manage_artwork'): ?>
+            <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_artworks.css">
+        <?php elseif ($page === 'manage_bookings'): ?>
+            <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_bookings.css">
+        <?php elseif ($page === 'manage_users'): ?>
+            <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_users.css">
+        <?php elseif ($page === 'manage_blog'): ?>
+            <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_blog.css">
+        <?php endif; ?>
+    <?php endif; ?>
     
     <?php require_once('../config.php'); ?>
 

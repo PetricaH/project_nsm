@@ -30,15 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
-    <link rel="stylesheet" href="../static/css/manage_users.css">
-</head>
-<body>
     <h2>Manage Users</h2>
 
     <!-- Success/Error Messages -->
@@ -100,5 +91,3 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
             </tbody>
         </table>
     </div>
-</body>
-</html>

@@ -3,24 +3,97 @@ document.addEventListener("DOMContentLoaded", () => {
     const links = document.querySelectorAll(".tab");
     const mainContent = document.querySelector(".main_content");
 
+    // Load the default page and CSS on first load
+    const defaultPage = "manage_users"; // Default page
+    loadPage(defaultPage);
+
+    // Handle sidebar navigation clicks
     links.forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
             const page = link.getAttribute("href").split("=")[1];
-            fetch(`${BASE_URL}${page}.php`)
-                .then(response => {
-                    if (!response.ok) throw new Error("Page not found");
-                    return response.text();
-                })
-                .then(data => {
-                    mainContent.innerHTML = data;
-                })
-                .catch(error => {
-                    mainContent.innerHTML = `<h1>${error.message}</h1>`;
-                    console.error(error);
-                });
+            loadPage(page);
+
+            // Highlight the active link
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
         });
     });
+
+    function loadPage(page) {
+        // Fetch the content of the page
+        fetch(`${BASE_URL}${page}.php`)
+            .then(response => {
+                if (!response.ok) throw new Error("Page not found");
+                return response.text();
+            })
+            .then(data => {
+                // Insert the content into the main_content div
+                mainContent.innerHTML = data;
+
+                // Load the CSS for the specific page
+                loadPageCSS(page);
+
+                // Initialize page-specific JavaScript
+                initializePageScripts(page);
+            })
+            .catch(error => {
+                mainContent.innerHTML = `<h1>${error.message}</h1>`;
+                console.error(error);
+            });
+    }
+
+    function loadPageCSS(page) {
+        // Remove any existing page-specific CSS
+        const existingCSS = document.getElementById("page-specific-css");
+        if (existingCSS) {
+            existingCSS.remove();
+        }
+
+        // Add the new page-specific CSS
+        const linkElement = document.createElement("link");
+        linkElement.id = "page-specific-css";
+        linkElement.rel = "stylesheet";
+        linkElement.type = "text/css";
+        linkElement.href = `../admin/admin_styles/${page}.css`; // Update the path to match your structure
+
+        document.head.appendChild(linkElement);
+    }
+
+    function initializePageScripts(page) {
+        switch (page) {
+            case "manage_artwork":
+                initializeArtworkManagement();
+                break;
+            case "manage_bookings":
+                initializeBookingManagement();
+                break;
+            case "manage_users":
+                initializeUserManagement();
+                break;
+            case "manage_blog":
+                initializeBlogManagement();
+                break;
+            default:
+                console.error("No specific scripts for this page.");
+        }
+    }
+
+    function initializeArtworkManagement() {
+        console.log("Artwork management scripts initialized.");
+    }
+
+    function initializeBookingManagement() {
+        console.log("Booking management scripts initialized.");
+    }
+
+    function initializeUserManagement() {
+        console.log("User management scripts initialized.");
+    }
+
+    function initializeBlogManagement() {
+        console.log("Blog management scripts initialized.");
+    }
     
 
     const dropZone = document.getElementById("drop_zone");

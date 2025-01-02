@@ -8,6 +8,12 @@ body {
     display: flex;
 }
 
+.sidebar .tab.active {
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: underline;
+}
+
 .sidebar {
     width: 200px;
     background: #333;
