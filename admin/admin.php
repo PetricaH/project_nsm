@@ -43,5 +43,23 @@ if (array_key_exists($page, $allowed_pages)) {
 <div class="main_content">
     <?php echo $content; ?>
 </div>
+<!-- Success/Error Messages -->
+<?php if (isset($_GET['status'])): ?>
+        <div class="notification <?= htmlspecialchars($_GET['status']); ?>">
+            <?php
+            switch ($_GET['status']) {
+                case 'success':
+                    echo 'User deleted successfully!';
+                    break;
+                case 'error':
+                    echo 'Failed to delete the user.';
+                    break;
+                case 'invalid':
+                    echo 'Invalid user ID.';
+                    break;
+            }
+            ?>
+        </div>
+    <?php endif; ?>
 
 <?php include ('../admin/admin_includes/admin_footer.php'); ?>

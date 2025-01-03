@@ -9,17 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $user_id);
 
         if ($stmt->execute()) {
-            // Redirect back to the user list with a success message
-            header('Location: ../../manage_users.php?status=success');
+            // Redirect back to the referring page with a success status
+            header('Location: ../../admin.php?status=success');
             exit;
         } else {
-            // Redirect with an error message
-            header('Location: ../manage_users.php?status=error');
+            // Redirect back with an error status
+            header('Location: ../../admin.php?status=error');
             exit;
         }
     } else {
-        // Redirect if no user ID was provided
-        header('Location: ../manage_users.php?status=invalid');
+        // Redirect back with an invalid ID status
+        header('Location: ../../admin.php?status=invalid');
         exit;
     }
 }

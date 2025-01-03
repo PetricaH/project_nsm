@@ -31,15 +31,6 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
 ?>
 
     <h2>Manage Users</h2>
-
-    <!-- Success/Error Messages -->
-    <?php if (isset($success_message)): ?>
-        <div class="message success"><?= htmlspecialchars($success_message); ?></div>
-    <?php endif; ?>
-    <?php if (isset($error_message)): ?>
-        <div class="message error"><?= htmlspecialchars($error_message); ?></div>
-    <?php endif; ?>
-
     <!-- Add New User Form -->
     <div class="user-form">
         <h3>Create New User</h3>
