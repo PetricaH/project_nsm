@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Debugging Manage Bookings</title>
-</head>
-<body>
+
     <h1>Manage Bookings</h1>
 
     <!-- Add a simple table to simulate some content -->
@@ -48,5 +43,3 @@
             }
         });
     </script>
-</body>
-</html>
