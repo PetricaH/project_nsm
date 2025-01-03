@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (createUserForm) {
         createUserForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); // Prevent form from refreshing
 
             const formData = new FormData(createUserForm);
 
@@ -14,11 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: formData,
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const result = await response.json();
+                console.log("Response:", result);
 
                 if (result.success) {
                     displayMessage('User created successfully!', 'success');
-                    loadUsers(); // Refresh user table dynamically
+                    loadUsers(); // Refresh user table
                     createUserForm.reset(); // Clear the form
                 } else {
                     displayMessage(result.error || 'Failed to create user.', 'error');
@@ -30,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to refresh the user table without page reload
+    // Function to refresh the user table
     async function loadUsers() {
         try {
             const response = await fetch('../admin_includes/users_actions/fetch_users.php');
@@ -46,13 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Utility function to display success or error messages
+    // Utility function to display success/error messages
     function displayMessage(message, type) {
         formMessage.textContent = message;
         formMessage.className = `message ${type}`;
         formMessage.classList.remove('hidden');
 
-        // Automatically hide the message after 3 seconds
         setTimeout(() => {
             formMessage.classList.add('hidden');
         }, 3000);

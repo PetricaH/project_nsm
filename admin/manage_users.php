@@ -43,7 +43,7 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
     <!-- Add New User Form -->
     <div class="user-form">
         <h3>Create New User</h3>
-        <form id="createUserForm">
+        <form id="createUserForm" method="post">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
