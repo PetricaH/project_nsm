@@ -3,20 +3,24 @@ require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
 
 header('Content-Type: application/json');
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
 
-    $id = intval($input['id']); // get the id to delete
+    $id = intval($input['id']);
 
     if ($id > 0) {
-        // prepare the delete uqery
         $stmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
+        if (!$stmt) {
+            echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error]);
+            exit;
+        }
+
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
+            echo json_encode(['success' => true, 'message' => 'Booking deleted successfully.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete booking.']);
+            echo json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]);
         }
 
         $stmt->close();
@@ -27,6 +31,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
     exit;
 }
-// happy new year :D bye 2024, welcome 2025. lets fulfill those goals and meet new awesome people :D last update on 2024 
+
 echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
-?>

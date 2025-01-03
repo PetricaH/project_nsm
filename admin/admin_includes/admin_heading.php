@@ -17,6 +17,7 @@
 
     <!-- Common Styles -->
     <link rel="stylesheet" type="text/css" href="../admin/admin_styles/admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin_styles/notifications.css">
 
     <!-- Dynamic Page-Specific Styles -->
     <?php if (isset($page)): ?>

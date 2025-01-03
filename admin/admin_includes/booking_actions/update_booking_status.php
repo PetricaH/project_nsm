@@ -1,35 +1,26 @@
 <?php
-require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
-
-header('Content-Type: application/json');
+require_once('../../config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
+    $id = $_POST['id'] ?? null;
+    $status = $_POST['status'] ?? null;
 
-    $id = intval($input['id']);
-    $status = htmlspecialchars(trim($input['status']));
+    if ($id && $status) {
+        // Sanitize inputs
+        $id = $conn->real_escape_string($id);
+        $status = $conn->real_escape_string($status);
 
-    // Validate status
-    $validStatuses = ['Pending', 'Approved', 'Completed', 'Canceled'];
-    if (!in_array($status, $validStatuses)) {
-        echo json_encode(['success' => false, 'message' => 'Invalid status.']);
-        exit;
-    }
-
-    // Update status in the database
-    $stmt = $conn->prepare("UPDATE bookings SET status = ? WHERE id = ?");
-    $stmt->bind_param("si", $status, $id);
-
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
+        // Update the booking status
+        $query = "UPDATE bookings SET status = '$status' WHERE id = $id";
+        if ($conn->query($query) === TRUE) {
+            header("Location: ../manage_bookings.php?success=1");
+        } else {
+            header("Location: ../manage_bookings.php?error=1");
+        }
     } else {
-        echo json_encode(['success' => false, 'message' => $stmt->error]);
+        header("Location: ../manage_bookings.php?error=1");
     }
-
-    $stmt->close();
-    $conn->close();
-    exit;
+} else {
+    header("Location: ../manage_bookings.php");
 }
-
-echo json_encode(['success' => false, 'message' => 'Invalid request.']);
 ?>
