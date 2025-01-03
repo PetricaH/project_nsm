@@ -1,6 +1,5 @@
 <?php
-require_once(realpath(dirname(__FILE__) . '/../init.php'));
-header('Content-Type: application/json');
+require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'] ?? null;
@@ -10,13 +9,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $user_id);
 
         if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
+            // Redirect back to the user list with a success message
+            header('Location: ../../manage_users.php?status=success');
+            exit;
         } else {
-            echo json_encode(['success' => false, 'error' => 'Eror deleting user: ' . $stmt->error]);
+            // Redirect with an error message
+            header('Location: ../manage_users.php?status=error');
+            exit;
         }
-        $stmt->close();
     } else {
-        echo json_encode(['success' => false, 'error' => 'User ID is required.']);
+        // Redirect if no user ID was provided
+        header('Location: ../manage_users.php?status=invalid');
+        exit;
     }
 }
 ?>

@@ -63,9 +63,9 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
     </div>
 
     <!-- Display Existing Users -->
-    <div class="user-table">
+    <div class="user-table-div">
         <h3>Existing Users</h3>
-        <table>
+        <table class="user-table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -79,12 +79,15 @@ $result = $conn->query("SELECT user_id, email, role, created_at FROM users");
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['user_id']); ?></td>
-                        <td><?= htmlspecialchars($row['email']); ?></td>
-                        <td><?= htmlspecialchars($row['role']); ?></td>
+                        <td class="user-email"><?= htmlspecialchars($row['email']); ?></td>
+                        <td class="user-role"><?= htmlspecialchars($row['role']); ?></td>
                         <td><?= htmlspecialchars($row['created_at']); ?></td>
                         <td>
-                            <a href="edit_user.php?id=<?= $row['user_id']; ?>">Edit</a>
-                            <a href="delete_user.php?id=<?= $row['user_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                            <!-- Form for deletion -->
+                            <form method="POST" action="../admin/admin_includes/users_actions/delete_user.php" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="user_id" value="<?= htmlspecialchars($row['user_id']); ?>">
+                                <button type="submit">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endwhile; ?>

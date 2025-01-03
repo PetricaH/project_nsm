@@ -1,15 +1,14 @@
 (function () {
     // Define API endpoints for managing users
     const API_ENDPOINTS = {
-        fetchUsers: '../admin_includes/users_actions/fetch_users.php', // Fetch all users
-        createUser: '../admin_includes/users_actions/create_user_handler.php', // Create a new user
-        deleteUser: '../admin_includes/users_actions/delete_user.php', // Delete a user
-        editUser: '../admin_includes/users_actions/edit_user.php', // Edit a user
+        fetchUsers: '../admin/admin_includes/users_actions/fetch_users.php',
+        createUser: '../admin/admin_includes/users_actions/create_user_handler.php',
+        editUser: '../admin/admin_includes/users_actions/edit_user.php',
     };
 
     // Store commonly accessed DOM elements
     const domElements = {
-        userTableBody: document.querySelector('.user-table tbody'), // Table body for user list
+        userTableDiv: document.querySelector('.user-table-div'), // Parent container of the table
         createUserForm: document.getElementById('createUserForm'), // Form for creating users
         formMessage: document.getElementById('formMessage'), // Message area for success/error feedback
     };
@@ -37,12 +36,16 @@
      * Fetch and display the list of users dynamically
      */
     async function loadUsers() {
-        const { userTableBody } = domElements;
-
+        const userTableBody = document.querySelector('.user-table tbody'); // Dynamically fetch the table body
         try {
-            const response = await fetch(API_ENDPOINTS.fetchUsers); // Fetch users from the server
-            const data = await response.text(); // Get HTML table rows as response
-            if (userTableBody) userTableBody.innerHTML = data; // Update the table body
+            const response = await fetch(API_ENDPOINTS.fetchUsers);
+            const data = await response.text();
+            if (userTableBody) {
+                userTableBody.innerHTML = data; // Dynamically update the table
+                console.log('Users loaded successfully');
+            } else {
+                console.error('userTableBody not found while loading users!');
+            }
         } catch (error) {
             console.error('Error loading users:', error);
             displayMessage('An error occurred while loading users.', 'error');
@@ -79,28 +82,59 @@
     }
 
     /**
-     * Handle deletion of a user
-     * @param {string} userId - The ID of the user to delete
+     * Enable editing a user
+     * @param {HTMLElement} row - The table row of the user to edit
+     * @param {string} userId - The ID of the user to edit
      */
-    async function deleteUser(userId) {
-        if (!confirm('Are you sure you want to delete this user?')) return; // Confirm deletion
+    function enableEditUser(row, userId) {
+        const emailCell = row.querySelector('.user-email');
+        const roleCell = row.querySelector('.user-role');
+        const editButton = row.querySelector('.edit-user');
+
+        // Change the cells to editable fields
+        emailCell.innerHTML = `<input type="email" value="${emailCell.textContent.trim()}" />`;
+        roleCell.innerHTML = `
+            <select>
+                <option value="user" ${roleCell.textContent.trim() === 'user' ? 'selected' : ''}>User</option>
+                <option value="author" ${roleCell.textContent.trim() === 'author' ? 'selected' : ''}>Author</option>
+                <option value="admin" ${roleCell.textContent.trim() === 'admin' ? 'selected' : ''}>Admin</option>
+            </select>
+        `;
+
+        // Change edit button to save
+        editButton.textContent = 'Save';
+        editButton.classList.replace('edit-user', 'save-user');
+    }
+
+    /**
+     * Save edited user data
+     * @param {HTMLElement} row - The table row of the user to save
+     * @param {string} userId - The ID of the user to save
+     */
+    async function saveEditedUser(row, userId) {
+        const emailInput = row.querySelector('.user-email input');
+        const roleSelect = row.querySelector('.user-role select');
+        const editButton = row.querySelector('.save-user');
+
+        const email = emailInput.value.trim();
+        const role = roleSelect.value;
 
         try {
-            const response = await fetch(API_ENDPOINTS.deleteUser, {
+            const response = await fetch(API_ENDPOINTS.editUser, {
                 method: 'POST',
-                body: new URLSearchParams({ user_id: userId }), // Send user ID as form data
+                body: new URLSearchParams({ user_id: userId, email, role }),
             });
             const result = await response.json();
 
             if (result.success) {
-                displayMessage('User deleted successfully!', 'success'); // Show success message
+                displayMessage('User updated successfully!', 'success');
                 loadUsers(); // Refresh the user list
             } else {
-                displayMessage(result.error || 'Failed to delete user.', 'error'); // Show error message
+                displayMessage(result.error || 'Failed to update user.', 'error');
             }
         } catch (error) {
-            console.error('Error deleting user:', error);
-            displayMessage('An error occurred while deleting the user.', 'error');
+            console.error('Error updating user:', error);
+            displayMessage('An error occurred while updating the user.', 'error');
         }
     }
 
@@ -108,26 +142,32 @@
      * Initialize event listeners
      */
     function addEventListeners() {
-        const { createUserForm, userTableBody } = domElements;
+        const { userTableDiv, createUserForm } = domElements;
+
+        console.log('addEventListeners called');
 
         // Handle user creation form submission
         if (createUserForm) {
             createUserForm.addEventListener('submit', handleCreateUserFormSubmit);
         }
 
-        // Delegate event handling for delete and edit actions in the user table
-        if (userTableBody) {
-            userTableBody.addEventListener('click', (event) => {
+        // Delegate event handling for edit actions in the user table
+        if (userTableDiv) {
+            userTableDiv.addEventListener('click', (event) => {
                 const target = event.target;
+                const row = target.closest('tr');
+                const userId = target.dataset.userId;
 
-                // Handle delete button click
-                if (target.classList.contains('delete-user')) {
-                    const userId = target.dataset.userId; // Get user ID from data attribute
-                    deleteUser(userId); // Call deleteUser function
+                if (target.classList.contains('edit-user')) {
+                    console.log('Edit button clicked for user ID:', userId);
+                    enableEditUser(row, userId);
+                } else if (target.classList.contains('save-user')) {
+                    console.log('Save button clicked for user ID:', userId);
+                    saveEditedUser(row, userId);
                 }
-
-                // You can add additional event handling here (e.g., for editing users)
             });
+        } else {
+            console.error('userTableDiv not found!');
         }
     }
 

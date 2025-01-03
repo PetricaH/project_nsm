@@ -2,7 +2,7 @@
 require_once(realpath(dirname(__FILE__) . '/../init.php'));
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POSt') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'] ?? null;
     $email = $_POST['email'] ?? '';
     $role = $_POST['role'] ?? '';
