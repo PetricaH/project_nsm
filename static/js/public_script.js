@@ -3,8 +3,8 @@
     // Define all the API endpoints in one place for easy reference
     const API_ENDPOINTS = {
         artworks: '/project_nsm/admin/admin_includes/artworks_actions/get_artworks.php', // For loading artworks
-        register: '../includes/register_handler.php', // For handling user registration
-        login: '../includes/login_handler.php', // For handling user login
+        register: '/project_nsm/includes/register_handler.php', // For handling user registration
+        login: '/project_nsm/includes/login_handler.php', // For handling user login
     };
 
     // Store commonly accessed DOM elements to reduce repetitive queries
@@ -24,14 +24,17 @@
      */
     async function fetchData(url, options = {}) {
         try {
-            const response = await fetch(url, options); // Make the API call
+            const response = await fetch(url, options);
+            const text = await response.text(); // Get raw response for debugging
+            console.log('Raw response:', text);
+    
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return await response.json(); // Parse and return JSON data
+            return JSON.parse(text); // Parse JSON
         } catch (error) {
             console.error(`Error fetching data from ${url}:`, error);
-            throw error; // Re-throw the error for handling in calling function
+            throw error;
         }
-    }
+    }    
 
     /**
      * Toggles the visibility of the navigation menu
@@ -108,21 +111,21 @@
         form.addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent the default form submission
             const formData = new FormData(form); // Gather form data
-
+    
             try {
                 const data = await fetchData(API_ENDPOINTS.login, { method: 'POST', body: formData });
+    
                 if (data.success) {
-                    alert('Login successful!'); // Show success message
                     window.location.reload(); // Reload the page to reflect the login
                 } else {
-                    alert(data.error || 'Invalid credentials.'); // Show error message
+                    alert(data.error || 'Invalid credentials.'); // Show error message for failed login
                 }
             } catch (error) {
                 console.error('Error during login:', error);
             }
         });
     }
-
+    
     /**
      * Toggles the visibility of the registration modal
      */
