@@ -19,7 +19,7 @@ if (empty($username) || empty($email) || empty($password)) {
     exit;
 }
 
-// Check if the username or email already exists
+// Check if the username or email already exists **BEFORE** insertion
 $stmt = $conn->prepare("SELECT user_id FROM users WHERE username = ? OR email = ?");
 $stmt->bind_param("ss", $username, $email);
 $stmt->execute();
@@ -27,6 +27,7 @@ $stmt->store_result();
 
 if ($stmt->num_rows > 0) {
     echo json_encode(['success' => false, 'error' => 'Username or email already exists.']);
+    $stmt->close(); 
     exit;
 }
 
@@ -40,8 +41,10 @@ $stmt->bind_param("sss", $username, $email, $hashedPassword);
 if ($stmt->execute()) {
     echo json_encode(['success' => true, 'message' => 'Registration successful.']);
     exit;
+} else {
+    echo json_encode(['success' => false, 'error' => 'Registration failed.']);
 }
 
-echo json_encode(['success' => false, 'error' => 'Registration failed.']);
+$stmt->close(); // Close the statement after execution
 exit;
 ?>

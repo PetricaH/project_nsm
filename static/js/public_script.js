@@ -24,7 +24,6 @@
         try {
             const response = await fetch(url, options);
             const text = await response.text(); // Get raw response for debugging
-            console.log('Raw response:', text);
     
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return JSON.parse(text); // Parse JSON
@@ -83,15 +82,21 @@
      */
     function initRegisterForm(form) {
         form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
             const formData = new FormData(form); // Gather form data
 
             try {
                 const data = await fetchData(API_ENDPOINTS.register, { method: 'POST', body: formData });
+    
                 if (data.success) {
-                    alert('Registration successful!'); // Show success message
+                    // Clear form fields after successful registration
+                    form.reset(); 
+    
+                    // Optionally, display a success message to the user
+                    alert('Registration successful!'); 
+
                 } else {
-                    alert(data.error || 'An error occurred.'); // Show error message
+                    alert(data.error || 'An error occurred.');
                 }
             } catch (error) {
                 console.error('Error during registration:', error);
