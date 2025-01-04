@@ -1,44 +1,58 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-require_once(realpath(dirname(__FILE__) . '/../../init.php'));
+require_once('../../../config.php');
+header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['id'])) {
-        $id = intval($_POST['id']); // Sanitize input
-        // Fetch the image file name from the database
-        $query = $conn->prepare("SELECT image FROM artworks WHERE id = ?");
-        $query->bind_param("i", $id);
-        $query->execute();
-        $query->bind_result($image);
-        $query->fetch();
-        $query->close();
-        if ($image) {
-            // File path on the server
-            $filePath = __DIR__ . '/../static/artworks/' . $image;
-            // Attempt to delete the file
-            if (file_exists($filePath)) {
-                if (!unlink($filePath)) {
-                    echo json_encode(['success' => false, 'message' => 'Failed to delete the file.']);
-                    exit;
-                }
-            }
-            // Delete the record from the database
-            $deleteQuery = $conn->prepare("DELETE FROM artworks WHERE id = ?");
-            $deleteQuery->bind_param("i", $id);
-            if ($deleteQuery->execute()) {
-                echo json_encode(['success' => true, 'message' => 'Artwork deleted successfully.']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to delete artwork from database.']);
-            }
-            $deleteQuery->close();
-        } else {
+// Define the upload directory
+$uploadDir = '../../../static/artworks/';
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['id'])) {
+    $artworkId = (int)$_GET['id']; 
+
+    try {
+        // Step 1: Fetch image filename before deleting the database entry
+        $stmt = $conn->prepare("SELECT image FROM artworks WHERE id = ?");
+        $stmt->bind_param("i", $artworkId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if (!$row) {
             echo json_encode(['success' => false, 'message' => 'Artwork not found.']);
+            exit;
         }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid or missing ID.']);
+
+        $imagePath = $uploadDir . $row['image'];
+
+        // Step 2: Delete the image file
+        if (file_exists($imagePath) && is_file($imagePath)) {
+            if (unlink($imagePath)) {
+                error_log("Image deleted successfully: " . $imagePath);
+            } else {
+                error_log("Failed to delete image: " . $imagePath . " - " . error_get_last()['message']);
+                echo json_encode(['success' => false, 'message' => 'Failed to delete the image file.']);
+                exit;
+            }
+        } else {
+            error_log("Image file not found: " . $imagePath);
+        }
+
+        // Step 3: Delete the database entry
+        $stmt = $conn->prepare("DELETE FROM artworks WHERE id = ?");
+        $stmt->bind_param("i", $artworkId);
+        $stmt->execute();
+
+        echo json_encode(['success' => true, 'message' => 'Artwork deleted successfully.']);
+
+    } catch (mysqli_sql_exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
+
+    $stmt->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
-}json_encode(['success' => false, 'message' => 'Invalid request method.']);
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid request.']);
+}
+
+$conn->close();
 ?>

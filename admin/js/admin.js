@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
             const page = link.getAttribute("href").split("=")[1];
-            loadPage(page);
+
+            loadPage(page, true); // `true` ensures the history is updated
 
             // Highlight the active link
             links.forEach(l => l.classList.remove("active"));
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    function loadPage(page) {
+    function loadPage(page, pushToHistory = true) {
         // Fetch the content of the page
         fetch(`${BASE_URL}${page}.php`)
             .then(response => {
@@ -30,6 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 // Insert the content into the main_content div
                 mainContent.innerHTML = data;
+
+                // update the url without refreshing the page
+                if (pushToHistory) {
+                    history.pushState({ page }, "", `?page=${page}`); 
+                }
 
                 // Load the CSS for the specific page
                 loadPageCSS(page);
@@ -105,4 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function initializeBlogManagement() {
         console.log("Blog management scripts initialized.");
     }
+
+    // handle browser back/forward buttons
+    window.addEventListener("popstate", (event) => {
+        const page = event.state?.page || "manage_artwork"; // default to "manage_artwork" if no state exists
+        loadPage(page, false); // `false`  to avoid pushing to history again
+    });
 });

@@ -1,10 +1,7 @@
-<?php
+<?php header('Content-Type: application/json');
+require_once('../../../config.php');
 
-header('Content-Type: application/json');
-
-require_once(realpath(dirname(__FILE__) . '/../../init.php'));
-
-$artworksWebPath = '/static/artworks/';
+$artworksWebPath = '../../../static/artworks/';
 // Get query parameters
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 9; // Default to 9 items per page
@@ -28,7 +25,7 @@ try {
     }
     $artworks = [];
     while ($row = $result->fetch_assoc()) {
-        $row['image'] = $artworksWebPath . rawurlencode($row['image']);
+        $row['image'] = $artworksWebPath . $row['image'];
         $artworks[] = $row;
     }
     // Build the response

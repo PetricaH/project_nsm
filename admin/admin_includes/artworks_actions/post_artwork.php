@@ -1,10 +1,9 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-require_once(realpath(dirname(__FILE__) . '/../../init.php'));
-
+require_once('../../../config.php');
 header('Content-Type: application/json'); // Respond with JSON
+
+// Define the upload directory 
+$uploadDir = '../../../static/artworks/';
 
 // Check if the form is submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
