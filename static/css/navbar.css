@@ -103,11 +103,6 @@
         flex-direction: column !important;
         width: 100%;
     }
-
-    form.auth_form h2 {
-        color: #f2f2f2;
-        text-align: center;
-    }
     
     form.auth_form input {
         display: block;
@@ -153,15 +148,163 @@
 }
 
 @media (min-width: 769px) {
+    /* Ensure nav_menu styling for wider screens */
     #nav_menu {
+        width: 70%;
         display: flex;
         list-style-type: none;
         gap: 30px;
+        justify-content: center; /* Center the menu items */
+        align-items: center; /* Align menu items vertically */
+        position: static; /* Default position for desktop */
+        height: auto; /* Remove fixed height for larger screens */
+        opacity: 1; /* Fully visible by default */
     }
 
     #nav_menu > li > a {
         color: #f2f2f2;
         text-decoration: none;
+        font-size: 16px; /* Adjust font size for wider screens */
+        padding: 10px 15px; /* Add padding for easier clickability */
+    }
+
+    /* Remove animations for wider screens if not needed */
+    #nav_menu li {
+        opacity: 1;
+        transform: translateY(0);
+        transition: none; /* Disable transition for desktop */
+    }
+
+    /* Navbar Styling for Desktop */
+    .menu_toggle {
+        display: none; /* Hide the menu toggle for larger screens */
+    }
+
+    /* Auth Form Styling for Horizontal Inputs */
+    form.auth_form {
+        display: flex;
+        flex-direction: row; /* Arrange inputs and buttons horizontally */
+        flex-wrap: wrap; /* Allow wrapping if the screen size becomes smaller */
+        gap: 15px; /* Space between inputs and buttons */
+        justify-content: center; /* Center the inputs horizontally */
+        align-items: center; /* Align inputs vertically */
+        width: 100%; /* Ensure form spans the container */
+    }
+
+    form.auth_form input {
+        flex: 1; /* Inputs share equal space */
+        min-width: 150px; /* Ensure inputs don’t shrink too much */
+        max-width: 180px; /* Optional: Set a max width for consistency */
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    form.auth_form button {
+        padding: 6px 10px;
+        flex: 0; /* Button does not grow */
+        border: none;
+        border-radius: 4px;
+        background-color: #ff6347;
+        color: #fff;
+        cursor: pointer;
+        min-width: 120px; /* Ensure the button has a minimum size */
+    }
+
+    form.auth_form button:hover {
+        background-color: #e5533d;
+    }
+
+    /* Ensure headers and switch text align properly */
+
+    .switch-text {
+        flex: 1 0 100%; /* Ensure switch text spans full width */
+        text-align: center;
+        margin-top: 10px;
+        color: #f2f2f2;
+    }
+
+    .switch-button {
+        background: none;
+        border: none;
+        color: #ff6347;
+        cursor: pointer;
+        font-size: 1em;
+        text-decoration: underline;
+    }
+
+    .switch-button:hover {
+        color: #e5533d;
+    }
+
+    /* Ensure modal styles remain consistent */
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        z-index: 9999;
+    }
+
+    .modal form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal form input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .modal form button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .modal form button:hover {
+        background-color: #0056b3;
+    }
+
+    .modal .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    #authFormsContainer {
+        position: relative;
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    .form-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        pointer-events: none; /* Prevent interaction when hidden */
+    }
+    
+    .form-wrapper.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all; /* Allow interaction when active */
     }
 }
 
@@ -226,32 +369,6 @@
     transform: rotate(-45deg);
     bottom: 50%;
     margin-bottom: -1px;
-}
-
-/* Navbar Styling */
-.auth_form {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.auth_form input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.auth_form button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #ff6347;
-    color: #fff;
-    cursor: pointer;
-}
-
-.auth_form button:hover {
-    background-color: #e5533d;
 }
 
 /* Welcome and Logout Styling */

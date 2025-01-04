@@ -37,7 +37,6 @@
                 <!-- Login Form -->
                 <div id="loginFormWrapper" class="form-wrapper active">
                     <form id="loginForm" class="auth_form" method="POST" action="../includes/login_handler.php">
-                        <h2>Login</h2>
                         <input type="email" name="email" placeholder="Email" required>
                         <input type="password" name="password" placeholder="Password" required>
                         <button type="submit">Login</button>
@@ -51,7 +50,6 @@
                 <!-- Register Form -->
                 <div id="registerFormWrapper" class="form-wrapper">
                     <form id="registerForm" class="auth_form" method="POST" action="../includes/register_handler.php">
-                        <h2>Register</h2>
                         <input type="text" name="username" placeholder="Username" required>
                         <input type="email" name="email" placeholder="Email" required>
                         <input type="password" name="password" placeholder="Password" required>
