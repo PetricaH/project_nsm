@@ -30,29 +30,30 @@
                 <li><a href="author_dashboard.php">Author Dashboard</a></li>
             <?php endif; ?>
         <?php else: ?>
-            <li><a href="#" onclick="toggleLoginModal()">LOGIN</a></li>
-            <li><a href="#" onclick="toggleRegisterModal()">REGISTER</a></li>
+            <li><a href="#" id="loginToggle">LOGIN</a></li>
+            <li><a href="#" id="registerToggle">REGISTER</a></li>
         <?php endif; ?>
     </ul>
+    <div id="registerModal" class="modal hidden">
+    <form id="registerForm">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" name="email" required>
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" name="password" required>
+        <button type="submit">Register</button>
+    </form>
+    <span class="close" onclick="document.getElementById('registerModal').classList.add('hidden')">X</span>
 </div>
-<div id="registerModal" class="modal hidden">
-        <form id="registerForm">
-            <label>Email</label>
-            <input type="email" name="email" required>
-            <label>Password</label>
-            <input type="password" name="password" required>
-            <button type="submit">Register</button>
-        </form>
-        <span class="close" onclick="toggleRegisterModal()">X</span>
-    </div>
 
-    <div id="loginModal" class="modal hidden">
-        <form id="loginForm">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-        <span class="close" onclick="toggleLoginModal()">X</span>
-    </div>
+<div id="loginModal" class="modal hidden">
+    <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" name="email" required>
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <span class="close" onclick="document.getElementById('loginModal').classList.add('hidden')">X</span>
+</div>
+
+</div>

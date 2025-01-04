@@ -1,31 +1,42 @@
 <?php
-require_once(realpath(dirname(__FILE__) . '/../../../init.php')); // get the db info
+require_once('../config.php');
 session_start();
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    if (empty($email) || empty($password)) {
-        echo json_encode(['success' => false, 'error' => 'All fileds are required.']);
+    if (!$email || !$password) {
+        echo json_encode(['success' => false, 'error' => 'Email and password are required.']);
         exit;
     }
 
-    $stmt = $conn->prepare("SELECT user_id, password_hash, role FROM users WHERE email = ?");
+    // Fetch user by email
+    $stmt = $conn->prepare("SELECT user_id, username, password_hash, role FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($user_id, $hashed_password, $role);
-    $stmt->fetch();
+    $result = $stmt->get_result();
 
-    if ($stmt->num_rows > 0 && password_verify($password, $hashed_password)) {
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['role'] = $role;
-        echo json_encode(['success' => true]);
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        // Verify password
+        if (password_verify($password, $user['password_hash'])) {
+            // Set session variables
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+
+            echo json_encode(['success' => true, 'message' => 'Login successful.']);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Invalid password.']);
+        }
     } else {
-        echo json_encode(['success' => false, 'error' => 'Invalid email or password.']);
+        echo json_encode(['success' => false, 'error' => 'User not found.']);
     }
+
     $stmt->close();
+    $conn->close();
 }
 ?>

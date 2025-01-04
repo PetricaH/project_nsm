@@ -1,5 +1,4 @@
 // Encapsulate the script in an IIFE (Immediately Invoked Function Expression)
-// This helps to avoid polluting the global namespace
 (function () {
     // Define all the API endpoints in one place for easy reference
     const API_ENDPOINTS = {
@@ -128,14 +127,24 @@
      * Toggles the visibility of the registration modal
      */
     function toggleRegisterModal() {
-        domElements.registerModal?.classList.toggle('hidden');
+        const registerModal = domElements.registerModal;
+        if (registerModal) {
+            registerModal.classList.toggle('hidden');
+        } else {
+            console.error("Register modal not found!");
+        }
     }
 
     /**
      * Toggles the visibility of the login modal
      */
     function toggleLoginModal() {
-        domElements.loginModal?.classList.toggle('hidden');
+        const loginModal = domElements.loginModal;
+        if (loginModal) {
+            loginModal.classList.toggle('hidden');
+        } else {
+            console.error("Login modal not found!");
+        }
     }
 
     /**
@@ -155,8 +164,16 @@
         if (loginForm) initLoginForm(loginForm);
 
         // Add event listeners for toggling modals
-        document.getElementById('registerModalToggle')?.addEventListener('click', toggleRegisterModal);
-        document.getElementById('loginModalToggle')?.addEventListener('click', toggleLoginModal);
+        const loginToggle = document.getElementById('loginToggle');
+        const registerToggle = document.getElementById('registerToggle');
+
+        if (loginToggle) {
+            loginToggle.addEventListener('click', toggleLoginModal);
+        }
+
+        if (registerToggle) {
+            registerToggle.addEventListener('click', toggleRegisterModal);
+        }
     }
 
     // Run the initialization function when the DOM content is loaded

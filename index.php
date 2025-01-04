@@ -1,6 +1,5 @@
 <?php require_once('config.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
-
 <title>Hreniuc Petrică</title>
 </head>
 
@@ -150,6 +149,5 @@
 <div id="notification" class="hidden">
     <p id="notification-message"></p>
 </div>
-
 
 <?php include(ROOT_PATH . '/includes/footer.php'); ?>
