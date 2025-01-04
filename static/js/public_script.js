@@ -12,6 +12,10 @@
         menuToggle: document.getElementById('menu_toggle'), // Button to toggle menu
         navMenu: document.getElementById('nav_menu'), // The navigation menu
         artworksGrid: document.getElementById('artworksGrid'), // Container for artworks
+        loginFormWrapper: document.getElementById('loginFormWrapper'), // Login form wrapper
+        registerFormWrapper: document.getElementById('registerFormWrapper'), // Register form wrapper
+        showRegisterFormButton: document.getElementById('showRegisterForm'), // Button to show register form
+        showLoginFormButton: document.getElementById('showLoginForm'), // Button to show login form
     };
 
     const menuItems = domElements.navMenu ? Array.from(domElements.navMenu.querySelectorAll('li')) : [];
@@ -41,28 +45,74 @@
      */
     function initMenuToggle() {
         const { menuToggle, navMenu } = domElements;
-
+    
         if (menuToggle && navMenu) {
+            const menuItems = navMenu.querySelectorAll('a'); // select all <a> elements from the menu
+            const forms = navMenu.querySelectorAll('form'); // select all the forms from the menu
+
             menuToggle.addEventListener('click', () => {
                 const isOpening = !navMenu.classList.contains('active');
                 navMenu.classList.toggle('active'); // Show/hide the menu
                 menuToggle.classList.toggle('open'); // Change button appearance
-
-                if (!isOpening) {
-                    // Reset animations if the menu is closing
-                    menuItems.forEach((item) => {
-                        item.style.animation = 'none';
+    
+                if (isOpening) {
+                    // Add animations to menu items when the menu opens
+                    menuItems.forEach((item, index) => {
+                        item.style.animation = `fadeInUp 0.5s ease forwards ${0.5 + index * 0.1}s`;
                     });
-                } else {
-                    setTimeout(() => {
-                        menuItems.forEach((item, index) => {
-                            item.style.animation = `fadeInUp 0.5s ease forwards ${0.6 + index * 0.1}s`;
-                        });
-                    }, 5); // Match the duration of the menu opening transition
                 }
+            });
+
+            // close menu when any menu item is clicked
+            menuItems.forEach((item) => {
+                item.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('open');
+                });
+            });
+
+            // prevent menu from closing when interacting with forms
+            forms.forEach((form) => {
+                form.addEventListener('click', (event) => {
+                    event.stopPropagation(); // stop event from bubbling to parent <li>
+                });
+
+                // close menu when the form is submitted 
+                form.addEventListener('submit', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('open');
+                });
             });
         } else {
             console.error('Menu toggle or navigation menu is not defined.');
+        }
+    }    
+
+    /**
+     * Handles switching between login and register forms
+     */
+    function initFormSwitching() {
+        const {
+            loginFormWrapper,
+            registerFormWrapper,
+            showRegisterFormButton,
+            showLoginFormButton,
+        } = domElements;
+
+        if (loginFormWrapper && registerFormWrapper && showRegisterFormButton && showLoginFormButton) {
+            // show register form
+            showRegisterFormButton.addEventListener('click', () => {
+                loginFormWrapper.classList.remove('active');
+                registerFormWrapper.classList.add('active');
+            });
+
+            // show login form
+            showLoginFormButton.addEventListener('click', () => {
+                registerFormWrapper.classList.remove('active');
+                loginFormWrapper.classList.add('active');
+            });
+        } else {
+            console.error('Form switching elements are not defined.');
         }
     }
 
@@ -152,6 +202,7 @@
      */
     function init() {
         initMenuToggle(); // Set up menu toggle functionality
+        initFormSwitching(); // Set up login/register form switching
         loadArtworksOnPageLoad(); // Load and display artworks
 
         // Check if the registration form exists and initialize it

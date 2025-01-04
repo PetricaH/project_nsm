@@ -32,21 +32,37 @@
             <?php endif; ?>
         <?php else: ?>
             <!-- Show login and register forms if not logged in -->
-            <li>
-                <form id="loginForm" class="auth_form" method="POST" action="../includes/login_handler.php">
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
-                </form>
-            </li>
-            <li>
-                <form id="registerForm" class="auth_form" method="POST" action="../includes/register_handler.php">
-                    <input type="text" name="username" placeholder="Username" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <button type="submit">Register</button>
-                </form>
-            </li>
+            <!-- Auth Forms Wrapper -->
+            <div id="authFormsContainer">
+                <!-- Login Form -->
+                <div id="loginFormWrapper" class="form-wrapper active">
+                    <form id="loginForm" class="auth_form" method="POST" action="../includes/login_handler.php">
+                        <h2>Login</h2>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                    <p class="switch-text">
+                        Don't have an account? 
+                        <button type="button" id="showRegisterForm" class="switch-button">Register</button>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerFormWrapper" class="form-wrapper">
+                    <form id="registerForm" class="auth_form" method="POST" action="../includes/register_handler.php">
+                        <h2>Register</h2>
+                        <input type="text" name="username" placeholder="Username" required>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button type="submit">Register</button>
+                    </form>
+                    <p class="switch-text">
+                        Already have an account? 
+                        <button type="button" id="showLoginForm" class="switch-button">Login</button>
+                    </p>
+                </div>
+            </div>
         <?php endif; ?>
     </ul>
 </div>
