@@ -1,45 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Handle booking deletion
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+$(document).ready(function () {
+     // Inline editing for dropdown
+     $(document).on("change", "select.editable", function () {
+        var row = $(this).closest("tr");
+        var id = row.data("id");
+        var column = $(this).data("column");
+        var value = $(this).val(); // Get the selected value
 
-    deleteButtons.forEach((button) => {
-        button.addEventListener('click', function () {
-            const id = this.dataset.id;
-
-            if (confirm('Are you sure you want to delete this booking?')) {
-                fetch('admin_includes/booking_actions/delete_booking.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            alert('Booking deleted successfully!');
-                            this.closest('tr').remove();
-                        } else {
-                            alert(data.message || 'Error deleting booking.');
-                        }
-                    })
-                    .catch(() => {
-                        alert('An error occurred while deleting the booking.');
-                    });
+        // AJAX to update the status
+        $.ajax({
+            url: "../admin/admin_includes/booking_actions/update_booking_status.php", // Correct path
+            method: "POST",
+            data: { id: id, column: column, value: value },
+            success: function (response) {
+                if (response.trim() === "success") { // Handle success case
+                    console.log("Status updated successfully.");
+                } else {
+                    alert("Failed to update status.");
+                }
+            },
+            error: function () {
+                alert("Error connecting to the server.");
             }
         });
     });
 
-    // Notification function
-    function showNotification(message, isError = false) {
-        const notification = document.getElementById('notification');
-        const notificationMessage = document.getElementById('notificationMessage');
+    // Attach delete button event
+    $(document).on("click", ".delete-btn", function() {
+        var row = $(this).closest("tr");
+        var id = row.data("id");
 
-        notificationMessage.textContent = message;
-        notification.classList.remove('hidden');
-        if (isError) notification.classList.add('error');
-        else notification.classList.remove('error');
-
-        setTimeout(() => {
-            notification.classList.add('hidden');
-        }, 3000);
-    }
+        if (confirm("Are you sure you want to delete this booking?")) {
+            $.ajax({
+                url: "../admin/admin_includes/booking_actions/delete_booking.php",
+                method: "POST",
+                data: { id: id},
+                success: function(response) {
+                    if (response.trim() === "success") { // check for success
+                        // Add fade-out effect before removing the row
+                        row.fadeOut(500, function () {
+                            $(this).remove(); // Remove row after fade-out
+                        });
+                        console.log("Booking deleted successfully!");
+                    } else {
+                        alert("Failed to delete booking.");
+                    }
+                },
+                error: function() {
+                    alert("Error connecting to the server.");
+                }
+            });
+        }
+    });
 });

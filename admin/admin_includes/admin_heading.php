@@ -31,6 +31,8 @@
             <link rel="stylesheet" type="text/css" href="../admin/admin_styles/manage_blog.css">
         <?php endif; ?>
     <?php endif; ?>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <?php require_once('../config.php'); ?>
 

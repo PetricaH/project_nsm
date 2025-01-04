@@ -1,35 +1,20 @@
 <?php
 require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
 
-header('Content-Type: application/json');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
+    $stmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
+    $stmt->bind_param("i", $id);
 
-    $id = intval($input['id']);
-
-    if ($id > 0) {
-        $stmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
-        if (!$stmt) {
-            echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error]);
-            exit;
-        }
-
-        $stmt->bind_param("i", $id);
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Booking deleted successfully.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]);
-        }
-
-        $stmt->close();
+    if ($stmt->execute()) {
+        echo "success";
     } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid booking ID.']);
+        echo "error";
     }
 
-    $conn->close();
-    exit;
+    $stmt->close();
 }
 
-echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+$conn->close();
+?>

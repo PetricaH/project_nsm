@@ -1,26 +1,31 @@
 <?php
-require_once('../../config.php');
+require_once(realpath(dirname(__FILE__) . '/../../../init.php'));
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'] ?? null;
-    $status = $_POST['status'] ?? null;
 
-    if ($id && $status) {
-        // Sanitize inputs
-        $id = $conn->real_escape_string($id);
-        $status = $conn->real_escape_string($status);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $column = $_POST['column'];
+    $value = $_POST['value'];
 
-        // Update the booking status
-        $query = "UPDATE bookings SET status = '$status' WHERE id = $id";
-        if ($conn->query($query) === TRUE) {
-            header("Location: ../manage_bookings.php?success=1");
-        } else {
-            header("Location: ../manage_bookings.php?error=1");
-        }
-    } else {
-        header("Location: ../manage_bookings.php?error=1");
+    // Validate the column name (optional)
+    $allowed_columns = ['status'];
+    if (!in_array($column, $allowed_columns)) {
+        echo "error";
+        exit;
     }
-} else {
-    header("Location: ../manage_bookings.php");
+
+    // Update the record
+    $stmt = $conn->prepare("UPDATE bookings SET $column = ? WHERE id = ?");
+    $stmt->bind_param("si", $value, $id);
+
+    if ($stmt->execute()) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+
+    $stmt->close();
 }
+
+$conn->close();
 ?>
