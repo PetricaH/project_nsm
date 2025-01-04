@@ -3,7 +3,7 @@
 (function () {
     // Define all the API endpoints in one place for easy reference
     const API_ENDPOINTS = {
-        artworks: '../admin/admin_includes/get_artworks.php', // For loading artworks
+        artworks: '/project_nsm/admin/admin_includes/artworks_actions/get_artworks.php', // For loading artworks
         register: '../includes/register_handler.php', // For handling user registration
         login: '../includes/login_handler.php', // For handling user login
     };
