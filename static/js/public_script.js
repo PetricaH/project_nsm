@@ -14,6 +14,8 @@
         artworksGrid: document.getElementById('artworksGrid'), // Container for artworks
     };
 
+    const menuItems = domElements.navMenu ? Array.from(domElements.navMenu.querySelectorAll('li')) : [];
+
     /**
      * Utility function to perform an API call and return the response as JSON
      * @param {string} url - The URL of the API
@@ -42,9 +44,25 @@
 
         if (menuToggle && navMenu) {
             menuToggle.addEventListener('click', () => {
+                const isOpening = !navMenu.classList.contains('active');
                 navMenu.classList.toggle('active'); // Show/hide the menu
                 menuToggle.classList.toggle('open'); // Change button appearance
+
+                if (!isOpening) {
+                    // Reset animations if the menu is closing
+                    menuItems.forEach((item) => {
+                        item.style.animation = 'none';
+                    });
+                } else {
+                    setTimeout(() => {
+                        menuItems.forEach((item, index) => {
+                            item.style.animation = `fadeInUp 0.5s ease forwards ${0.6 + index * 0.1}s`;
+                        });
+                    }, 5); // Match the duration of the menu opening transition
+                }
             });
+        } else {
+            console.error('Menu toggle or navigation menu is not defined.');
         }
     }
 
