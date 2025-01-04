@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropZone = document.getElementById("drop_zone");
     const fileInput = document.getElementById("image");
     const preview = document.getElementById("preview");
+    const form = document.getElementById("manage_artwork_form"); // The form element
 
     // Drag-and-drop functionality
     dropZone.addEventListener("dragover", (e) => {
@@ -59,6 +60,49 @@ document.addEventListener("DOMContentLoaded", () => {
             preview.innerHTML = "<p>Invalid file</p>";
         }
     }
+
+    // Handle form submission for posting artwork
+    form.addEventListener("submit", (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        const formData = new FormData(form); // Gather form data
+
+        // Send the POST request to save the artwork
+        fetch("./admin_includes/post_artwork.php", {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const notification = document.getElementById("notification");
+                const notificationMessage = document.getElementById("notificationMessage");
+
+                if (data.success) {
+                    notificationMessage.textContent = data.message;
+                    notification.classList.add("show");
+                    notification.classList.remove("hidden");
+                    form.reset(); // Clear the form
+                    preview.innerHTML = ""; // Clear the preview
+
+                    // Optionally, refresh artworks
+                    fetchArtworks();
+                } else {
+                    notificationMessage.textContent = data.message;
+                    notification.classList.add("error");
+                    notification.classList.add("show");
+                    notification.classList.remove("hidden");
+                }
+
+                // Hide notification after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove("show");
+                    notification.classList.add("hidden");
+                }, 3000);
+            })
+            .catch((error) => {
+                console.error("Error posting artwork:", error);
+            });
+    });
 
     // Fetch and display artworks
     fetchArtworks();

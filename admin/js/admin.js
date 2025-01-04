@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContent = document.querySelector(".main_content");
 
     // Load the default page and CSS on first load
-    const defaultPage = "manage_bookings"; // Default page
+    const defaultPage = "manage_artwork"; // Default page
     loadPage(defaultPage);
 
     // Handle sidebar navigation clicks
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function initializePageScripts(page) {
         switch (page) {
             case "manage_artworks":
-                console.log("Artwork management script skipped. Handled by artwork.js");
+                initializeArtworksManagement();
                 break;
             case "manage_bookings":
                 initializeBookingManagement();
@@ -88,6 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
             default:
                 console.error("No specific scripts for this page.");
         }
+    }
+
+    function initializeArtworksManagement() {
+        console.log("Artworks management initialized.");
     }
 
     function initializeBookingManagement() {
