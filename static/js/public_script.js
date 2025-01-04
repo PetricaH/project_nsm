@@ -12,8 +12,6 @@
         menuToggle: document.getElementById('menu_toggle'), // Button to toggle menu
         navMenu: document.getElementById('nav_menu'), // The navigation menu
         artworksGrid: document.getElementById('artworksGrid'), // Container for artworks
-        registerModal: document.getElementById('registerModal'), // Registration modal
-        loginModal: document.getElementById('loginModal'), // Login modal
     };
 
     /**
@@ -92,7 +90,6 @@
                 const data = await fetchData(API_ENDPOINTS.register, { method: 'POST', body: formData });
                 if (data.success) {
                     alert('Registration successful!'); // Show success message
-                    toggleRegisterModal(); // Hide the registration modal
                 } else {
                     alert(data.error || 'An error occurred.'); // Show error message
                 }
@@ -125,30 +122,6 @@
             }
         });
     }
-    
-    /**
-     * Toggles the visibility of the registration modal
-     */
-    function toggleRegisterModal() {
-        const registerModal = domElements.registerModal;
-        if (registerModal) {
-            registerModal.classList.toggle('hidden');
-        } else {
-            console.error("Register modal not found!");
-        }
-    }
-
-    /**
-     * Toggles the visibility of the login modal
-     */
-    function toggleLoginModal() {
-        const loginModal = domElements.loginModal;
-        if (loginModal) {
-            loginModal.classList.toggle('hidden');
-        } else {
-            console.error("Login modal not found!");
-        }
-    }
 
     /**
      * Initializes all the functionality on the page
@@ -165,18 +138,6 @@
         // Check if the login form exists and initialize it
         const loginForm = document.getElementById('loginForm');
         if (loginForm) initLoginForm(loginForm);
-
-        // Add event listeners for toggling modals
-        const loginToggle = document.getElementById('loginToggle');
-        const registerToggle = document.getElementById('registerToggle');
-
-        if (loginToggle) {
-            loginToggle.addEventListener('click', toggleLoginModal);
-        }
-
-        if (registerToggle) {
-            registerToggle.addEventListener('click', toggleRegisterModal);
-        }
     }
 
     // Run the initialization function when the DOM content is loaded
