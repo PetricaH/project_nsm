@@ -1,5 +1,5 @@
 /* Table Styles */
-#bookings_table {
+table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Poppins', sans-serif;
@@ -8,7 +8,7 @@
 }
 
 /* Table Header */
-#bookings_table thead th {
+thead th {
     background-color: #f4f4f4;
     color: #333;
     text-align: left;
@@ -18,31 +18,31 @@
 }
 
 /* Table Rows */
-#bookings_table tbody tr {
+tbody tr {
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s ease;
 }
 
 /* Hover Effect */
-#bookings_table tbody tr:hover {
+tbody tr:hover {
     background-color: #f9f9f9;
 }
 
 /* Table Data Cells */
-#bookings_table tbody td {
+tbody td {
     padding: 10px;
     text-align: left;
     vertical-align: middle;
 }
 
 /* Responsive Adjustments */
-#bookings_table tbody td:nth-child(4),
-#bookings_table tbody td:nth-child(5) {
+tbody td:nth-child(4),
+tbody td:nth-child(5) {
     word-break: break-word;
 }
 
 /* No Bookings Message */
-#bookings_table tbody td[colspan] {
+tbody td[colspan] {
     text-align: center;
     font-style: italic;
     color: #666;
@@ -51,24 +51,24 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-    #bookings_table thead {
+    thead {
         display: none;
     }
 
-    #bookings_table tbody tr {
+    tbody tr {
         display: block;
         margin-bottom: 15px;
         border-bottom: 2px solid #ddd;
     }
 
-    #bookings_table tbody td {
+    tbody td {
         display: block;
         text-align: right;
         padding: 8px 5px;
         border-bottom: 1px solid #eee;
     }
 
-    #bookings_table tbody td::before {
+    tbody td::before {
         content: attr(data-label);
         float: left;
         font-weight: bold;
@@ -76,7 +76,7 @@
         color: #666;
     }
 
-    #bookings_table tbody td:last-child {
+    tbody td:last-child {
         border-bottom: 0;
     }
 }
