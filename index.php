@@ -86,7 +86,6 @@
     </section>
 
 <!-- Popup Modal Form -->
-<!-- Popup Modal Form -->
 <div id="bookingModal" class="booking-modal hidden">
         <div class="booking-modal-content">
             <span class="booking-modal-close" onclick="closeBookingModal()">&times;</span>
@@ -153,4 +152,4 @@
 </div>
 
 
-    <?php include(ROOT_PATH . '/includes/footer.php'); ?>
+<?php include(ROOT_PATH . '/includes/footer.php'); ?>
