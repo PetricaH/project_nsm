@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function createArtworkCard(artwork) {
         // artwork = { id, title, image }
         const card = document.createElement("div");
-        card.classList.add("artwork-card");
+        card.classList.add("artwork_card");
 
         const img = document.createElement("img");
-        img.scr = artwork.image;
+        img.src = artwork.image;
         img.alt = artwork.title;
 
         const titleDiv = document.createElement("div");
-        titleDiv.classList.add("artwork-title");
+        titleDiv.classList.add("artwork_title");
         titleDiv.textContent = artwork.title;
 
         card.appendChild(img);
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayPagination(totalPages, currentPage) {
-        const paginationDiv = document.querySelector(".gallery-pagination");
+        const paginationDiv = document.querySelector(".gallery_pagination");
         paginationDiv.innerHTML = "";
 
         for (let page = 1; page <= totalPages; page++) {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // highlight current page
             if (page === currentPage) {
-                link.classList.add("active-page");
+                link.classList.add("active_page");
             }
 
             // on click, fetch that page
