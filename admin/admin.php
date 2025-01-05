@@ -1,4 +1,10 @@
 <?php
+session_start();
+if ($_SESSION['user_role'] !== 'admin') {
+    header('Location: ../index.php');
+    exit;
+}
+
 require_once('../config.php');
 require_once('../admin/admin_includes/admin_heading.php');
 require_once('../admin/admin_includes/admin_navbar.php');
