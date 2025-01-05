@@ -1,72 +1,47 @@
-/* Gallery Container */
-#galleryContainer {
-    padding: 20px;
-}
-
-.gallery-container {
-    display: flex;
-}
-
-/* Gallery Item */
-.gallery-item {
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Image */
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Title */
-.gallery-item h3 {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-top: 10px;
-}
-
-/* Pagination */
-.gallery-pagination {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.gallery-pagination button {
-    margin: 0 5px;
-    padding: 10px 15px;
-    border: none;
-    background-color: #e0e0e0;
-    color: #333;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.gallery-pagination .page-button:hover {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.gallery-pagination .active-page {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
-}
+.gallery-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.artwork-card {
+    width: 200px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.artwork-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.artwork-title {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.gallery-pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.gallery-pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+.gallery-pagination a.active-page {
+    font-weight: bold;
+    color: #007BFF;
+}

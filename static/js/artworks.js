@@ -1,72 +1,79 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const galleryContainer = document.getElementById("galleryContainer");
-    const itemsPerPage = 10; // Number of artworks per page
-    let currentPage = 1;
-
-    // Fetch artworks for the current page
-    const fetchGalleryItems = (page) => {
-        fetch(`../admin/admin_includes/get_artworks.php?context=gallery&page=${page}&limit=${itemsPerPage}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data.success) {
-                    displayGalleryItems(data.artworks);
-                    createGalleryPagination(data.totalPages, page);
-                } else {
-                    console.error("Failed to fetch gallery items:", data.error);
-                }
-            })
-            .catch((err) => {
-                console.error("Error fetching gallery items:", err);
-            });
-    };
-
-    // Render artworks in a flex layout
-    const displayGalleryItems = (artworks) => {
-        galleryContainer.innerHTML = ""; // Clear previous artworks
-        galleryContainer.style.display = "flex"; // Use flexbox
-        galleryContainer.style.flexWrap = "wrap"; // Wrap rows
-        galleryContainer.style.justifyContent = "center"; // Center align the grid
-
-        artworks.forEach((item) => {
-            const galleryItem = document.createElement("div");
-            galleryItem.className = "gallery-item";
-            galleryItem.style.width = "300px"; // Set fixed width
-            galleryItem.style.height = "300px"; // Set fixed height
-            galleryItem.style.margin = "15px"; // Add spacing between items
-            galleryItem.style.textAlign = "center"; // Center-align content
-            galleryItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title}" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);">
-                <h3 style="margin-top: 10px; font-size: 16px;">${item.title}</h3>
-            `;
-            galleryContainer.appendChild(galleryItem);
-        });
-    };
-
-    // Render pagination buttons
-    const createGalleryPagination = (totalPages, currentPage) => {
-        const paginationContainer = document.querySelector(".gallery-pagination") || document.createElement("div");
-        paginationContainer.className = "gallery-pagination";
-        paginationContainer.innerHTML = ""; // Clear existing pagination
-
-        for (let i = 1; i <= totalPages; i++) {
-            const paginationButton = document.createElement("button");
-            paginationButton.textContent = i;
-            paginationButton.className = i === currentPage ? "active-page" : "page-button";
-            paginationButton.addEventListener("click", () => {
-                fetchGalleryItems(i);
-            });
-            paginationContainer.appendChild(paginationButton);
-        }
-
-        if (!document.querySelector(".gallery-pagination")) {
-            galleryContainer.parentElement.appendChild(paginationContainer);
-        }
-    };
-
-    fetchGalleryItems(currentPage); // Initial fetch
-});
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("artworks.js loaded.");
+
+    // fetch the first page of artworks on load 
+    fetchArtworks(1);
+
+    function fetchArtworks(page = 1, limit = 14) {
+        fetch(`admin/admin_includes/artworks_actions/get_artworks.php?page=${page}&limit=${limit}`)
+            .then((Response) => Response.json())
+            .then((data) => {
+                if (data.success) {
+                    renderArtworks(data.artworks);
+
+                    // if server returns totalPages/currentPage, display pagination
+                    if (data.totalPages && data.currentPage) {
+                        displayPagination(data.totalPages, data.currentPage);
+                    }
+                } else {
+                    console.error("Failed to fetch artworks: ", data.message);
+                }
+            })
+            .catch((error) => {
+                console.error("error fetching artworks:", error);
+            });
+    }
+
+    function renderArtworks(artworks) {
+        const galleryContainer = document.getElementById("galleryContainer");
+        galleryContainer.innerHTML = "";
+
+        artworks.forEach((art) => {
+            const card = createArtworkCard(art);
+            galleryContainer.appendChild(card);
+        });
+    } 
+
+    function createArtworkCard(artwork) {
+        // artwork = { id, title, image }
+        const card = document.createElement("div");
+        card.classList.add("artwork-card");
+
+        const img = document.createElement("img");
+        img.scr = artwork.image;
+        img.alt = artwork.title;
+
+        const titleDiv = document.createElement("div");
+        titleDiv.classList.add("artwork-title");
+        titleDiv.textContent = artwork.title;
+
+        card.appendChild(img);
+        card.appendChild(titleDiv);
+
+        return card;
+    }
+
+    function displayPagination(totalPages, currentPage) {
+        const paginationDiv = document.querySelector(".gallery-pagination");
+        paginationDiv.innerHTML = "";
+
+        for (let page = 1; page <= totalPages; page++) {
+            const link = document.createElement("a");
+            link.textContent = page;
+            link.href = "#";
+
+            // highlight current page
+            if (page === currentPage) {
+                link.classList.add("active-page");
+            }
+
+            // on click, fetch that page
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                fetchArtworks(page);
+            });
+
+            paginationDiv.appendChild(link);
+        }
+    }
+}) 

@@ -1,6 +1,5 @@
 <?php session_start(); // Ensure session is started ?>
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
-<script src="static/js/public_script.js"></script>
 
 <!-- Navbar -->
 <div class="navbar">
