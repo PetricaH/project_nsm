@@ -1,4 +1,11 @@
 <?php
+session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../index.php');
+    exit;
+}
+?>
+<?php
 require_once(realpath(dirname(__FILE__) . '/../init.php'));
 
 // Fetch all users

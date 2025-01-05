@@ -1,4 +1,11 @@
 <?php
+session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../index.php');
+    exit;
+}
+?>
+<?php
 require_once('../admin/admin_includes/admin_heading.php');
 // Fetch bookings data
 $sql = "SELECT * FROM bookings";

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../index.php');
+    exit;
+}
+?>
 <h2 id="manage_artwork_h2">Manage Artwork</h2>
 
 <form method="POST" enctype="multipart/form-data" id="manage_artwork_form">
