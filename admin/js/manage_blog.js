@@ -53,5 +53,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // cancel button
-    
-})
+    cancelBtn.addEventListener("click", () => {
+        formContainer.style.display = "none";
+    });
+
+    // edit buttons
+    document.querySelectorAll(".edit-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const postData = JSON.parse(btn.dataset.post);
+            showEditForm(postData);
+        });
+    });
+
+    // show create form button
+    document.getElementById('newPostBtn').addEventListener("click", showCreateForm);
+
+    // handle delete buttons
+    document.querySelectorAll(".delete-btn").forEach((delBtn) => {
+        delBtn.addEventListener("click", () => {
+            const row = delBtn.closest("tr");
+            const postId = row.dataset.id;
+
+            if (confirm("Are you sure you want to delete this post?")) {
+                fetch(`process_blog.php?action=delete&post_id=${postId}`)
+                    .then(res => res.text())
+                    .then(data => {
+                        row.remove();
+                    })
+                    .catch(err => console.error(err));
+            }
+        });
+    });
+});

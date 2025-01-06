@@ -2,6 +2,7 @@
 <script src="../admin/js/manage_artworks.js"></script>
 <script src="../admin/js/manage_bookings.js"></script>
 <script src="../admin/js/manage_users.js"></script>
+<script src="../admin/js/manage_blog.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const url = new URL(window.location.href);
