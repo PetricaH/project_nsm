@@ -9,6 +9,7 @@ require_once('../config.php');
 require_once('../admin/admin_includes/admin_heading.php');
 require_once('../admin/admin_includes/admin_navbar.php');
 
+
 // Define allowed pages and their paths
 $allowed_pages = [
     'manage_artwork' => 'manage_artwork.php',
@@ -49,6 +50,7 @@ if (array_key_exists($page, $allowed_pages)) {
 <div class="main_content">
     <?php echo $content; ?>
 </div>
+
 <!-- Success/Error Messages -->
 <?php if (isset($_GET['status'])): ?>
         <div class="notification <?= htmlspecialchars($_GET['status']); ?>">

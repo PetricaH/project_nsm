@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const saveBtn = document.getElementById('saveBtn');
     const cancelBtn = document.getElementById('cancelBtn');
+    
 
     // show form in "Create" mode
     function showCreateForm() {
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const postId = row.dataset.id;
 
             if (confirm("Are you sure you want to delete this post?")) {
-                fetch(`process_blog.php?action=delete&post_id=${postId}`)
+                fetch(`../admin/admin_includes/blog_actions/process_blog.php?action=delete&post_id=${postId}`)
                     .then(res => res.text())
                     .then(data => {
                         row.remove();
