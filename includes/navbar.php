@@ -22,7 +22,7 @@
 
         <?php if (isset($_SESSION['user_id'])): ?>
             <!-- Show welcome message if logged in -->
-            <li><span class="welcome_message">Welcome, <?= htmlspecialchars($_SESSION['username']) ?>!</span></li>
+            <li><span class="welcome_message">Welcome, <?= htmlspecialchars($_SESSION['username'] ?? '') ?>!</span></li>
             <li><a href="includes/logout.php" class="logout">LOGOUT</a></li>
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 <li><a href="admin/admin.php">Admin Dashboard</a></li>
