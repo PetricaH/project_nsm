@@ -100,45 +100,6 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
             <div class="posts-section">
                 <h2>Manage Blog Posts</h2>
                 
-                <!-- Table of Existing Posts -->
-                <div class="table-wrapper">
-                    <table class="blog-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Slug</th>
-                                <th>Category</th>
-                                <th>Author</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $result->fetch_assoc()) { ?>
-                                <tr data-id="<?php echo $row['post_id']; ?>">
-                                    <td><?php echo $row['post_id']; ?></td>
-                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['slug']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['category_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['author_name']); ?></td>
-                                    <td><?php echo $row['created_at']; ?></td>
-                                    <td><?php echo $row['updated_at']; ?></td>
-                                    <td>
-                                        <button class="btn btn-primary edit-btn" data-post='<?php echo json_encode($row); ?>'>
-                                            Edit
-                                        </button>
-                                        <button class="btn btn-danger delete-post-btn" data-post-id="<?php echo $row['post_id']; ?>">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-                
                 <!-- New Post / Edit Post Form -->
                 <div class="blog-form-container">
                     <h2 id="formTitle">Create New Post</h2>
@@ -189,6 +150,45 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                         </div>
                     </form>
                 </div>
+                <!-- Table of Existing Posts -->
+                <div class="table-wrapper">
+                    <table class="blog-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()) { ?>
+                                <tr data-id="<?php echo $row['post_id']; ?>">
+                                    <td><?php echo $row['post_id']; ?></td>
+                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['slug']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['category_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['author_name']); ?></td>
+                                    <td><?php echo $row['created_at']; ?></td>
+                                    <td><?php echo $row['updated_at']; ?></td>
+                                    <td>
+                                        <button class="btn btn-primary edit-btn" data-post='<?php echo json_encode($row); ?>'>
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-danger delete-post-btn" data-post-id="<?php echo $row['post_id']; ?>">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
         </div>
     </div>

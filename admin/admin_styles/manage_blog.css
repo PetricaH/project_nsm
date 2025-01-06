@@ -1,6 +1,6 @@
 /* Container */
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -19,7 +19,8 @@ h1, h2, h3 {
 
 /* Categories Section */
 .categories-section {
-    flex: 1 1 25%;
+    flex: 1 1 10%;
+    max-height: fit-content;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -32,7 +33,7 @@ h1, h2, h3 {
 
 /* Posts Section */
 .posts-section {
-    flex: 1 1 75%;
+    flex: 1 1 65%;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
