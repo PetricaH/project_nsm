@@ -1,88 +1,107 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const formContainer = document.getElementById('blogFormContainer');
-    const blogForm = document.getElementById('blogForm');
-    const formTitle = document.getElementById('formTitle');
-    const formActionField = document.getElementById('formAction');
-    const postIdField = document.getElementById('postIdField');
+// manage_blog.js
 
-    // fields
-    const titleField = document.getElementById('titleField');
-    const slugField = document.getElementById('slugField');
-    const categoryField = document.getElementById('categoryField');
-    const authorField = document.getElementById('authorField');
-    const imageField = document.getElementById('imageField');
-    const contentField = CKEDITOR.instances['contentField'];
+(function() {
+    function initManageBlog() {
+        console.log("Blog management scripts initialized.");
 
-    const saveBtn = document.getElementById('saveBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    
+        // Initialize CKEditor for contentField
+        const contentField = document.getElementById('contentField');
+        if (contentField) {
+            CKEDITOR.replace('contentField', {
+                toolbar: [
+                    { name: 'document', items: ['Source', '-', 'NewPage', 'Preview'] },
+                    { name: 'clipboard', items: ['Cut','Copy','Paste','Undo','Redo'] },
+                    { name: 'editing', items: ['Find','Replace','SelectAll'] },
+                    '/',
+                    { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','RemoveFormat'] },
+                    { name: 'paragraph', items: ['NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+                    { name: 'links', items: ['Link','Unlink','Anchor'] },
+                    { name: 'insert', items: ['Image','Table','HorizontalRule','SpecialChar'] },
+                    '/',
+                    { name: 'styles', items: ['Styles','Format','Font','FontSize'] },
+                    { name: 'colors', items: ['TextColor','BGColor'] }
+                ]
+            });
+        }
 
-    // show form in "Create" mode
-    function showCreateForm() {
-        formTitle.textContent = "Create New Post";
-        formActionField.value = "create";
-        postIdField.value = "";
+        // Handle Add Category Form Submission via AJAX
+        const addCategoryForm = document.getElementById('addCategoryForm');
+        if (addCategoryForm) {
+            addCategoryForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
 
-        // clear all fields
-        titleField.value = "";
-        slugField.value = "";
-        categoryField.value = "";
-        authorField.value = "";
-        imageField.value = "";
-        contentField.setData("");
+                const formData = new FormData(addCategoryForm);
+                fetch('admin_includes/blog_actions/process_blog.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    // Optionally, handle success or error messages
+                    // For example, reload the categories table
+                    loadPage('manage_blog', false); // Reload manage_blog without pushing to history
+                })
+                .catch(error => {
+                    console.error('Error adding category:', error);
+                });
+            });
+        }
 
-        // show form
-        formContainer.style.display = "block";
-    }
+        // Handle Delete Category Buttons via AJAX
+        const deleteCategoryButtons = document.querySelectorAll('.delete-category-btn');
+        deleteCategoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const categoryId = this.getAttribute('data-category-id');
+                if (confirm('Are you sure you want to delete this category?')) {
+                    const formData = new FormData();
+                    formData.append('action', 'delete_category');
+                    formData.append('category_id', categoryId);
 
-    // show form in "Edit mode"
-    function showEditForm(postData) {
-        formTitle.textContent = "Edit Post: " + postData.title;
-        formActionField.value = "update";
-        postIdField.value = postData.post_id;
-
-        // fil lfields from JSON data
-        titleField.value = postData.title;
-        slugField.value = postData.slug;
-        categoryField.value = postData.category_id || "";
-        authorField.value = postData.author_id;
-        imageField.value = postData.image_url;
-        contentField.setData(postData.content);
-
-        // show form
-        formContainer.style.display = "block";
-    }
-
-    // cancel button
-    cancelBtn.addEventListener("click", () => {
-        formContainer.style.display = "none";
-    });
-
-    // edit buttons
-    document.querySelectorAll(".edit-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            const postData = JSON.parse(btn.dataset.post);
-            showEditForm(postData);
-        });
-    });
-
-    // show create form button
-    document.getElementById('newPostBtn').addEventListener("click", showCreateForm);
-
-    // handle delete buttons
-    document.querySelectorAll(".delete-btn").forEach((delBtn) => {
-        delBtn.addEventListener("click", () => {
-            const row = delBtn.closest("tr");
-            const postId = row.dataset.id;
-
-            if (confirm("Are you sure you want to delete this post?")) {
-                fetch(`../admin/admin_includes/blog_actions/process_blog.php?action=delete&post_id=${postId}`)
-                    .then(res => res.text())
-                    .then(data => {
-                        row.remove();
+                    fetch('admin_includes/blog_actions/process_blog.php', {
+                        method: 'POST',
+                        body: formData
                     })
-                    .catch(err => console.error(err));
-            }
+                    .then(response => response.text())
+                    .then(data => {
+                        // Optionally, handle success or error messages
+                        // For example, reload the categories table
+                        loadPage('manage_blog', false); // Reload manage_blog without pushing to history
+                    })
+                    .catch(error => {
+                        console.error('Error deleting category:', error);
+                    });
+                }
+            });
         });
-    });
-});
+
+        // Handle Delete Post Buttons via AJAX
+        const deletePostButtons = document.querySelectorAll('.delete-post-btn');
+        deletePostButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+                if (confirm('Are you sure you want to delete this post?')) {
+                    const formData = new FormData();
+                    formData.append('action', 'delete_post');
+                    formData.append('post_id', postId);
+
+                    fetch('admin_includes/blog_actions/process_blog.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Optionally, handle success or error messages
+                        // For example, reload the posts table
+                        loadPage('manage_blog', false); // Reload manage_blog without pushing to history
+                    })
+                    .catch(error => {
+                        console.error('Error deleting post:', error);
+                    });
+                }
+            });
+        });
+    }
+
+    // Automatically initialize when the script is loaded
+    document.addEventListener("DOMContentLoaded", initManageBlog);
+})();

@@ -73,14 +73,12 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                     <button class="edit-btn" data-post='<?php echo json_encode($row); ?>'>
                         Edit
                     </button>
-                    <button class="delete-btn">Delete</button>
+                    <button class="delete-post-btn">Delete</button>
                 </td>
             </tr>
         <?php } ?>
     </tbody>
 </table>
-
-<button id="newPostBtn">Create New Post</button>
 
 <!-- New post / edit post form -->
 <div class="blog-form-container" id="blogFormContainer" ">
