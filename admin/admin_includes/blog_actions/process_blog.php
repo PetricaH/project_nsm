@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if ($stmt->execute()) {
                 // Redirect back to manage_blog with success
-                header("Location: ../admin.php?page=manage_blog&status=post_created");
+                header("Location: ../../admin.php?page=manage_blog");
                 exit;
             } else {
                 die("Error creating post: " . $stmt->error);
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if ($stmt->execute()) {
                 // Redirect back to manage_blog with success
-                header("Location: ../admin.php?page=manage_blog&status=post_updated");
+                header("Location: ../../admin.php?page=manage_blog");
                 exit;
             } else {
                 die("Error updating post: " . $stmt->error);
