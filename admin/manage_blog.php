@@ -72,3 +72,59 @@ if ($categoriesResult && $categoriesResult->num_rows > 0) {
 </table>
 
 <!-- new post / edit post form -->
+<!-- toggle the same form for creating or editing posts -->
+<div class="blog-form-container" id="blogFormContainer" style="display: none;">
+    <h2 id="formTitle">Create New Post</h2>
+    <form method="POST" action="process_blog.php" enctype="multipart/form-data" id="blogForm">
+        <input type="hidden" name="action" value="create" id="formAction">
+        <input type="hidden" name="post_id" value="" id="postIdField">
+
+        <!-- title -->
+        <div class="form-group">
+            <label for="titleField">Title:</label>
+            <input type="text" name="title" id="titleField" required>
+        </div>
+
+        <!-- slug -->
+        <div class="form-group">
+            <label for="slugField">Slug:</label>
+            <input type="text" name="slug" id="slugField" required>
+        </div>
+
+        <!-- category -->
+        <div class="form-group">
+            <label for="categoryField">Category:</label>
+            <select name="category_id" id="categoryField">
+                <option value="">Select Category</option>
+                <?php foreach ($categories as $cat) { ?>
+                    <option value="<?php echo $cat['category_id']; ?>">
+                        <?php echo htmlspecialchars($cat['category_name']); ?>
+                    </option>
+                <?php } ?> 
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="authorField">Author ID:</label>
+            <input type="number" name="author_id" id="authorField" required>
+        </div>
+
+        <!-- Featured Image URL -->
+        <div class="form-group">
+            <label for="imageField">Image URL:</label>
+            <input type="text" name="image_url" id="imageField" placeholder="https://example.com/image.jpg">
+        </div>
+
+        <!-- Content (Using CKEditor) -->
+        <div class="form-group">
+            <label for="contentField">Content:</label>
+            <textarea name="content" id="contentField" rows="10"></textarea>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" id="saveBtn">Save Post</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+        </div>
+        
+    </form>
+</div>
