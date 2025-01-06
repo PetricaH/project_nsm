@@ -63,8 +63,6 @@
                     })
                     .then(response => response.text())
                     .then(data => {
-                        // Optionally, handle success or error messages
-                        // For example, reload the categories table
                         loadPage('manage_blog', false); // Reload manage_blog without pushing to history
                     })
                     .catch(error => {
@@ -90,8 +88,6 @@
                     })
                     .then(response => response.text())
                     .then(data => {
-                        // Optionally, handle success or error messages
-                        // For example, reload the posts table
                         loadPage('manage_blog', false); // Reload manage_blog without pushing to history
                     })
                     .catch(error => {

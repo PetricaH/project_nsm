@@ -73,7 +73,7 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                     <button class="edit-btn" data-post='<?php echo json_encode($row); ?>'>
                         Edit
                     </button>
-                    <button class="delete-post-btn">Delete</button>
+                    <button class="delete-post-btn" data-post-id="<?php echo $row['post_id']; ?>">Delete</button>
                 </td>
             </tr>
         <?php } ?>
