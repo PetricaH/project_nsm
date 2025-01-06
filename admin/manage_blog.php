@@ -125,6 +125,29 @@ if ($categoriesResult && $categoriesResult->num_rows > 0) {
             <button type="submit" id="saveBtn">Save Post</button>
             <button type="button" id="cancelBtn">Cancel</button>
         </div>
-        
+
     </form>
 </div>
+
+<!-- ===== LOAD CKEDITOR FROM CDN ===== -->
+<script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+<script>
+    // Replace the textarea with CKEditor
+    CKEDITOR.replace('contentField', {
+        // Configuration options:
+        toolbar: [
+            { name: 'document', items: ['Source', '-', 'NewPage', 'Preview'] },
+            { name: 'clipboard', items: ['Cut','Copy','Paste','Undo','Redo'] },
+            { name: 'editing', items: ['Find','Replace','SelectAll'] },
+            '/',
+            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','RemoveFormat'] },
+            { name: 'paragraph', items: ['NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+            { name: 'links', items: ['Link','Unlink','Anchor'] },
+            { name: 'insert', items: ['Image','Table','HorizontalRule','SpecialChar'] },
+            '/',
+            { name: 'styles', items: ['Styles','Format','Font','FontSize'] },
+            { name: 'colors', items: ['TextColor','BGColor'] }
+        ]
+    });
+</script>
+<?php include ('../admin/admin_includes/admin_footer.php'); ?>

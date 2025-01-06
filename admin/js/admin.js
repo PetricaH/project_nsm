@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContent = document.querySelector(".main_content");
 
     // Load the default page and CSS on first load
-    const defaultPage = "manage_artwork"; // Default page
+    const defaultPage = "manage_blog"; // Default page
     loadPage(defaultPage);
 
     // Handle sidebar navigation clicks
