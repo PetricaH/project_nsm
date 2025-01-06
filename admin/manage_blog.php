@@ -152,12 +152,6 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                             <input type="text" name="title" id="titleField" required>
                         </div>
                 
-                        <!-- Slug -->
-                        <div class="form-group">
-                            <label for="slugField">Slug:</label>
-                            <input type="text" name="slug" id="slugField" required>
-                        </div>
-                
                         <!-- Category -->
                         <div class="form-group">
                             <label for="categoryField">Category:</label>

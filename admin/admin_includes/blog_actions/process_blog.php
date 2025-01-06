@@ -87,64 +87,32 @@ function ensureUniqueSlug($conn, $slug, $table, $column, $exclude_id = null) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
-    // Handle Post Actions
     if ($action === 'create' || $action === 'update') {
-        // Common fields for posts
-        $title       = trim($_POST['title'] ?? '');
-        $slug        = trim($_POST['slug'] ?? '');
-        $content     = trim($_POST['content'] ?? '');
-        $image_url   = trim($_POST['image_url'] ?? '');
-        $author_id   = !empty($_POST['author_id']) ? (int)$_POST['author_id'] : NULL;
-        $category_id = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : NULL;
-
+        // Common fields for both create and update
+        $title = trim($_POST['title'] ?? '');
+        $content = trim($_POST['content'] ?? '');
+        $image_url = trim($_POST['image_url'] ?? '');
+        $author_id = isset($_POST['author_id']) ? (int)$_POST['author_id'] : 0;
+        $category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0;
+    
         // Validate required fields
-        if (empty($title) || empty($slug) || empty($content) || empty($author_id)) {
-            die("Error: Please fill in all required fields.");
+        if (empty($title)) {
+            die("Error: Title is required.");
         }
-
-        // Generate slug if not provided
-        if (empty($slug)) {
-            $slug = generateSlug($title);
-        }
-
-        // Ensure slug is unique
-        $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug', isset($_POST['post_id']) ? (int)$_POST['post_id'] : null);
-
-        // Validate author_id exists
-        $stmt = $conn->prepare("SELECT user_id FROM users WHERE user_id = ?");
-        if (!$stmt) {
-            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-        $stmt->bind_param("i", $author_id);
-        if (!$stmt->execute()) {
-            die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-        $stmt->store_result();
-
-        if ($stmt->num_rows === 0) {
+        if ($author_id <= 0) {
             die("Error: Invalid Author ID.");
         }
-        $stmt->close();
-
-        // Validate category_id exists (if provided)
-        if ($category_id !== NULL) {
-            $stmt = $conn->prepare("SELECT category_id FROM categories WHERE category_id = ?");
-            if (!$stmt) {
-                die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-            }
-            $stmt->bind_param("i", $category_id);
-            if (!$stmt->execute()) {
-                die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-            }
-            $stmt->store_result();
-
-            if ($stmt->num_rows === 0) {
-                die("Error: Invalid Category ID.");
-            }
-            $stmt->close();
+        if ($category_id <= 0) {
+            die("Error: Invalid Category ID.");
         }
-
+    
+        // Generate slug from title
+        $slug = generateSlug($title);
+    
         if ($action === 'create') {
+            // Ensure slug is unique in the 'posts' table
+            $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug');
+    
             // Insert a new post
             $stmt = $conn->prepare("INSERT INTO posts (title, slug, content, image_url, author_id, category_id) VALUES (?, ?, ?, ?, ?, ?)");
             if (!$stmt) {
@@ -166,7 +134,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($post_id <= 0) {
                 die("Error: Invalid Post ID.");
             }
-
+    
+            // Ensure slug is unique, excluding the current post
+            $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug', $post_id);
+    
             $stmt = $conn->prepare("UPDATE posts SET title = ?, slug = ?, content = ?, image_url = ?, author_id = ?, category_id = ?, updated_at = CURRENT_TIMESTAMP WHERE post_id = ?");
             if (!$stmt) {
                 die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
@@ -181,8 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 die("Error updating post: " . $stmt->error);
             }
             $stmt->close();
-        } else {
-            die("Error: Invalid action.");
         }
     }
 
@@ -268,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
+
     else {
         die("Error: Invalid action.");
     }
