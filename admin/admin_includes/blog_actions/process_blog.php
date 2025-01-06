@@ -246,6 +246,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
+    elseif ($action === 'delete_post') {
+        // get post id to delete
+        $post_id = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
+        if ($post_id <= 0) {
+            die("Error: Invalid post ID.");
+        }
+        
+        //  delete the post
+        $stmt = $conn->prepare("DELETE FROM posts WHERE post_id = ?");
+        if (!$stmt) {
+            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+        }
+        $stmt->bind_param("i", $post_id);
+
+        if ($stmt->execute()) {
+            header("Location: ../admin.php?page=manage_blog&status=post_deleted");
+            exit;
+        } else {
+            die("Error deleting post: " . $stmt->error);
+        }
+        $stmt->close();
+    }
     else {
         die("Error: Invalid action.");
     }

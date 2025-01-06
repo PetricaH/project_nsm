@@ -45,146 +45,158 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
 
 <h1>Manage Blog Posts</h1>
 
-<!-- Table of existing posts -->
-<table class="blog-table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Slug</th>
-            <th>Category</th>
-            <th>Author</th>
-            <th>Created</th>
-            <th>Updated</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-            <tr data-id="<?php echo $row['post_id']; ?>">
-                <td><?php echo $row['post_id']; ?></td>
-                <td><?php echo htmlspecialchars($row['title']); ?></td>
-                <td><?php echo htmlspecialchars($row['slug']); ?></td>
-                <td><?php echo htmlspecialchars($row['category_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['author_name']); ?></td>
-                <td><?php echo $row['created_at']; ?></td>
-                <td><?php echo $row['updated_at']; ?></td>
-                <td>
-                    <button class="edit-btn" data-post='<?php echo json_encode($row); ?>'>
-                        Edit
-                    </button>
-                    <button class="delete-post-btn" data-post-id="<?php echo $row['post_id']; ?>">Delete</button>
-                </td>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
-
-<!-- New post / edit post form -->
-<div class="blog-form-container" id="blogFormContainer" ">
-    <h2 id="formTitle">Create New Post</h2>
-    <form method="POST" action="../admin/admin_includes/blog_actions/process_blog.php" enctype="multipart/form-data" id="blogForm">
-        <input type="hidden" name="action" value="create" id="formAction">
-        <input type="hidden" name="post_id" value="" id="postIdField">
-
-        <!-- Title -->
-        <div class="form-group">
-            <label for="titleField">Title:</label>
-            <input type="text" name="title" id="titleField" required>
+<div class="container">
+        <div class="dashboard-container">
+            <!-- Categories Section -->
+            <div class="categories-section">
+                <h2>Manage Categories</h2>
+                
+                <!-- Categories Table -->
+                <div class="table-wrapper">
+                    <table class="categories-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($allCategories as $category) { ?>
+                                <tr data-id="<?php echo $category['category_id']; ?>">
+                                    <td><?php echo $category['category_id']; ?></td>
+                                    <td><?php echo htmlspecialchars($category['category_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($category['slug']); ?></td>
+                                    <td>
+                                        <button class="btn btn-danger delete-category-btn" data-category-id="<?php echo $category['category_id']; ?>">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Add New Category Form -->
+                <div class="category-form-container">
+                    <h3>Add New Category</h3>
+                    <form method="POST" action="../admin/admin_includes/blog_actions/process_blog.php" id="addCategoryForm">
+                        <input type="hidden" name="action" value="create_category">
+                        
+                        <!-- Category Name -->
+                        <div class="form-group">
+                            <label for="newCategoryName">Category Name:</label>
+                            <input type="text" name="category_name" id="newCategoryName" required>
+                        </div>
+                        
+                        <button type="submit" class="btn add-category-btn">Add Category</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Blog Posts Section -->
+            <div class="posts-section">
+                <h2>Manage Blog Posts</h2>
+                
+                <!-- Table of Existing Posts -->
+                <div class="table-wrapper">
+                    <table class="blog-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()) { ?>
+                                <tr data-id="<?php echo $row['post_id']; ?>">
+                                    <td><?php echo $row['post_id']; ?></td>
+                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['slug']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['category_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['author_name']); ?></td>
+                                    <td><?php echo $row['created_at']; ?></td>
+                                    <td><?php echo $row['updated_at']; ?></td>
+                                    <td>
+                                        <button class="btn btn-primary edit-btn" data-post='<?php echo json_encode($row); ?>'>
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-danger delete-post-btn" data-post-id="<?php echo $row['post_id']; ?>">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- New Post / Edit Post Form -->
+                <div class="blog-form-container">
+                    <h2 id="formTitle">Create New Post</h2>
+                    <form method="POST" action="../admin/admin_includes/blog_actions/process_blog.php" enctype="multipart/form-data" id="blogForm">
+                        <input type="hidden" name="action" value="create" id="formAction">
+                        <input type="hidden" name="post_id" value="" id="postIdField">
+                
+                        <!-- Title -->
+                        <div class="form-group">
+                            <label for="titleField">Title:</label>
+                            <input type="text" name="title" id="titleField" required>
+                        </div>
+                
+                        <!-- Slug -->
+                        <div class="form-group">
+                            <label for="slugField">Slug:</label>
+                            <input type="text" name="slug" id="slugField" required>
+                        </div>
+                
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label for="categoryField">Category:</label>
+                            <select name="category_id" id="categoryField">
+                                <option value="">Select Category</option>
+                                <?php foreach ($categories as $cat) { ?>
+                                    <option value="<?php echo $cat['category_id']; ?>">
+                                        <?php echo htmlspecialchars($cat['category_name']); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                
+                        <!-- Author ID -->
+                        <div class="form-group">
+                            <label for="authorField">Author ID:</label>
+                            <input type="number" name="author_id" id="authorField" required>
+                        </div>
+                
+                        <!-- Featured Image URL -->
+                        <div class="form-group">
+                            <label for="imageField">Image URL:</label>
+                            <input type="url" name="image_url" id="imageField" placeholder="https://example.com/image.jpg">
+                        </div>
+                
+                        <!-- Content (for CKEditor) -->
+                        <div class="form-group">
+                            <label for="contentField">Content:</label>
+                            <textarea name="content" id="contentField" rows="10"></textarea>
+                        </div>
+                
+                        <div class="form-buttons">
+                            <button type="submit" class="btn save-btn" id="saveBtn">Save Post</button>
+                            <button type="button" class="btn cancel-btn" id="cancelBtn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <!-- Slug -->
-        <div class="form-group">
-            <label for="slugField">Slug:</label>
-            <input type="text" name="slug" id="slugField" required>
-        </div>
-
-        <!-- Category -->
-        <div class="form-group">
-            <label for="categoryField">Category:</label>
-            <select name="category_id" id="categoryField">
-                <option value="">Select Category</option>
-                <?php foreach ($categories as $cat) { ?>
-                    <option value="<?php echo $cat['category_id']; ?>">
-                        <?php echo htmlspecialchars($cat['category_name']); ?>
-                    </option>
-                <?php } ?>
-            </select>
-        </div>
-
-        <!-- Author ID -->
-        <div class="form-group">
-            <label for="authorField">Author ID:</label>
-            <input type="number" name="author_id" id="authorField" required>
-        </div>
-
-        <!-- Featured Image URL -->
-        <div class="form-group">
-            <label for="imageField">Image URL:</label>
-            <input type="text" name="image_url" id="imageField" placeholder="https://example.com/image.jpg">
-        </div>
-
-        <!-- Content (for CKEditor) -->
-        <div class="form-group">
-            <label for="contentField">Content:</label>
-            <textarea name="content" id="contentField" rows="10"></textarea>
-        </div>
-
-        <div class="form-buttons">
-            <button type="submit" id="saveBtn">Save Post</button>
-            <button type="button" id="cancelBtn">Cancel</button>
-        </div>
-    </form>
-</div>
-
-<h2>Manage Categories</h2>
-
-<!-- Categories Table -->
-<table class="categories-table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Category Name</th>
-            <th>Slug</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($allCategories as $category) { ?>
-            <tr data-id="<?php echo $category['category_id']; ?>">
-                <td><?php echo $category['category_id']; ?></td>
-                <td><?php echo htmlspecialchars($category['category_name']); ?></td>
-                <td><?php echo htmlspecialchars($category['slug']); ?></td>
-                <td>
-                    <button class="delete-category-btn" data-category-id="<?php echo $category['category_id']; ?>">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
-
-<!-- Add New Category Form -->
-<div class="category-form-container">
-    <h3>Add New Category</h3>
-    <form method="POST" action="../admin/admin_includes/blog_actions/process_blog.php" id="addCategoryForm">
-        <input type="hidden" name="action" value="create_category">
-        
-        <!-- Category Name -->
-        <div class="form-group">
-            <label for="newCategoryName">Category Name:</label>
-            <input type="text" name="category_name" id="newCategoryName" required>
-        </div>
-        
-        <!-- Slug (Optional: Auto-generate if left blank) -->
-        <div class="form-group">
-            <label for="newCategorySlug">Slug:</label>
-            <input type="text" name="slug" id="newCategorySlug" placeholder="Auto-generated if left blank">
-        </div>
-        
-        <button type="submit">Add Category</button>
-    </form>
-</div>
+    </div>
 
 <?php include('../admin/admin_includes/admin_footer.php'); ?>

@@ -190,6 +190,30 @@ document.addEventListener("DOMContentLoaded", () => {
                  }
              });
          });
+
+        const deletePostButtons = document.querySelectorAll('.delete-post-btn');
+        deletePostButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+                if (confirm('Are you sure you want to delete this post?')) {
+                    const formData = new FormData();
+                    formData.append('action', 'delete_post');
+                    formData.append('post_id', postId);
+
+                    fetch('admin_includes/blog_actions/process_blog.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        loadPage('manage_blog', false); // Reload manage_blog without pushing to history
+                    })
+                    .catch(error => {
+                        console.error('Error deleting post:', error);
+                    });
+                }
+            });
+        });
     }
 
     // Function to destroy all existing CKEditor instances before loading a new page

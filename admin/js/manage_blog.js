@@ -1,4 +1,5 @@
 // manage_blog.js
+console.log('manage_blog.js has been loadedawddad.');
 
 (function() {
     function initManageBlog() {
@@ -46,58 +47,8 @@
                 });
             });
         }
-
-        // Handle Delete Category Buttons via AJAX
-        const deleteCategoryButtons = document.querySelectorAll('.delete-category-btn');
-        deleteCategoryButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const categoryId = this.getAttribute('data-category-id');
-                if (confirm('Are you sure you want to delete this category?')) {
-                    const formData = new FormData();
-                    formData.append('action', 'delete_category');
-                    formData.append('category_id', categoryId);
-
-                    fetch('admin_includes/blog_actions/process_blog.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        loadPage('manage_blog', false); // Reload manage_blog without pushing to history
-                    })
-                    .catch(error => {
-                        console.error('Error deleting category:', error);
-                    });
-                }
-            });
-        });
-
-        // Handle Delete Post Buttons via AJAX
-        const deletePostButtons = document.querySelectorAll('.delete-post-btn');
-        deletePostButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const postId = this.getAttribute('data-post-id');
-                if (confirm('Are you sure you want to delete this post?')) {
-                    const formData = new FormData();
-                    formData.append('action', 'delete_post');
-                    formData.append('post_id', postId);
-
-                    fetch('admin_includes/blog_actions/process_blog.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        loadPage('manage_blog', false); // Reload manage_blog without pushing to history
-                    })
-                    .catch(error => {
-                        console.error('Error deleting post:', error);
-                    });
-                }
-            });
-        });
     }
 
     // Automatically initialize when the script is loaded
-    document.addEventListener("DOMContentLoaded", initManageBlog);
+    initManageBlog();
 })();
