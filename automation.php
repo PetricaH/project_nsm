@@ -14,9 +14,11 @@
         <div class="gradient_overlay"></div>
 
         <!-- robotic arms -->
-        <img src="static/images/automation_lp_imgs/left_arm.png" alt="">
-        <img src="static/images/automation_lp_imgs/top_arm.png" alt="">
-        <img src="static/images/automation_lp_imgs/right_arm.png" alt="">
+        <div class="arms_container">
+            <img src="static/images/automation_lp_imgs/left_arm.png" alt="Left Arm" class="left_arm">
+            <img src="static/images/automation_lp_imgs/top_arm.png" alt="Top Arm" class="top_arm">
+            <img src="static/images/automation_lp_imgs/right_arm.png" alt="Right Arm" class="right_arm">
+        </div>
 
         <!-- content in the hero section -->
         <div class="automation_hero_content">
@@ -27,7 +29,6 @@
                 <p>Save Money</p>
                 <img src="static/images/automation_lp_imgs/arrow_left.svg" alt="">
                 <p>Do More</p>
-                <img src="static/images/automation_lp_imgs/arrow_left.svg" alt="">
             </div>
             <button onclick="openBookingModal()">Schedule Your Free Consultation</button>
         </div>
