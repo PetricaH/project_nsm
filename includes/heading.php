@@ -31,5 +31,6 @@
     <link rel="stylesheet" type="text/css" href="static/css/home.css">
     <link rel="stylesheet" type="text/css" href="static/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="static/css/artworks.css">
+    <link rel="stylesheet" type="text/css" href="static/css/automation.css">
 
     <?php require_once('config.php'); ?>
