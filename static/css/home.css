@@ -6,6 +6,10 @@
     scroll-behavior: smooth;
 }
 
+button {
+    border-radius: 5px !important;
+}
+
 body {
     background-color: #0F1413;
 }

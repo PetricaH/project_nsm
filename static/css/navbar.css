@@ -1,4 +1,4 @@
-@media (max-width: 768px) {
+@media (max-width: 1785px) {
     #nav_menu {
         display: flex;
         flex-direction: column;
@@ -147,7 +147,7 @@
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1786px) {
     /* Ensure nav_menu styling for wider screens */
     #nav_menu {
         width: 70%;
