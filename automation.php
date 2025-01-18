@@ -41,6 +41,20 @@
                 arrow_cool_down
             </span>
         </div>
+        <div class="difficulties_group">
+            <span><span class="material-symbols-outlined">
+                hourglass_arrow_down
+                </span>Wasting hours on repetitive tasks.
+            </span>
+            <span><span class="material-symbols-outlined">
+                error
+                </span>Inconsistent workflows leading to errors.
+            </span>
+            <span><span class="material-symbols-outlined">
+                build_circle
+                </span>Difficulty integrating various software tools.
+            </span>
+        </div>
     </section>
 
 

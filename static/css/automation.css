@@ -356,3 +356,23 @@
         transform: translateY(0); /* Return to original position */
     }
 }
+
+.difficulties_group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.difficulties_group span {
+    background-color: hsl(8, 100%, 83%);
+    border-radius: 5px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: hsl(8, 97%, 36%);
+}
