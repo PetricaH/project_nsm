@@ -1,6 +1,6 @@
 .hero_automation_section {
     position: relative;
-    height: 100vh;
+    height: 80vh;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -316,3 +316,43 @@
                 font-size: 0.85em;
             }
         }
+
+#automation_examples_section h2 {
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #f2f2f2;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+#automation_examples_section h2 > span {
+    color: #de4c36;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.automation_examples_tease_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow_animate {
+    color: white;
+    margin-top: 30px;
+    display: inline-block;
+    animation: upDown 2s infinite ease-in-out;
+}
+
+@keyframes upDown {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Move up by 10px */
+    }
+    100% {
+        transform: translateY(0); /* Return to original position */
+    }
+}

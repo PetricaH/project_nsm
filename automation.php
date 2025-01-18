@@ -34,6 +34,15 @@
         </div>
     </section>
 
+    <section id="automation_examples_section">
+        <div class="automation_examples_tease_group">
+            <h2>Do You Have These <span>Difficulties</span>?</h2>
+            <span class="material-symbols-outlined arrow_animate">
+                arrow_cool_down
+            </span>
+        </div>
+    </section>
+
 
     <!-- Popup Modal Form -->
 <div id="bookingModal" class="booking-modal hidden">
