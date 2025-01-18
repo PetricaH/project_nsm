@@ -42,21 +42,20 @@
             </span>
         </div>
         <div class="difficulties_group">
-            <span><span class="material-symbols-outlined">
+            <div><span class="material-symbols-outlined difficulty_icon">
                 hourglass_arrow_down
                 </span>Wasting hours on repetitive tasks.
-            </span>
-            <span><span class="material-symbols-outlined">
+            </div>
+            <div><span class="material-symbols-outlined difficulty_icon">
                 error
                 </span>Inconsistent workflows leading to errors.
-            </span>
-            <span><span class="material-symbols-outlined">
+            </div>
+            <div><span class="material-symbols-outlined difficulty_icon">
                 build_circle
                 </span>Difficulty integrating various software tools.
-            </span>
+            </div>
         </div>
     </section>
-
 
     <!-- Popup Modal Form -->
 <div id="bookingModal" class="booking-modal hidden">

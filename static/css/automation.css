@@ -367,12 +367,16 @@
     margin-top: 50px;
 }
 
-.difficulties_group span {
+.difficulties_group div {
     background-color: hsl(8, 100%, 83%);
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     color: hsl(8, 97%, 36%);
+}
+
+.difficulty_icon {
+    padding: 10px;
 }
