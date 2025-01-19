@@ -89,7 +89,7 @@
     </section>
 
     <!-- Popup Modal Form -->
-<div id="bookingModal" class="booking-modal hidden">
+    <div id="bookingModal" class="booking-modal hidden">
         <div class="booking-modal-content">
             <span class="booking-modal-close" onclick="closeBookingModal()">&times;</span>
             <h2>Book a Service</h2>
@@ -109,28 +109,34 @@
                         <option value="Web Development">Web Development</option>
                     </select>
                 </div>
-                <div class="booking-form-group">
-                    <label for="booking-date">Pick a Date:</label>
-                    <input type="date" id="booking-date" name="date" required>
+
+                <!-- New Container for Date and Time -->
+                <div class="booking-form-row">
+                    <div class="booking-form-group">
+                        <label for="booking-date">Pick a Date:</label>
+                        <input type="date" id="booking-date" name="date" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="booking-time">Pick a Time:</label>
+                        <select id="booking-time" name="time" required>
+                            <option value="16:30">4:30 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="17:30">5:30 PM</option>
+                            <option value="18:00">6:00 PM</option>
+                            <option value="18:30">6:30 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="19:30">7:30 PM</option>
+                            <option value="20:00">8:00 PM</option>
+                            <option value="20:30">8:30 PM</option>
+                            <option value="21:00">9:00 PM</option>
+                            <option value="21:30">9:30 PM</option>
+                            <option value="22:00">10:00 PM</option>
+                            <option value="22:30">10:30 PM</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="booking-form-group">
-                    <label for="booking-time">Pick a Time:</label>
-                    <select id="booking-time" name="time" required>
-                        <option value="16:30">4:30 PM</option>
-                        <option value="17:00">5:00 PM</option>
-                        <option value="17:30">5:30 PM</option>
-                        <option value="18:00">6:00 PM</option>
-                        <option value="18:30">6:30 PM</option>
-                        <option value="19:00">7:00 PM</option>
-                        <option value="19:30">7:30 PM</option>
-                        <option value="20:00">8:00 PM</option>
-                        <option value="20:30">8:30 PM</option>
-                        <option value="21:00">9:00 PM</option>
-                        <option value="21:30">9:30 PM</option>
-                        <option value="22:00">10:00 PM</option>
-                        <option value="22:30">10:30 PM</option>
-                    </select>
-                </div>
+                <!-- End of New Container -->
+
                 <div class="booking-form-group">
                     <label for="booking-description">Description:</label>
                     <textarea id="booking-description" name="description" rows="4" placeholder="Provide a short description of your situation..." required></textarea>
@@ -147,6 +153,7 @@
             </form>
         </div>
     </div>
+
 
 
 <!-- Notification Area -->

@@ -4,6 +4,10 @@ body {
     align-items: center;
 }
 
+button, a {
+    border-radius: 5px !important;
+}
+
 .hero_automation_section {
     position: relative;
     height: 80vh;
@@ -418,8 +422,7 @@ body {
 .text_part_automation_case_studies_group h2 {
     color: #f2f2f2;
     text-align: right !important;
-    line-height: 1.1;
-    padding-bottom: 10px;
+    line-height: 1;
 }
 
 /* Case Studies Cards Group */
@@ -461,7 +464,8 @@ body {
 }
 
 /* Button Styling */
-.text_part_automation_case_studies_group button {
+.text_part_automation_case_studies_group button, 
+.automation_case_study_card a {
     padding: 10px 35px;
     margin-top: 25px;
     background-color: #de4c36;
@@ -469,11 +473,11 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1em;
-    border-radius: 20px;
     transition: background-color 0.3s ease;
 }
 
-.text_part_automation_case_studies_group button:hover {
+.text_part_automation_case_studies_group button:hover,
+.automation_case_study_card a:hover {
     background-color: #333333;
 }
 
@@ -483,10 +487,6 @@ body {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
         align-items: start;
-    }
-
-    .text_part_automation_case_studies_group {
-        text-align: left; /* Optional: Align text to left on larger screens */
     }
 
     .case_studies_cards_automation_group {

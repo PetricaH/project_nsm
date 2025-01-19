@@ -253,7 +253,6 @@ body {
     justify-content: center;
     padding: 20px;
     background-color: #0F1413;
-    overflow: hidden;
     height: 100vh;
 }
 .background_images {
@@ -264,6 +263,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1;
+    overflow: hidden;
 }
 .background_images::before {
     content: '';
@@ -392,77 +392,154 @@ body {
 .booking-modal.hidden {
     display: none;
 }
-
 .booking-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5); /* Slightly lighter for better visibility */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Show Modal when Active */
+.booking-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Content Container */
 .booking-modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 30px 25px;
+    border-radius: 12px;
     max-width: 500px;
     width: 90%;
     position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
+    animation: slideDown 0.3s ease forwards;
 }
 
+/* Slide Down Animation */
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close Button */
 .booking-modal-close {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 20px;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
     cursor: pointer;
+    transition: color 0.2s ease;
 }
 
+.booking-modal-close:hover {
+    color: #de4c36;
+}
+
+/* Form Group Styling */
 .booking-form-group {
-    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: last baseline;
+    gap: 10px;
 }
 
-.booking-form-group button {
-    align-self: center;
+/* New Styling for the Row Container */
+.booking-form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap; /* Allows wrapping if necessary */
 }
 
+/* Ensure each field in the row takes equal space */
+.booking-form-row .booking-form-group {
+    flex: 1;
+    min-width: 150px; /* Prevents fields from becoming too narrow */
+}
+
+/* Form Labels */
 .booking-form-group label {
-    display: block;
+    font-size: 1rem;
+    color: #333333;
     margin-bottom: 5px;
 }
 
+/* Form Inputs, Selects, and Textareas */
 .booking-form-group input,
 .booking-form-group select,
 .booking-form-group textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.booking-form-group input:focus,
+.booking-form-group select:focus,
+.booking-form-group textarea:focus {
+    border-color: #de4c36;
+    box-shadow: 0 0 5px rgba(222, 76, 54, 0.3);
+    outline: none;
+}
+
+/* Submit Button */
 .booking-submit-btn {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background-color: #de4c36;
-    color: white;
+    color: #ffffff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-end; /* Align the button to the end */
 }
 
 .booking-submit-btn:hover {
     background-color: #c43c2a;
+    transform: translateY(-2px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    .booking-modal-content {
+        padding: 20px 15px;
+    }
+
+    .booking-modal-close {
+        top: 10px;
+        right: 15px;
+    }
+
+    .booking-submit-btn {
+        width: 100%;
+        align-self: center;
+    }
+
+    /* Adjust the booking-form-row for very small screens */
+    .booking-form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
