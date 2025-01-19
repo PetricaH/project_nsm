@@ -55,6 +55,37 @@
                 </span>Difficulty integrating various software tools.
             </div>
         </div>
+
+        <div class="automation_case_studies_group">
+            <div class="text_part_automation_case_studies_group">
+                <h2>LEARN HOW I MADE THESE PROBLEMS FADE IN THE <span>PAST</span></h2>
+                <p>
+                Streamline your workflows using Zapier, Marketo, n8n, and more. Save time and reduce
+                costs by automating repetitive tasks tailored to your needs. Let me 
+                handle the technical setup so you can focus on growing your business. 
+                Contact me today to start saving!
+                </p>
+                <button onclick="openBookingModal()">Schedule Your Free Consultation</button>
+            </div>
+            <div class="case_studies_cards_automation_group">
+                <div class="automation_case_study_card">
+                    <h3>Case Study Title 1</h3>
+                    <p>Brief description of the first case study. Highlight key points and outcomes.</p>
+                    <a href="path/to/your-first-document.pdf" class="download-button" target="_blank" rel="noopener noreferrer">
+                        Download PDF
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="automation_case_study_card">
+                    <h3>Case Study Title 2</h3>
+                    <p>Brief description of the second case study. Highlight key points and outcomes.</p>
+                    <a href="path/to/your-second-document.pdf" class="download-button" target="_blank" rel="noopener noreferrer">
+                        Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Popup Modal Form -->
