@@ -2,6 +2,7 @@
 
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
 
+<?php $page_css = 'artworks.css';?>
 <title>Artworks</title>
 
 </head>

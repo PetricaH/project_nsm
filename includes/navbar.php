@@ -16,7 +16,7 @@
         <li><a href="index.php" class="active">HOME</a></li>
         <li><a onclick="openBookingModal()">CONTACT</a></li>
         <li><a href="#programming_section">WEB DEV</a></li>
-        <li><a href="#automation_section">MARKETING AUTOMATION</a></li>
+        <li><a href="automation.php">MARKETING AUTOMATION</a></li>
         <li><a href="#digital_art_section">DIGITAL ART</a></li>
 
         <?php if (isset($_SESSION['user_id'])): ?>

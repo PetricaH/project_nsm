@@ -2,6 +2,7 @@
 
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
 
+<?php $page_css = 'automation.css';?>
 <title>Automation</title>
 </head>
 

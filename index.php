@@ -1,5 +1,6 @@
 <?php require_once('config.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
+<?php $page_css = 'home.css';?>
 <title>Hreniuc Petrică</title>
 </head>
 
