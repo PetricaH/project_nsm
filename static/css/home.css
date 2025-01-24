@@ -56,7 +56,7 @@ body {
 }
 .hero_bg_top_layer {
     top: 40%;
-    height: 60vh;
+    height: 85vh;
     width: auto;
     background-image: url("../images/top-layer-hero-bg.png");
     background-size: cover;
@@ -542,4 +542,4 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-}
+} 

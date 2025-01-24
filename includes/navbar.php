@@ -37,6 +37,16 @@
                     <form id="loginForm" class="auth_form" method="POST" action="../includes/login_handler.php">
                         <input type="email" name="email" placeholder="Email" required>
                         <input type="password" name="password" placeholder="Password" required>
+                        
+                        <!-- Remember Me Checkbox -->
+                        <div class="remember-me-container">
+                            <label class="remember-me">
+                                <input type="checkbox" name="remember_me">
+                                <span class="checkmark"></span>
+                                Stay logged in
+                            </label>
+                        </div>
+                        
                         <button type="submit">Login</button>
                     </form>
                     <p class="switch-text">

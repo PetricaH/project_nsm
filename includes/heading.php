@@ -44,46 +44,124 @@
     </script>
 
     <style>
-        /* Cookie Banner Styles */
         .cookie-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #333;
-            color: #fff;
-            padding: 15px;
+            background: rgba(15, 20, 19, 0.95);
+            color: #f2f2f2;
+            padding: 20px;
             text-align: center;
             z-index: 1000;
-            display: none; /* Hidden by default */
+            display: none;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); 
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(222, 76, 54, 0.3); 
         }
 
         .cookie-banner p {
-            margin: 0 0 10px;
-            font-size: 14px;
+            margin: 0 0 15px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif; 
         }
 
         .cookie-banner a {
-            color: #4caf50;
-            text-decoration: underline;
+            color: #de4c36; 
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .cookie-banner a:hover {
+            color: #c43c2a;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; 
         }
 
         .cookie-buttons button {
-            background: #4caf50;
-            color: #fff;
+            background-color: #de4c36;
+            color: #f2f2f2;
             border: none;
-            padding: 8px 16px;
-            margin: 0 5px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif; 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .cookie-buttons button:hover {
+            background-color: #c43c2a;
+            transform: translateY(-2px); 
         }
 
         .cookie-buttons button#reject-cookies {
-            background: #f44336;
+            background-color: transparent;
+            border: 1px solid #f2f2f2;
+            color: #f2f2f2;
+        }
+
+        .cookie-buttons button#reject-cookies:hover {
+            background-color: rgba(242, 242, 242, 0.1);
         }
     </style>
 
     <?php require_once('config.php'); ?>
+
+    <!-- auto login from cookie -->
+    <?php 
+        if (!isset($_SESSION['logged_id']) && isset($_COOKIE['remember'])) {
+            list($selector, $validator) = explode(':', $_COOKIE['remember']);
+
+            $stmt = $conn->prepare("SELECT a.*, u.user_id, u.username, u.role
+                                    FROM auth_tokens a
+                                    JOIN users u ON a.user_id = u.user_id
+                                    WHERE a.selector = ? AND a.expires > NOw()");
+            $stmt->bind_param("s", $selector);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $token = $result->fetch_assoc();
+
+                if (hash_equals($token['hashed_validator'], hash('sha256', $validator))) {
+                    // valid token - set session
+                    $_SESSION['user_id'] = $token['user_id'];
+                    $_SESSION['username'] = $token['username'];
+                    $_SESSION['role'] = $token['role'];
+                    $_SESSION['logged_in'] = true;
+
+                    // rotate token
+                    $newValidator = bin2hex(random_bytes(32));
+                    $newHashedValidator = hash('sha256', $newValidator);
+
+                    $stmt = $conn->prepare("UPDATE auth_tokens
+                                            SET hashed_validator = ?, expires = DATE_ADD(NOW(), INTERVAL 30 DAY)
+                                            WHERE token_id = ?");
+                    $stmt->bind_param("si", $newHashedValidator, $token['token_id']);
+                    $stmt->execute();
+
+                    // set new cookie 
+                    setCookie(
+                        'remember',
+                        $selector . ':' . $newValidator,
+                        [
+                            'expires' => time() + 60*60*24*30,
+                            'path' => '/',
+                            'secure' => isset($_SERVER['HTTPS']),
+                            'httponly' => true,
+                            'samesite' => 'Strict'
+                        ]
+                    );
+                }
+            }
+        }
+    ?>
 </head>
 <body>
     <!-- Cookie Banner -->
@@ -150,5 +228,10 @@
                 }
             }
             return null;
+        }
+
+        function clearConsentCookie() {
+            document.cookie = "cookie_consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            alert("Consent cookie cleared. Refresh the page to see the banner again.");
         }
     </script>

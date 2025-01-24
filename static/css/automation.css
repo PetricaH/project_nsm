@@ -1,4 +1,4 @@
-body {
+body[data-context="automation"] {
     display: flex;
     flex-direction: column;
     align-items: center;
