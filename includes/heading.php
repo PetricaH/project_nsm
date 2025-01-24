@@ -1,3 +1,63 @@
+<?php
+// Start output buffering to prevent headers already sent errors
+ob_start();
+
+// Start the session only if it's not already active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Include the database configuration
+require_once('config.php');
+
+// Auto-login from cookie
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
+    list($selector, $validator) = explode(':', $_COOKIE['remember']);
+
+    $stmt = $conn->prepare("SELECT a.*, u.user_id, u.username, u.role
+                            FROM auth_tokens a
+                            JOIN users u ON a.user_id = u.user_id
+                            WHERE a.selector = ? AND a.expires > NOW()");
+    $stmt->bind_param("s", $selector);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $token = $result->fetch_assoc();
+
+        if (hash_equals($token['hashed_validator'], hash('sha256', $validator))) {
+            // Valid token - set session
+            $_SESSION['user_id'] = $token['user_id'];
+            $_SESSION['username'] = $token['username'];
+            $_SESSION['role'] = $token['role'];
+            $_SESSION['logged_in'] = true;
+
+            // Rotate token
+            $newValidator = bin2hex(random_bytes(32));
+            $newHashedValidator = hash('sha256', $newValidator);
+
+            $stmt = $conn->prepare("UPDATE auth_tokens
+                                    SET hashed_validator = ?, expires = DATE_ADD(NOW(), INTERVAL 30 DAY)
+                                    WHERE token_id = ?");
+            $stmt->bind_param("si", $newHashedValidator, $token['token_id']);
+            $stmt->execute();
+
+            // Set new cookie
+            setcookie(
+                'remember',
+                $selector . ':' . $newValidator,
+                [
+                    'expires' => time() + 60 * 60 * 24 * 30,
+                    'path' => '/',
+                    'secure' => isset($_SERVER['HTTPS']),
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                ]
+            );
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,58 +170,6 @@
             background-color: rgba(242, 242, 242, 0.1);
         }
     </style>
-
-    <?php require_once('config.php'); ?>
-
-    <!-- auto login from cookie -->
-    <?php 
-        if (!isset($_SESSION['logged_id']) && isset($_COOKIE['remember'])) {
-            list($selector, $validator) = explode(':', $_COOKIE['remember']);
-
-            $stmt = $conn->prepare("SELECT a.*, u.user_id, u.username, u.role
-                                    FROM auth_tokens a
-                                    JOIN users u ON a.user_id = u.user_id
-                                    WHERE a.selector = ? AND a.expires > NOw()");
-            $stmt->bind_param("s", $selector);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $token = $result->fetch_assoc();
-
-                if (hash_equals($token['hashed_validator'], hash('sha256', $validator))) {
-                    // valid token - set session
-                    $_SESSION['user_id'] = $token['user_id'];
-                    $_SESSION['username'] = $token['username'];
-                    $_SESSION['role'] = $token['role'];
-                    $_SESSION['logged_in'] = true;
-
-                    // rotate token
-                    $newValidator = bin2hex(random_bytes(32));
-                    $newHashedValidator = hash('sha256', $newValidator);
-
-                    $stmt = $conn->prepare("UPDATE auth_tokens
-                                            SET hashed_validator = ?, expires = DATE_ADD(NOW(), INTERVAL 30 DAY)
-                                            WHERE token_id = ?");
-                    $stmt->bind_param("si", $newHashedValidator, $token['token_id']);
-                    $stmt->execute();
-
-                    // set new cookie 
-                    setCookie(
-                        'remember',
-                        $selector . ':' . $newValidator,
-                        [
-                            'expires' => time() + 60*60*24*30,
-                            'path' => '/',
-                            'secure' => isset($_SERVER['HTTPS']),
-                            'httponly' => true,
-                            'samesite' => 'Strict'
-                        ]
-                    );
-                }
-            }
-        }
-    ?>
 </head>
 <body>
     <!-- Cookie Banner -->

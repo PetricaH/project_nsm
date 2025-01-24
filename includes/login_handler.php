@@ -1,5 +1,4 @@
 <?php
-session_start();
 ob_start(); // Start output buffering
 header('Content-Type: application/json');
 
