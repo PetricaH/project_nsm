@@ -27,10 +27,11 @@ body {
 }
 .name_container {
     position: absolute;
-    top: 30%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #f2f2f2;
+    z-index: 9999;
 }
 .hreniuc > #hreniuc_span {
     text-transform: uppercase;
@@ -39,10 +40,10 @@ body {
 }
 .petrica {
     position: absolute;
-    top: 66%;
+    top: -2%;
 }
 #petrica_span {
-    font-size: 2.4rem;
+    font-size: 4rem;
     font-family: "Reenie Beanie", cursive !important;
     color: #de4c36;
     position: relative;

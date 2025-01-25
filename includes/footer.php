@@ -11,9 +11,9 @@
             <h3 class="footer-heading">Quick Links</h3>
             <ul class="footer-links">
                 <li><a href="/">Home</a></li>
-                <li><a href="/artworks">Artworks</a></li>
-                <li><a href="/automation">Automation</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="artworks.php">Artworks</a></li>
+                <li><a href="automation.php">Automation</a></li>
+                <li><a onclick="openBookingModal()" style="cursor: pointer;">Contact</a></li>
             </ul>
         </div>
 
@@ -21,9 +21,8 @@
         <div class="footer-section">
             <h3 class="footer-heading">Follow Me</h3>
             <ul class="social-links">
-                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-                <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
-                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                <li><a href="https://www.instagram.com/petrica_hreniuc/" target="_blank">Instagram</a></li>
+                <li><a href="https://github.com/PetricaH" target="_blank">GitHub</a></li>
             </ul>
         </div>
 
