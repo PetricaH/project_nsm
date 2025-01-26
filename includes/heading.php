@@ -1,12 +1,24 @@
 <?php
-// Start output buffering to prevent headers already sent errors
+// Debug: Check if headers are already sent
+if (headers_sent($file, $line)) {
+    die("Headers already sent in $file on line $line");
+}
+
+// Start output buffering
 ob_start();
 
-// Start the session only if it's not already active
-if (session_status() === PHP_SESSION_NONE) session_start();
+// Start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Include the database configuration
-require_once('config.php');
+// Include config.php
+require_once(__DIR__ . '/../config.php');
+
+// Debug: Check for output
+if (ob_get_length() > 0) {
+    die("Unexpected output detected: " . ob_get_clean());
+}
 
 // Auto-login from cookie
 if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {

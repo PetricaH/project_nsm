@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // Only admins can process these requests
 if ($_SESSION['role'] !== 'admin') {
     header('Location: ../index.php');

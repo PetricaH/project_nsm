@@ -1,11 +1,6 @@
 <?php
 require_once('../config.php');
 
-// Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Get current session cookie parameters
 $cookieParams = session_get_cookie_params();
 

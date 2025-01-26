@@ -3,7 +3,6 @@ ob_start(); // Start output buffering
 header('Content-Type: application/json');
 
 require_once('../config.php');
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ob_clean(); // Clear any unwanted output
