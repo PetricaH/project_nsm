@@ -3,9 +3,7 @@
 ob_start();
 
 // Start the session only if it's not already active
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 // Include the database configuration
 require_once('config.php');
