@@ -110,7 +110,7 @@
                                 echo htmlspecialchars($preview, ENT_QUOTES, 'UTF-8');
                             ?></p>
                             <div class="post_meta">
-                                <span class="author">By <?php echo htmlspecialchars($row['author_name']); ?></span>
+                                <span class="author">By <?php echo htmlspecialchars($row['author_id']); ?></span>
                                 <span class="date"><?php echo date('M d, Y', strtotime($row['created_at'])); ?></span>
                             </div>
                         </a>
