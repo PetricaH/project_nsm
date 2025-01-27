@@ -87,7 +87,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
     <link rel="stylesheet" type="text/css" href="static/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="static/css/artworks.css">
     <link rel="stylesheet" type="text/css" href="static/css/automation.css">
-
+    <link rel="stylesheet" type="text/css" href="static/css/blog.css">
     <!-- Define dataLayer and gtag function -->
     <script>
         window.dataLayer = window.dataLayer || [];

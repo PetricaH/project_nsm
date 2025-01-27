@@ -1,5 +1,8 @@
 <?php
-if ($_SESSION['role'] !== 'admin') {
+require_once('../config.php');
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'admin') {
+    // Optionally, set a flash message about unauthorized access
     header('Location: ../index.php');
     exit;
 }

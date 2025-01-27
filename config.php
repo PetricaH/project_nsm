@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Enable error reporting at the VERY TOP
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

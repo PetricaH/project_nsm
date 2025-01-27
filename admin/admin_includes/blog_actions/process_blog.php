@@ -1,11 +1,16 @@
 <?php
-// Only admins can process these requests
-if ($_SESSION['role'] !== 'admin') {
-    header('Location: ../index.php');
+require_once('../../../config.php'); // session_start() and DB connection presumably in config
+
+header('Content-Type: application/json'); // We will always return JSON
+
+// Check admin role
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Unauthorized request. Admin only.'
+    ]);
     exit;
 }
-
-require_once('../../../config.php');
 
 /**
  * Generates a URL-friendly slug from a given string.
@@ -40,40 +45,38 @@ function ensureUniqueSlug($conn, $slug, $table, $column, $exclude_id = null) {
     $i = 1;
 
     while (true) {
-        // Prepare SQL statement based on whether to exclude an ID
+        // Prepare SQL based on whether to exclude an ID
         if ($exclude_id) {
             $stmt = $conn->prepare("SELECT COUNT(*) FROM `$table` WHERE `$column` = ? AND `category_id` != ?");
             if (!$stmt) {
-                die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+                echo json_encode(['status' => 'error', 'message' => $conn->error]);
+                exit;
             }
             $stmt->bind_param("si", $slug, $exclude_id);
         } else {
             $stmt = $conn->prepare("SELECT COUNT(*) FROM `$table` WHERE `$column` = ?");
             if (!$stmt) {
-                die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+                echo json_encode(['status' => 'error', 'message' => $conn->error]);
+                exit;
             }
             $stmt->bind_param("s", $slug);
         }
 
-        // Execute the statement and check for errors
         if (!$stmt->execute()) {
-            die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+            echo json_encode(['status' => 'error', 'message' => $stmt->error]);
+            exit;
         }
 
-        // Bind the result to the $count variable
         $stmt->bind_result($count);
-        if (!$stmt->fetch()) {
-            // If fetch fails, assume count is 0 to avoid infinite loop
-            $count = 0;
-        }
+        $stmt->fetch();
         $stmt->close();
 
-        // If no existing slug is found, break the loop
         if ($count == 0) {
+            // No collision, we can use this slug
             break;
         }
 
-        // Modify the slug and continue the loop
+        // Collision found; increment slug
         $slug = $original_slug . '-' . $i;
         $i++;
     }
@@ -81,165 +84,195 @@ function ensureUniqueSlug($conn, $slug, $table, $column, $exclude_id = null) {
     return $slug;
 }
 
-// Handle POST requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+// Must be a POST request
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid request method. Only POST allowed.'
+    ]);
+    exit;
+}
 
-    if ($action === 'create' || $action === 'update') {
-        // Common fields for both create and update
-        $title = trim($_POST['title'] ?? '');
-        $content = trim($_POST['content'] ?? '');
-        $image_url = trim($_POST['image_url'] ?? '');
-        $author_id = isset($_POST['author_id']) ? (int)$_POST['author_id'] : 0;
-        $category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0;
-    
-        // Validate required fields
-        if (empty($title)) {
-            die("Error: Title is required.");
-        }
-        if ($author_id <= 0) {
-            die("Error: Invalid Author ID.");
-        }
-        if ($category_id <= 0) {
-            die("Error: Invalid Category ID.");
-        }
-    
-        // Generate slug from title
-        $slug = generateSlug($title);
-    
-        if ($action === 'create') {
-            // Ensure slug is unique in the 'posts' table
-            $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug');
-    
-            // Insert a new post
-            $stmt = $conn->prepare("INSERT INTO posts (title, slug, content, image_url, author_id, category_id) VALUES (?, ?, ?, ?, ?, ?)");
-            if (!$stmt) {
-                die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-            }
-            $stmt->bind_param("sssiii", $title, $slug, $content, $image_url, $author_id, $category_id);
-            
-            if ($stmt->execute()) {
-                // Redirect back to manage_blog with success
-                header("Location: ../../admin.php?page=manage_blog");
-                exit;
-            } else {
-                die("Error creating post: " . $stmt->error);
-            }
-            $stmt->close();
-        } elseif ($action === 'update') {
-            // Update an existing post
-            $post_id = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
-            if ($post_id <= 0) {
-                die("Error: Invalid Post ID.");
-            }
-    
-            // Ensure slug is unique, excluding the current post
-            $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug', $post_id);
-    
-            $stmt = $conn->prepare("UPDATE posts SET title = ?, slug = ?, content = ?, image_url = ?, author_id = ?, category_id = ?, updated_at = CURRENT_TIMESTAMP WHERE post_id = ?");
-            if (!$stmt) {
-                die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-            }
-            $stmt->bind_param("sssiiii", $title, $slug, $content, $image_url, $author_id, $category_id, $post_id);
-            
-            if ($stmt->execute()) {
-                // Redirect back to manage_blog with success
-                header("Location: ../../admin.php?page=manage_blog");
-                exit;
-            } else {
-                die("Error updating post: " . $stmt->error);
-            }
-            $stmt->close();
-        }
+$action = $_POST['action'] ?? '';
+
+/*--------------------------------------------------------------
+ | 1. CREATE OR UPDATE POST
+ *-------------------------------------------------------------*/
+if ($action === 'create' || $action === 'update') {
+    // Common fields
+    $title       = trim($_POST['title'] ?? '');
+    $content     = trim($_POST['content'] ?? '');
+    $image_url   = trim($_POST['image_url'] ?? '');
+    $author_id   = isset($_POST['author_id']) ? (int)$_POST['author_id'] : 0;
+    $category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0;
+
+    // Validation
+    if (empty($title)) {
+        echo json_encode(['status' => 'error', 'message' => 'Title is required.']);
+        exit;
+    }
+    if ($author_id <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid Author ID.']);
+        exit;
+    }
+    if ($category_id <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid Category ID.']);
+        exit;
     }
 
-    // Handle Category Actions
-    elseif ($action === 'create_category') {
-        // Fields for category
-        $category_name = trim($_POST['category_name'] ?? '');
-        $slug = trim($_POST['slug'] ?? '');
+    // Generate slug from title
+    $slug = generateSlug($title);
 
-        // Validate required fields
-        if (empty($category_name)) {
-            die("Error: Category name is required.");
-        }
+    /*----------------------------------------------------------
+     | CREATE POST
+     *---------------------------------------------------------*/
+    if ($action === 'create') {
+        // Ensure unique slug in 'posts'
+        $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug');
 
-        // Generate slug if not provided
-        if (empty($slug)) {
-            $slug = generateSlug($category_name);
-        }
-
-        // Ensure slug is unique
-        $slug = ensureUniqueSlug($conn, $slug, 'categories', 'slug');
-
-        // Insert the new category
-        $stmt = $conn->prepare("INSERT INTO categories (category_name, slug) VALUES (?, ?)");
+        // Insert new post
+        $stmt = $conn->prepare("INSERT INTO posts (title, slug, content, image_url, author_id, category_id) 
+                                VALUES (?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
-            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-        $stmt->bind_param("ss", $category_name, $slug);
-        
-        if ($stmt->execute()) {
-            // Redirect back to manage_blog with success
-            header("Location: ../admin.php?page=manage_blog&status=category_created");
+            echo json_encode(['status' => 'error', 'message' => $conn->error]);
             exit;
+        }
+        $stmt->bind_param("sssiii", $title, $slug, $content, $image_url, $author_id, $category_id);
+
+        if ($stmt->execute()) {
+            echo json_encode(['status' => 'post_created']);
         } else {
-            die("Error creating category: " . $stmt->error);
+            echo json_encode(['status' => 'error', 'message' => $stmt->error]);
         }
         $stmt->close();
+        exit;
     }
 
-    elseif ($action === 'delete_category') {
-        // Get category_id to delete
-        $category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0;
-        if ($category_id <= 0) {
-            die("Error: Invalid Category ID.");
-        }
-
-        // Delete the category
-        $stmt = $conn->prepare("DELETE FROM categories WHERE category_id = ?");
-        if (!$stmt) {
-            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-        $stmt->bind_param("i", $category_id);
-        
-        if ($stmt->execute()) {
-            // Redirect back to manage_blog with success
-            header("Location: ../admin.php?page=manage_blog&status=category_deleted");
-            exit;
-        } else {
-            die("Error deleting category: " . $stmt->error);
-        }
-        $stmt->close();
-    }
-
-    elseif ($action === 'delete_post') {
-        // get post id to delete
+    /*----------------------------------------------------------
+     | UPDATE POST
+     *---------------------------------------------------------*/
+    if ($action === 'update') {
         $post_id = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
         if ($post_id <= 0) {
-            die("Error: Invalid post ID.");
+            echo json_encode(['status' => 'error', 'message' => 'Invalid Post ID.']);
+            exit;
         }
-        
-        //  delete the post
-        $stmt = $conn->prepare("DELETE FROM posts WHERE post_id = ?");
+
+        // Ensure slug is unique, excluding the current post
+        $slug = ensureUniqueSlug($conn, $slug, 'posts', 'slug', $post_id);
+
+        $stmt = $conn->prepare("UPDATE posts
+                                SET title = ?, slug = ?, content = ?, image_url = ?, author_id = ?, category_id = ?, updated_at = CURRENT_TIMESTAMP
+                                WHERE post_id = ?");
         if (!$stmt) {
-            die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+            echo json_encode(['status' => 'error', 'message' => $conn->error]);
+            exit;
         }
-        $stmt->bind_param("i", $post_id);
+
+        $stmt->bind_param("sssiiii", $title, $slug, $content, $image_url, $author_id, $category_id, $post_id);
 
         if ($stmt->execute()) {
-            header("Location: ../admin.php?page=manage_blog&status=post_deleted");
-            exit;
+            echo json_encode(['status' => 'post_updated']);
         } else {
-            die("Error deleting post: " . $stmt->error);
+            echo json_encode(['status' => 'error', 'message' => $stmt->error]);
         }
         $stmt->close();
+        exit;
+    }
+}
+
+/*--------------------------------------------------------------
+ | 2. CREATE CATEGORY
+ *-------------------------------------------------------------*/
+elseif ($action === 'create_category') {
+    $category_name = trim($_POST['category_name'] ?? '');
+    $slug          = trim($_POST['slug'] ?? '');
+
+    if (empty($category_name)) {
+        echo json_encode(['status' => 'error', 'message' => 'Category name is required.']);
+        exit;
     }
 
-    else {
-        die("Error: Invalid action.");
+    // Generate slug if not provided
+    if (empty($slug)) {
+        $slug = generateSlug($category_name);
     }
-} else {
-    die("Error: Invalid request method.");
+
+    // Ensure slug is unique
+    $slug = ensureUniqueSlug($conn, $slug, 'categories', 'slug');
+
+    $stmt = $conn->prepare("INSERT INTO categories (category_name, slug) VALUES (?, ?)");
+    if (!$stmt) {
+        echo json_encode(['status' => 'error', 'message' => $conn->error]);
+        exit;
+    }
+    $stmt->bind_param("ss", $category_name, $slug);
+
+    if ($stmt->execute()) {
+        echo json_encode(['status' => 'category_created']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => $stmt->error]);
+    }
+    $stmt->close();
+    exit;
 }
-?>
+
+/*--------------------------------------------------------------
+ | 3. DELETE CATEGORY
+ *-------------------------------------------------------------*/
+elseif ($action === 'delete_category') {
+    $category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0;
+    if ($category_id <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid Category ID.']);
+        exit;
+    }
+
+    $stmt = $conn->prepare("DELETE FROM categories WHERE category_id = ?");
+    if (!$stmt) {
+        echo json_encode(['status' => 'error', 'message' => $conn->error]);
+        exit;
+    }
+    $stmt->bind_param("i", $category_id);
+
+    if ($stmt->execute()) {
+        echo json_encode(['status' => 'category_deleted']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => $stmt->error]);
+    }
+    $stmt->close();
+    exit;
+}
+
+/*--------------------------------------------------------------
+ | 4. DELETE POST
+ *-------------------------------------------------------------*/
+elseif ($action === 'delete_post') {
+    $post_id = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
+    if ($post_id <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid Post ID.']);
+        exit;
+    }
+
+    $stmt = $conn->prepare("DELETE FROM posts WHERE post_id = ?");
+    if (!$stmt) {
+        echo json_encode(['status' => 'error', 'message' => $conn->error]);
+        exit;
+    }
+    $stmt->bind_param("i", $post_id);
+
+    if ($stmt->execute()) {
+        echo json_encode(['status' => 'post_deleted']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => $stmt->error]);
+    }
+    $stmt->close();
+    exit;
+}
+
+/*--------------------------------------------------------------
+ | 5. UNKNOWN ACTION
+ *-------------------------------------------------------------*/
+else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid action.']);
+    exit;
+}

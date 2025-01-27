@@ -1,8 +1,13 @@
 <?php
-if ($_SESSION['role'] !== 'admin') {
+require_once('../config.php');
+
+// Check if the user is logged in and has the 'admin' role
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'admin') {
+    // Optionally, set a flash message about unauthorized access
     header('Location: ../index.php');
     exit;
 }
+require_once('../admin/admin_includes/admin_heading.php');
 ?>
 <h2 id="manage_artwork_h2">Manage Artwork</h2>
 

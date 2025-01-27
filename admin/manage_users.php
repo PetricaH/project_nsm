@@ -1,11 +1,16 @@
 <?php
-if ($_SESSION['role'] !== 'admin') {
+require_once('../config.php');
+
+// Check if the user is logged in and has the 'admin' role
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'admin') {
+    // Optionally, set a flash message about unauthorized access
     header('Location: ../index.php');
     exit;
 }
 ?>
 <?php
 require_once(realpath(dirname(__FILE__) . '/../init.php'));
+require_once('../admin/admin_includes/admin_heading.php');
 
 // Fetch all users
 $result = $conn->query("SELECT user_id, email, role, created_at FROM users");

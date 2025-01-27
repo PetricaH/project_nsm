@@ -1,0 +1,107 @@
+/* Blog Hero Section */
+.hero_blog_section {
+    position: relative;
+    height: 60vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('path/to/blog-hero-image.jpg') no-repeat center center/cover;
+}
+
+.blog_hero_content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.blog_hero_content h1 {
+    font-size: 5em;
+    text-transform: uppercase;
+    margin-bottom: -35px;
+    color: #0F1413;
+    background: linear-gradient(90deg, rgba(241, 101, 41, 1) 22%, #f2f2f2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.under_h1_text_container p {
+    font-size: 1.2em;
+    color: #f2f2f2;
+}
+
+/* Blog Posts Grid */
+#blog_posts_section, #featured_blog_section {
+    padding: 50px 0;
+    background-color: #0F1413;
+}
+
+.blog_posts_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.blog_post_card {
+    background-color: rgba(222, 76, 54, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.blog_post_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.blog_post_card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.blog_post_card h3 {
+    font-size: 1.5em;
+    color: #f2f2f2;
+    margin-bottom: 10px;
+}
+
+.blog_post_card p {
+    font-size: 1em;
+    color: #f2f2f2;
+    margin-bottom: 15px;
+}
+
+.post_meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #de4c36;
+}
+
+.see_more_container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.see_more_btn {
+    padding: 10px 35px;
+    background-color: #de4c36;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.see_more_btn:hover {
+    background-color: #333333;
+}

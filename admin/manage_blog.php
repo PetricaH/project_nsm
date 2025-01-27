@@ -1,11 +1,14 @@
 <?php
+require_once('../config.php');
 
-if ($_SESSION['role'] !== 'admin') {
+
+// Check if the user is logged in and has the 'admin' role
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'admin') {
+    // Optionally, set a flash message about unauthorized access
     header('Location: ../index.php');
     exit;
 }
 
-require_once('../config.php');
 require_once('../admin/admin_includes/admin_heading.php');
 
 // Fetch existing posts
@@ -156,7 +159,7 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                             <tr>
                                 <th>ID</th>
                                 <th>Title</th>
-                                <th>Slug</th>
+                                <th>Content</th>
                                 <th>Category</th>
                                 <th>Author</th>
                                 <th>Created</th>
@@ -169,9 +172,17 @@ if ($allCategoriesResult && $allCategoriesResult->num_rows > 0) {
                                 <tr data-id="<?php echo $row['post_id']; ?>">
                                     <td><?php echo $row['post_id']; ?></td>
                                     <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['slug']); ?></td>
+                                    <td><?php 
+                                        $raw_content = $row['content'];
+                                        $clean_content = strip_tags($raw_content);
+                                        $preview = mb_substr($clean_content, 0, 50, 'UTF-8');
+                                        if (mb_strlen($clean_content) > 50) {
+                                            $preview .= '...';
+                                        }
+                                        echo htmlspecialchars($preview, ENT_QUOTES, 'UTF-8');
+                                    ?></td>
                                     <td><?php echo htmlspecialchars($row['category_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['author_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['author_id']); ?></td>
                                     <td><?php echo $row['created_at']; ?></td>
                                     <td><?php echo $row['updated_at']; ?></td>
                                     <td>
