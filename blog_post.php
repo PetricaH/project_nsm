@@ -31,13 +31,13 @@ if ($result->num_rows === 0) {
 
 $post = $result->fetch_assoc();
 ?>
-
+<?php include(ROOT_PATH . '/includes/navbar.php'); ?>
 <!-- Blog Post Content -->
 <section class="blog_post_section">
     <div class="container">
         <h1><?php echo htmlspecialchars($post['title']); ?></h1>
         <div class="post_meta">
-            <span class="author">By <?php echo htmlspecialchars($post['author_name']); ?></span>
+            <span class="author">By <?php echo htmlspecialchars($post['author_id']); ?></span>
             <span class="date"><?php echo date('M d, Y', strtotime($post['created_at'])); ?></span>
         </div>
         <?php if (!empty($post['image_url'])) { ?>
