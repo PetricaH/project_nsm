@@ -136,6 +136,64 @@
         <div class="most_recent_art_works" id="artworksGrid"></div>
     </section>
 
+    <div class="cards-container">
+        <!-- Web Development Card -->
+        <article class="card web-dev">
+            <a href="/web-development" class="card-link">
+                <i class="card-icon fas fa-code" aria-hidden="true"></i>
+                <span class="card-title-short">Dev</span>
+                
+                <div class="card-content-full">
+                    <h2 class="card-title-full">Web Development</h2>
+                    <p class="card-description">
+                        Full-stack solutions with modern technologies. Specializing in responsive design, 
+                        API integration, and performance optimization. From concept to deployment.
+                    </p>
+                </div>
+                
+                <p class="card-excerpt">Explore Services</p>
+            </a>
+        </article>
+
+        <!-- Automation Card -->
+        <article class="card automation">
+            <a href="/automation" class="card-link">
+                <i class="card-icon fas fa-robot" aria-hidden="true"></i>
+                <span class="card-title-short">Auto</span>
+                
+                <div class="card-content-full">
+                    <h2 class="card-title-full">Workflow Automation</h2>
+                    <p class="card-description">
+                        Streamline business processes with custom automation solutions. 
+                        Integrate APIs, automate repetitive tasks, and connect your tools.
+                    </p>
+                </div>
+                
+                <p class="card-excerpt">Discover Solutions</p>
+            </a>
+        </article>
+
+        <!-- Digital Art Card -->
+        <article class="card digital-art">
+            <a href="/digital-art" class="card-link">
+                <i class="card-icon fas fa-palette" aria-hidden="true"></i>
+                <span class="card-title-short">Art</span>
+                
+                <div class="card-content-full">
+                    <h2 class="card-title-full">Digital Artistry</h2>
+                    <p class="card-description">
+                        Creative visual solutions including digital illustrations, 
+                        UI/UX design, and branding. Bringing ideas to life through 
+                        modern digital artistry.
+                    </p>
+                </div>
+                
+                <p class="card-excerpt">View Portfolio</p>
+            </a>
+        </article>
+    </div>
+
+
 <!-- Popup Modal Form -->
 <div id="bookingModal" class="booking-modal hidden">
         <div class="booking-modal-content">
@@ -196,8 +254,42 @@
         </div>
     </div>
 
+<script>
+// Add loading state simulation
+document.querySelectorAll('.card').forEach(card => {
+            card.classList.add('loading');
+            setTimeout(() => card.classList.remove('loading'), 1500);
+        });
 
-<!-- Notification Area -->
+        // Touch interaction support
+        let lastTap = 0;
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('touchend', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 500 && tapLength > 0) {
+                    card.click();
+                }
+                lastTap = currentTime;
+            });
+        });
+
+        // Lazy load images (if added later)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target.querySelector('img');
+                    if (img) {
+                        img.src = img.dataset.src;
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.card').forEach(card => observer.observe(card));
+</script>
+    <!-- Notification Area -->
 <div id="notification" class="hidden">
     <p id="notification-message"></p>
 </div>

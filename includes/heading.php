@@ -81,6 +81,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
 
     <!-- Google Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Linking to the stylesheet for the index.php -->
     <link rel="stylesheet" type="text/css" href="static/css/home.css">

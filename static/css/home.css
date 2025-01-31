@@ -6,6 +6,13 @@
     /* scroll-behavior: smooth; */
 }
 
+:root {
+    --bg-color: #0F1413;
+    --accent: #de4c36;
+    --text-primary: #f2f2f2;
+    --text-secondary: #a3a3a3;
+}
+
 button {
     border-radius: 5px !important;
 }
@@ -626,4 +633,282 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-} 
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    width: 100%;
+}
+
+/* Card Base */
+.card {
+    position: relative;
+    background: rgba(15, 20, 19, 0.95);
+    border: 1px solid rgba(222, 76, 54, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    overflow: hidden;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, 
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.008) 100%);
+    backdrop-filter: blur(6px); /* Reduced from 12px */
+    z-index: 1;
+}
+
+/* Original Background Effects */
+.web-dev::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -30%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(222, 76, 54, 0.15) 0%,
+        transparent 60%);
+    z-index: 0; /* Below overlay */
+    opacity: 0.8; /* Increased opacity */
+}
+
+.automation::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(222, 76, 54, 0.08) 40px, /* Increased opacity */
+        rgba(222, 76, 54, 0.08) 80px
+    );
+    z-index: 0;
+    opacity: 0.7;
+}
+
+.digital-art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg,
+        transparent 65%,
+        rgba(222, 76, 54, 0.12) 100%); /* Increased opacity */
+    z-index: 0;
+    opacity: 0.9;
+}
+
+.card-icon,
+.card-title-short,
+.card-content-full,
+.card-excerpt {
+    position: relative;
+    z-index: 2; /* Above both overlays */
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: contents;
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.card-title-short {
+    font-family: "Reenie Beanie", cursive;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.2;
+    z-index: 1;
+}
+
+.card-excerpt {
+    display: none;
+    position: absolute;
+    bottom: 1rem;
+    padding: 8px 20px;
+    background: rgba(222, 76, 54, 0.2);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+    text-decoration: none;
+}
+
+.card-content-full {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.card-title-full {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 600px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .card {
+        min-height: 200px;
+        padding: 1.2rem;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+    }
+
+    .card-title-short {
+        font-size: 1.4rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2rem;
+    }
+
+    .card {
+        min-height: 300px;
+        padding: 1.5rem;
+    }
+
+    .card-excerpt {
+        display: block;
+    }
+
+    .card:hover .card-excerpt {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .card {
+        min-height: 400px;
+        padding: 2rem;
+        justify-content: flex-start;
+    }
+
+    .card-content-full {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .card-title-short {
+        display: none;
+    }
+
+    .card-excerpt {
+        position: relative;
+        bottom: auto;
+        margin-top: auto;
+        opacity: 1;
+        background: transparent;
+        padding: 0;
+        font-size: 1rem;
+        color: var(--accent);
+    }
+
+    .card-excerpt::after {
+        content: '→';
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-excerpt::after {
+        transform: translateX(3px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+        min-height: 420px;
+    }
+
+    .card-description {
+        -webkit-line-clamp: 5;
+    }
+}
+
+/* Interactions */
+@media (hover: hover) {
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(222, 76, 54, 0.2);
+        border-color: rgba(222, 76, 54, 0.4);
+    }
+    
+    .card:hover::after {
+        filter: brightness(1.1); /* Enhance background on hover */
+    }
+}
+
+/* Responsive Background Sizing */
+@media (max-width: 768px) {
+    .web-dev::after {
+        bottom: -20%;
+        right: -20%;
+    }
+
+    .automation::after {
+        top: -30%;
+        left: -30%;
+    }
+}
+
+/* Accessibility */
+.card:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
