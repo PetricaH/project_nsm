@@ -130,9 +130,19 @@ window.initManageBlog = function initManageBlog() {
     blogForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      CKEDITOR.instances.contentField.updateElement();
+      // Ensure CKEditor content is added
+      if (CKEDITOR.instances.contentField) {
+        CKEDITOR.instances.contentField.updateElement();
+        console.log("CKEditor content:", CKEDITOR.instances.contentField.getData()); // Debugging
+      } else {
+        console.error("CKEditor instance is missing.");
+      }
 
       const formData = new FormData(blogForm);
+
+      // Debugging: Check if content is being added to formData
+      console.log("FormData content:", formData.get("content"));
+
       fetch("admin_includes/blog_actions/process_blog.php", {
         method: "POST",
         body: formData

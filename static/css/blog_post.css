@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Centers vertically */
     padding-top: 70px; /* Prevents overlap with navbar */
     min-height: 100vh;
     padding-bottom: 50px;
@@ -18,6 +17,8 @@
     max-width: 900px; /* Prevents section from getting too large */
     width: 80%; /* Allows shrinkage based on screen size */
     text-align: center;
+    margin: 100px auto; /* Centers the post and prevents navbar/footer overlap */
+    overflow: hidden; /* Prevents content from overflowing */
 }
 
 /* Blog Title */
@@ -55,7 +56,10 @@
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 10px;
+    word-wrap: break-word; /* Ensures long words don’t break layout */
+    overflow: hidden; /* Prevents content overflow */
 }
+
 
 /* Responsive Fixes */
 @media (max-width: 768px) {
