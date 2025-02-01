@@ -88,3 +88,111 @@
         font-size: 0.95rem;
     }
 }
+
+/* Social Share Buttons */
+.social_share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.social_share p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.share_btn {
+    padding: 10px 15px;
+    margin: 5px;
+    color: rgb(255, 255, 255, .5);
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.3s;
+}
+
+.share_btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+    color: rgb(255, 255, 255, 1);
+}
+
+/* Related Posts */
+.related_posts {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.related_posts h2 {
+    font-size: 2rem;
+    color: #f2f2f2;
+    margin-bottom: 20px;
+}
+
+.related_posts_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.related_post_card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.related_post_card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.related_post_card h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.related_post_card:hover {
+    transform: scale(1.05);
+}
+
+/* Dark/Light Mode Styling (Only for Blog Post) */
+.blog_post_section.light_mode {
+    background: white;
+    color: #0F1413;
+}
+
+.blog_post_section.light_mode h1,
+.blog_post_section.light_mode .social_share a,
+.blog_post_section.light_mode .social_share p,
+.blog_post_section.light_mode .related_posts h2 { 
+    color: #0F1413;
+}
+
+.blog_post_section.light_mode .post_meta {
+    color: #555;
+}
+
+.blog_post_section.light_mode .post_content {
+    background: rgba(0, 0, 0, 0.05);
+    color: #0F1413 !important;
+}
+
+.blog_post_section.light_mode .related_post_card {
+    background: rgba(0, 0, 0, 0.05);
+    color: #0F1413 !important;
+}
+
+#mode_toggle {
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

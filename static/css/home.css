@@ -861,6 +861,7 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: hidden;
+    max-width: 350px !important;
 }
 
 .blog_post_card::before {
@@ -948,6 +949,7 @@ body {
 
     .blog_post_card {
         padding: 15px;
+        max-width: 350px;
     }
 
     .blog_post_card h3 {

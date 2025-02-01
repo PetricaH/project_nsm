@@ -44,6 +44,31 @@
     </div>
 </footer>
 <link rel="stylesheet" type="text/css" href="static/css/footer.css">
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modeToggle = document.getElementById("mode_toggle");
+    const postSection = document.querySelector(".blog_post_section");
+
+    // Check for saved theme preference for blog post section
+    if (localStorage.getItem("blog_theme") === "light") {
+        postSection.classList.add("light_mode");
+        modeToggle.innerText = "☀️";
+    }
+
+    modeToggle.addEventListener("click", function () {
+        postSection.classList.toggle("light_mode");
+
+        if (postSection.classList.contains("light_mode")) {
+            localStorage.setItem("blog_theme", "light");
+            modeToggle.innerText = "☀️";
+        } else {
+            localStorage.setItem("blog_theme", "dark");
+            modeToggle.innerText = "🌙";
+        }
+    });
+});
+</script>
+
 </body>
 
 </html>

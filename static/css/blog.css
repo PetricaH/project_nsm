@@ -22,8 +22,9 @@
 
 /* Blog Posts Grid */
 .blog_list_page .blog_posts_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 25px;
     padding: 0 20px;
 }
@@ -34,7 +35,8 @@
     padding: 20px;
     border-radius: 12px;
     position: relative;
-    z-index: 2; /* Ensures button is above other elements */
+    z-index: 2; 
+    min-width: 350px;
 }
 
 .blog_list_page .see_more_btn {

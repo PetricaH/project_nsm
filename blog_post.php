@@ -37,6 +37,7 @@ $post = $result->fetch_assoc();
 <!-- Blog Post Content -->
 <div class="blog_post_page">
     <section class="blog_post_section">
+    <button id="mode_toggle">🌙</button>
         <div class="container">
             <h1><?php echo htmlspecialchars($post['title']); ?></h1>
 
@@ -53,6 +54,36 @@ $post = $result->fetch_assoc();
 
             <div class="post_content">
                 <?php echo nl2br($post['content']); ?>
+            </div>
+        </div>
+        <!-- Social Share Section -->
+        <div class="social_share">
+            <p>Share this post:</p>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn facebook">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>&text=<?php echo urlencode($post['title']); ?>" target="_blank" class="share_btn twitter">Twitter</a>
+            <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Check this out: " . $post['title'] . " https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn whatsapp">WhatsApp</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn linkedin">LinkedIn</a>
+        </div>
+
+        <!-- Related Posts Section -->
+        <div class="related_posts">
+            <h2>Related Posts</h2>
+            <div class="related_posts_grid">
+                <?php
+                $related_sql = "SELECT title, slug, image_url FROM posts 
+                                WHERE category_id = ? AND slug != ? 
+                                ORDER BY created_at DESC LIMIT 3";
+                $stmt_related = $conn->prepare($related_sql);
+                $stmt_related->bind_param("is", $post['category_id'], $post['slug']);
+                $stmt_related->execute();
+                $related_result = $stmt_related->get_result();
+
+                while ($related_post = $related_result->fetch_assoc()) { ?>
+                    <a href="blog_post.php?slug=<?php echo $related_post['slug']; ?>" class="related_post_card">
+                        <img src="<?php echo $related_post['image_url'] ?: 'images/default-blog.jpg'; ?>" alt="<?php echo htmlspecialchars($related_post['title']); ?>">
+                        <h3><?php echo htmlspecialchars($related_post['title']); ?></h3>
+                    </a>
+                <?php } ?>
             </div>
         </div>
     </section>
