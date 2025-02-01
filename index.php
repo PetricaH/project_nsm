@@ -8,15 +8,77 @@
     <?php include(ROOT_PATH . '/includes/navbar.php'); ?>
 
     <section id="hero_section">
-        <div class="name_container">
-            <div class="hreniuc">
-                <span id="hreniuc_span">Hreniuc</span>
-                <div class="petrica">
-                    <span id="petrica_span">Petrica</span>
+        <div class="hero_section_inner_background_container">
+            <div class="text_hero_part_container">
+                <div class="name_container">
+                    <div class="hreniuc">
+                        <span id="hreniuc_span">Hreniuc</span>
+                        <div class="petrica">
+                            <span id="petrica_span">Petrica</span>
+                        </div>
+                    </div>
                 </div>
+                <img src="static/images/me.png" id="me_hero_section_img" alt="Me">
             </div>
+
+            <div class="cards-container">
+            <!-- Web Development Card -->
+            <article class="card web-dev">
+                <a href="webdev.php" class="card-link">
+                    <i class="card-icon fas fa-code" aria-hidden="true"></i>
+                    <span class="card-title-short">Dev</span>
+                    
+                    <div class="card-content-full">
+                        <h2 class="card-title-full">Web Development</h2>
+                        <p class="card-description">
+                            Full-stack solutions with modern technologies. Specializing in responsive design, 
+                            API integration, and performance optimization. From concept to deployment.
+                        </p>
+                    </div>
+                    
+                    <p class="card-excerpt">Explore Services</p>
+                </a>
+            </article>
+
+            <!-- Automation Card -->
+            <article class="card automation">
+                <a href="automation.php" class="card-link">
+                    <i class="card-icon fas fa-robot" aria-hidden="true"></i>
+                    <span class="card-title-short">Auto</span>
+                    
+                    <div class="card-content-full">
+                        <h2 class="card-title-full">Workflow Automation</h2>
+                        <p class="card-description">
+                            Streamline business processes with custom automation solutions. 
+                            Integrate APIs, automate repetitive tasks, and connect your tools.
+                        </p>
+                    </div>
+                    
+                    <p class="card-excerpt">Discover Solutions</p>
+                </a>
+            </article>
+
+            <!-- Digital Art Card -->
+            <article class="card digital-art">
+                <a href="artworks.php" class="card-link">
+                    <i class="card-icon fas fa-palette" aria-hidden="true"></i>
+                    <span class="card-title-short">Art</span>
+                    
+                    <div class="card-content-full">
+                        <h2 class="card-title-full">Digital Artistry</h2>
+                        <p class="card-description">
+                            Creative visual solutions including digital illustrations, 
+                            UI/UX design, and branding. Bringing ideas to life through 
+                            modern digital artistry.
+                        </p>
+                    </div>
+                    
+                    <p class="card-excerpt">View Portfolio</p>
+                </a>
+            </article>
         </div>
-        <img src="static/images/me.png" id="me_hero_section_img" alt="Me">
+        <div class="hero_bg_top_layer_inner_container"></div>
+    </div>
         <div class="hero_bg_top_layer"></div>
     </section>
 
@@ -135,64 +197,6 @@
         </div>
         <div class="most_recent_art_works" id="artworksGrid"></div>
     </section>
-
-    <div class="cards-container">
-        <!-- Web Development Card -->
-        <article class="card web-dev">
-            <a href="/web-development" class="card-link">
-                <i class="card-icon fas fa-code" aria-hidden="true"></i>
-                <span class="card-title-short">Dev</span>
-                
-                <div class="card-content-full">
-                    <h2 class="card-title-full">Web Development</h2>
-                    <p class="card-description">
-                        Full-stack solutions with modern technologies. Specializing in responsive design, 
-                        API integration, and performance optimization. From concept to deployment.
-                    </p>
-                </div>
-                
-                <p class="card-excerpt">Explore Services</p>
-            </a>
-        </article>
-
-        <!-- Automation Card -->
-        <article class="card automation">
-            <a href="/automation" class="card-link">
-                <i class="card-icon fas fa-robot" aria-hidden="true"></i>
-                <span class="card-title-short">Auto</span>
-                
-                <div class="card-content-full">
-                    <h2 class="card-title-full">Workflow Automation</h2>
-                    <p class="card-description">
-                        Streamline business processes with custom automation solutions. 
-                        Integrate APIs, automate repetitive tasks, and connect your tools.
-                    </p>
-                </div>
-                
-                <p class="card-excerpt">Discover Solutions</p>
-            </a>
-        </article>
-
-        <!-- Digital Art Card -->
-        <article class="card digital-art">
-            <a href="/digital-art" class="card-link">
-                <i class="card-icon fas fa-palette" aria-hidden="true"></i>
-                <span class="card-title-short">Art</span>
-                
-                <div class="card-content-full">
-                    <h2 class="card-title-full">Digital Artistry</h2>
-                    <p class="card-description">
-                        Creative visual solutions including digital illustrations, 
-                        UI/UX design, and branding. Bringing ideas to life through 
-                        modern digital artistry.
-                    </p>
-                </div>
-                
-                <p class="card-excerpt">View Portfolio</p>
-            </a>
-        </article>
-    </div>
-
 
 <!-- Popup Modal Form -->
 <div id="bookingModal" class="booking-modal hidden">

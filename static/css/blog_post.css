@@ -1,0 +1,90 @@
+/* Ensures entire post page is centered */
+.blog_post_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Centers vertically */
+    padding-top: 70px; /* Prevents overlap with navbar */
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+/* Blog Post Section */
+.blog_post_section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 40px;
+    min-width: 600px; /* Ensures section has a minimum width */
+    max-width: 900px; /* Prevents section from getting too large */
+    width: 80%; /* Allows shrinkage based on screen size */
+    text-align: center;
+}
+
+/* Blog Title */
+.blog_post_section h1 {
+    font-size: 2.8rem;
+    color: #f2f2f2;
+    text-transform: capitalize;
+}
+
+/* Post Meta */
+.post_meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #a3a3a3;
+    margin-bottom: 20px;
+}
+
+/* Blog Image */
+.post_image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Blog Content */
+.post_content {
+    font-size: 1.1rem;
+    color: #a3a3a3;
+    text-align: justify;
+    line-height: 1.8;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .blog_post_section {
+        min-width: 90%;
+        width: 90%;
+        padding: 20px;
+    }
+
+    .blog_post_section h1 {
+        font-size: 2.2rem;
+    }
+
+    .post_image {
+        max-height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog_post_section {
+        min-width: 95%;
+        width: 95%;
+    }
+
+    .blog_post_section h1 {
+        font-size: 1.8rem;
+    }
+
+    .post_content {
+        font-size: 0.95rem;
+    }
+}

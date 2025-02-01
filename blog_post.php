@@ -1,11 +1,11 @@
 <?php require_once('config.php'); ?>
-
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
 
-<?php $page_css = 'blog.css';?>
+<?php $page_css = 'blog_post.css'; ?>
 
 <?php
 $slug = $_GET['slug'] ?? '';
+
 if (empty($slug)) {
     header('Location: blog.php');
     exit;
@@ -31,22 +31,31 @@ if ($result->num_rows === 0) {
 
 $post = $result->fetch_assoc();
 ?>
+
 <?php include(ROOT_PATH . '/includes/navbar.php'); ?>
+
 <!-- Blog Post Content -->
-<section class="blog_post_section">
-    <div class="container">
-        <h1><?php echo htmlspecialchars($post['title']); ?></h1>
-        <div class="post_meta">
-            <span class="author">By <?php echo htmlspecialchars($post['author_id']); ?></span>
-            <span class="date"><?php echo date('M d, Y', strtotime($post['created_at'])); ?></span>
+<div class="blog_post_page">
+    <section class="blog_post_section">
+        <div class="container">
+            <h1><?php echo htmlspecialchars($post['title']); ?></h1>
+
+            <div class="post_meta">
+                <span class="author">By <?php echo htmlspecialchars($post['author_id']); ?></span>
+                <span class="date"><?php echo date('M d, Y', strtotime($post['created_at'])); ?></span>
+            </div>
+
+            <?php if (!empty($post['image_url'])) { ?>
+                <img src="<?php echo $post['image_url']; ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="post_image">
+            <?php } else { ?>
+                <img src="/images/default-blog.jpg" alt="Default Blog Image" class="post_image">
+            <?php } ?>
+
+            <div class="post_content">
+                <?php echo nl2br($post['content']); ?>
+            </div>
         </div>
-        <?php if (!empty($post['image_url'])) { ?>
-            <img src="<?php echo $post['image_url']; ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="post_image">
-        <?php } ?>
-        <div class="post_content">
-            <?php echo nl2br(htmlspecialchars($post['content'])); ?>
-        </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <?php include('includes/footer.php'); ?>

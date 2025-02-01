@@ -13,6 +13,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="artworks.php">Artworks</a></li>
                 <li><a href="automation.php">Automation</a></li>
+                <li><a href="webdev.php">Web Dev</a></li>
                 <li><a onclick="openBookingModal()" style="cursor: pointer;">Contact</a></li>
             </ul>
         </div>
