@@ -73,6 +73,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Doing important things for important individuals.">
 
     <!-- Poppins and Reenie Beanie fonts linking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -158,7 +159,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
 
         .cookie-buttons button {
             background-color: #de4c36;
-            color: #f2f2f2;
+            color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -181,6 +182,10 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
 
         .cookie-buttons button#reject-cookies:hover {
             background-color: rgba(242, 242, 242, 0.1);
+        }
+
+        #accept-cookies {
+            color:rgb(255, 255, 255);
         }
     </style>
 </head>
