@@ -2,9 +2,9 @@
 (function () {
     // Define all the API endpoints in one place for easy reference
     const API_ENDPOINTS = {
-        artworks: '/project_nsm/admin/admin_includes/artworks_actions/get_artworks.php', // For loading artworks
-        register: '/project_nsm/includes/register_handler.php', // For handling user registration
-        login: '/project_nsm/includes/login_handler.php', // For handling user login
+        artworks: '/admin/admin_includes/artworks_actions/get_artworks.php', // For loading artworks
+        register: '/includes/register_handler.php', // For handling user registration
+        login: '/includes/login_handler.php', // For handling user login
     };
 
     // Store commonly accessed DOM elements to reduce repetitive queries
@@ -227,3 +227,253 @@
     // Run the initialization function when the DOM content is loaded
     document.addEventListener('DOMContentLoaded', init);
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the menu toggle and nav menu elements
+    const menuToggle = document.getElementById('menu_toggle');
+    const navMenu = document.getElementById('nav_menu');
+    
+    if (menuToggle && navMenu) {
+        // Add click event listener to menu toggle
+        menuToggle.addEventListener('click', function(e) {
+            console.log("Menu toggle clicked");
+            
+            // Toggle open class on menu toggle
+            this.classList.toggle('open');
+            console.log("Menu toggle has 'open' class:", this.classList.contains('open'));
+            
+            // Toggle active class on nav menu
+            navMenu.classList.toggle('active');
+            console.log("Nav menu has 'active' class:", navMenu.classList.contains('active'));
+            
+            // Log the computed style of nav menu to see if it's actually changing
+            const computedStyle = window.getComputedStyle(navMenu);
+            console.log("Nav menu transform:", computedStyle.transform);
+            console.log("Nav menu display:", computedStyle.display);
+            console.log("Nav menu visibility:", computedStyle.visibility);
+            console.log("Nav menu opacity:", computedStyle.opacity);
+            
+            // Prevent default behavior to ensure the click event isn't being intercepted
+            e.preventDefault();
+        });
+    } else {
+        console.error("Menu toggle or nav menu element not found!");
+    }
+});
+
+/* Simple case study switching script */
+document.addEventListener('DOMContentLoaded', function() {
+    const navButtons = document.querySelectorAll('.case-nav-btn');
+    const caseStudies = document.querySelectorAll('.case-study-container');
+    
+    navButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const studyId = this.getAttribute('data-study');
+            
+            // Update active button
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show selected case study
+            caseStudies.forEach(study => {
+                if (study.id === `${studyId}-case`) {
+                    study.classList.add('active');
+                } else {
+                    study.classList.remove('active');
+                }
+            });
+        });
+    });
+});
+
+// Add this to your public_script.js file or create a new file case-studies.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Case study navigation
+    const navButtons = document.querySelectorAll('.case-nav-btn');
+    const caseStudies = document.querySelectorAll('.case-study-container');
+    
+    if (navButtons.length > 0 && caseStudies.length > 0) {
+        navButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const studyId = this.getAttribute('data-study');
+                
+                // Update active button
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show selected case study with animation
+                caseStudies.forEach(study => {
+                    study.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        study.classList.remove('active');
+                        if (study.id === `${studyId}-case`) {
+                            study.classList.add('active');
+                            setTimeout(() => {
+                                study.style.opacity = '1';
+                            }, 50);
+                        }
+                    }, 300);
+                });
+            });
+        });
+    }
+    
+    // Create placeholder SVG diagrams if they don't exist
+    const diagramPlaceholders = document.querySelectorAll('.diagram-placeholder');
+    
+    diagramPlaceholders.forEach(placeholder => {
+        if (!placeholder.getAttribute('src') || placeholder.getAttribute('src').includes('placeholder')) {
+            // Create a simple placeholder diagram with SVG
+            createPlaceholderDiagram(placeholder);
+        }
+    });
+    
+    function createPlaceholderDiagram(element) {
+        // Get the parent container dimensions
+        const container = element.parentElement;
+        const width = container.offsetWidth || 600;
+        const height = 300;
+        
+        // Create an SVG string with a basic workflow diagram
+        const svgId = element.getAttribute('alt').includes('E-Commerce') ? 'ecommerce' : 'samples';
+        
+        let svgContent = '';
+        
+        if (svgId === 'ecommerce') {
+            svgContent = `
+            <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    .box { fill: rgba(70, 130, 180, 0.1); stroke: rgba(70, 130, 180, 0.3); stroke-width: 1; }
+                    .arrow { stroke: rgba(70, 130, 180, 0.5); stroke-width: 1.5; }
+                    .text { fill: #AAAAAA; font-family: sans-serif; font-size: 12px; text-anchor: middle; }
+                    .node-title { fill: #FFFFFF; font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+                </style>
+                
+                <!-- Website Node -->
+                <rect class="box" x="50" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="110" y="95">Website</text>
+                <text class="text" x="110" y="115">CUI Verification</text>
+                
+                <!-- Arrow 1 -->
+                <line class="arrow" x1="170" y1="100" x2="220" y2="100" />
+                <polygon points="220,95 230,100 220,105" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Verification Node -->
+                <rect class="box" x="230" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="290" y="95">Verification</text>
+                <text class="text" x="290" y="115">Database Check</text>
+                
+                <!-- Arrow 2 -->
+                <line class="arrow" x1="350" y1="100" x2="400" y2="100" />
+                <polygon points="400,95 410,100 400,105" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Request Node -->
+                <rect class="box" x="410" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="470" y="95">Request System</text>
+                <text class="text" x="470" y="115">Products/Technical</text>
+                
+                <!-- Arrow Down -->
+                <line class="arrow" x1="470" y1="130" x2="470" y2="170" />
+                <polygon points="465,170 470,180 475,170" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Staff Node -->
+                <rect class="box" x="410" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="470" y="205">Staff</text>
+                <text class="text" x="470" y="225">Notification</text>
+                
+                <!-- Connected Systems -->
+                <rect class="box" x="50" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="110" y="205">Brevo API</text>
+                <text class="text" x="110" y="225">Email Verification</text>
+                
+                <rect class="box" x="230" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="290" y="205">Database</text>
+                <text class="text" x="290" y="225">Client Records</text>
+                
+                <!-- Connection Lines -->
+                <line class="arrow" x1="110" y1="180" x2="110" y2="140" />
+                <line class="arrow" x1="110" y1="140" x2="290" y2="140" />
+                <line class="arrow" x1="290" y1="140" x2="290" y2="180" />
+                
+                <line class="arrow" x1="290" y1="180" x2="290" y2="150" />
+                <line class="arrow" x1="290" y1="150" x2="410" y2="150" />
+            </svg>`;
+        } else {
+            svgContent = `
+            <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    .box { fill: rgba(70, 130, 180, 0.1); stroke: rgba(70, 130, 180, 0.3); stroke-width: 1; }
+                    .arrow { stroke: rgba(70, 130, 180, 0.5); stroke-width: 1.5; }
+                    .text { fill: #AAAAAA; font-family: sans-serif; font-size: 12px; text-anchor: middle; }
+                    .node-title { fill: #FFFFFF; font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+                </style>
+                
+                <!-- Form Node -->
+                <rect class="box" x="50" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="110" y="95">Request Form</text>
+                <text class="text" x="110" y="115">Sales Agent</text>
+                
+                <!-- Arrow 1 -->
+                <line class="arrow" x1="170" y1="100" x2="220" y2="100" />
+                <polygon points="220,95 230,100 220,105" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Database Node -->
+                <rect class="box" x="230" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="290" y="95">Database</text>
+                <text class="text" x="290" y="115">Request Storage</text>
+                
+                <!-- Arrow 2 -->
+                <line class="arrow" x1="350" y1="100" x2="400" y2="100" />
+                <polygon points="400,95 410,100 400,105" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Zapier Node -->
+                <rect class="box" x="410" y="70" width="120" height="60" rx="2" />
+                <text class="node-title" x="470" y="95">Zapier</text>
+                <text class="text" x="470" y="115">Automation Hub</text>
+                
+                <!-- Arrows to channels -->
+                <line class="arrow" x1="470" y1="130" x2="470" y2="150" />
+                <line class="arrow" x1="470" y1="150" x2="350" y2="150" />
+                <line class="arrow" x1="470" y1="150" x2="590" y2="150" />
+                
+                <line class="arrow" x1="350" y1="150" x2="350" y2="170" />
+                <polygon points="345,170 350,180 355,170" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <line class="arrow" x1="590" y1="150" x2="590" y2="170" />
+                <polygon points="585,170 590,180 595,170" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Email Node -->
+                <rect class="box" x="290" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="350" y="205">Email</text>
+                <text class="text" x="350" y="225">Client Notification</text>
+                
+                <!-- WhatsApp Node -->
+                <rect class="box" x="530" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="590" y="205">WhatsApp</text>
+                <text class="text" x="590" y="225">Messaggio API</text>
+                
+                <!-- Webhook Node -->
+                <rect class="box" x="410" y="180" width="120" height="60" rx="2" />
+                <text class="node-title" x="470" y="205">Webhook</text>
+                <text class="text" x="470" y="225">Response Capture</text>
+                
+                <!-- Final Arrow -->
+                <line class="arrow" x1="470" y1="240" x2="470" y2="260" />
+                <polygon points="465,260 470,270 475,260" fill="rgba(70, 130, 180, 0.5)" />
+                
+                <!-- Marketing Node -->
+                <rect class="box" x="410" y="270" width="120" height="60" rx="2" />
+                <text class="node-title" x="470" y="295">Brevo</text>
+                <text class="text" x="470" y="315">Marketing Automation</text>
+            </svg>`;
+        }
+        
+        // Create a data URI for the SVG
+        const svgDataUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgContent);
+        
+        // Set the src attribute of the image
+        element.setAttribute('src', svgDataUri);
+    }
+});

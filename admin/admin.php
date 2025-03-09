@@ -24,6 +24,7 @@ $allowed_pages = [
     'manage_blog'      => 'manage_blog.php',
     'manage_bookings'  => 'manage_bookings.php',
     'manage_users'     => 'manage_users.php',
+    'manage_webdev'    => 'manage_webdev.php',
 ];
 
 /****************************************************
@@ -61,34 +62,26 @@ require_once('../admin/admin_includes/admin_navbar.php');
 <!-- Your main layout starts here -->
 <div class="sidebar">
     <ul>
-        <li><a href="?page=manage_artwork" class="tab">Manage Artwork</a></li>
-        <li><a href="?page=manage_blog" class="tab">Manage Blog</a></li>
-        <li><a href="?page=manage_bookings" class="tab">Manage Bookings</a></li>
-        <li><a href="?page=manage_users" class="tab">Manage Users</a></li>
+        <li><a href="?page=manage_artwork" class="tab <?php echo $page === 'manage_artwork' ? 'active' : ''; ?>">Manage Artwork</a></li>
+        <li><a href="?page=manage_blog" class="tab <?php echo $page === 'manage_blog' ? 'active' : ''; ?>">Manage Blog</a></li>
+        <li><a href="?page=manage_bookings" class="tab <?php echo $page === 'manage_bookings' ? 'active' : ''; ?>">Manage Bookings</a></li>
+        <li><a href="?page=manage_users" class="tab <?php echo $page === 'manage_users' ? 'active' : ''; ?>">Manage Users</a></li>
+        <li><a href="?page=manage_webdev" class="tab <?php echo $page === 'manage_webdev' ? 'active' : ''; ?>">Manage Web Projects</a></li>
     </ul>
 </div>
 
 <div class="main_content">
-    <?php echo $content; ?>
+    <?php 
+    // Display status messages if present
+    if (isset($_GET['status'])) {
+        $statusClass = $_GET['status'] === 'success' ? 'success' : 'error';
+        $message = $_GET['message'] ?? ($_GET['status'] === 'success' ? 'Operation completed successfully!' : 'An error occurred.');
+        echo "<div class='notification {$statusClass}'>{$message}</div>";
+    }
+    
+    // Display the page content
+    echo $content; 
+    ?>
 </div>
-
-<!-- Success/Error Messages -->
-<?php if (isset($_GET['status'])): ?>
-    <div class="notification <?= htmlspecialchars($_GET['status']); ?>">
-        <?php
-        switch ($_GET['status']) {
-            case 'success':
-                echo 'User deleted successfully!';
-                break;
-            case 'error':
-                echo 'Failed to delete the user.';
-                break;
-            case 'invalid':
-                echo 'Invalid user ID.';
-                break;
-        }
-        ?>
-    </div>
-<?php endif; ?>
 
 <?php include ('../admin/admin_includes/admin_footer.php'); ?>

@@ -1,506 +1,513 @@
-@media (max-width: 1785px) {
-    #nav_menu {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: left;
-        /* edit to 0 and 0 to go back */
-        max-height: 0;
-        opacity: 0;
-        /*  */
-        overflow: hidden;
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-        background-color: rgba(15, 20, 19, 0.95);
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100vh;
-        z-index: 1000;
-    }
-
-    #nav_menu.active {
-        max-height: 100vh; /* Expand to full height */
-        opacity: 1; /* Fully visible */
-    }
-
-    /* Menu items animation */
-    #nav_menu li {
-        list-style: none;
-        opacity: 0; /* Start hidden */
-        transform: translateY(20px); /* Positioned slightly lower */
-        transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth fade and slide */
-        text-align: right;
-        padding-right: 20px;
-        padding-bottom: 10px;
-    }
-
-    #nav_menu.active li {
-        top: 50%;
-        opacity: 1; /* Fully visible */
-        transform: translateY(0); /* Reset position */
-    }
-
-    #nav_menu.active li a  {
-        color: #f2f2f2;
-        text-decoration: none;
-    }
-
-    /* Staggered animation for list items */
-    #nav_menu.active li:nth-child(1) {
-        transition-delay: 0.3s;
-    }
-    #nav_menu.active li:nth-child(2) {
-        transition-delay: 0.4s;
-    }
-    #nav_menu.active li:nth-child(3) {
-        transition-delay: 0.5s;
-    }
-    #nav_menu.active li:nth-child(4) {
-        transition-delay: 0.6s;
-    }
-    #nav_menu.active li:nth-child(5) {
-        transition-delay: 0.7s;
-    }
-
-    #nav_menu li a {
-        color: #f2f2f2;
-        text-decoration: none;
-        font-size: 24px;
-    }
-
-    .menu_toggle {
-        z-index: 9999 !important;
-        display: block !important;
-    }
-
-    #authFormsContainer {
-        position: relative;
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-    
-    .form-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        pointer-events: none; /* Prevent interaction when hidden */
-    }
-    
-    .form-wrapper.active {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: all; /* Allow interaction when active */
-    }
-
-    form.auth_form {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100%;
-    }
-
-    form.auth_form input {
-        display: block;
-        width: 100%;
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ccc;
-    }
-    
-    form.auth_form button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #ff6347;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    form.auth_form button:hover {
-        background-color: #e5533d;
-    }
-    
-    .switch-text {
-        text-align: center;
-        margin-top: 10px;
-        color: #f2f2f2;
-    }
-    
-    .switch-button {
-        background: none;
-        border: none;
-        color: #ff6347;
-        cursor: pointer;
-        font-size: 1em;
-        text-decoration: underline;
-    }
-    
-    .switch-button:hover {
-        color: #e5533d;
-    }
-}
-
-@media (min-width: 1786px) {
-    /* Ensure nav_menu styling for wider screens */
-    #nav_menu {
-        width: 70%;
-        display: flex;
-        list-style-type: none;
-        gap: 30px;
-        justify-content: center; /* Center the menu items */
-        align-items: center; /* Align menu items vertically */
-        position: static; /* Default position for desktop */
-        height: auto; /* Remove fixed height for larger screens */
-        opacity: 1; /* Fully visible by default */
-    }
-
-    #nav_menu > li > a {
-        color: #f2f2f2;
-        text-decoration: none;
-        font-size: 16px; /* Adjust font size for wider screens */
-        padding: 10px 15px; /* Add padding for easier clickability */
-    }
-
-    /* Remove animations for wider screens if not needed */
-    #nav_menu li {
-        opacity: 1;
-        transform: translateY(0);
-        transition: none; /* Disable transition for desktop */
-    }
-
-    /* Navbar Styling for Desktop */
-    .menu_toggle {
-        display: none; /* Hide the menu toggle for larger screens */
-    }
-
-    /* Auth Form Styling for Horizontal Inputs */
-    form.auth_form {
-        display: flex;
-        flex-direction: row; /* Arrange inputs and buttons horizontally */
-        flex-wrap: wrap; /* Allow wrapping if the screen size becomes smaller */
-        gap: 15px; /* Space between inputs and buttons */
-        justify-content: center; /* Center the inputs horizontally */
-        align-items: center; /* Align inputs vertically */
-        width: 100%; /* Ensure form spans the container */
-    }
-
-    form.auth_form input {
-        flex: 1; /* Inputs share equal space */
-        min-width: 150px; /* Ensure inputs don’t shrink too much */
-        max-width: 180px; /* Optional: Set a max width for consistency */
-        padding: 5px;
-        border: 1px solid #de4c36;
-        border-radius: 4px;
-    }
-
-    form.auth_form button {
-        padding: 6px 10px;
-        flex: 0; /* Button does not grow */
-        border: none;
-        border-radius: 4px;
-        background-color: #ff6347;
-        color: #fff;
-        cursor: pointer;
-        min-width: 120px; /* Ensure the button has a minimum size */
-    }
-
-    form.auth_form button:hover {
-        background-color: #e5533d;
-    }
-
-    /* Ensure headers and switch text align properly */
-
-    .switch-text {
-        flex: 1 0 100%; /* Ensure switch text spans full width */
-        text-align: center;
-        margin-top: 10px;
-        color: #f2f2f2;
-    }
-
-    .switch-button {
-        background: none;
-        border: none;
-        color: #ff6347;
-        cursor: pointer;
-        font-size: 1em;
-        text-decoration: underline;
-    }
-
-    .switch-button:hover {
-        color: #e5533d;
-    }
-
-    /* Ensure modal styles remain consistent */
-    .modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 300px;
-        background: #fff;
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-        z-index: 9999;
-    }
-
-    .modal form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .modal form input {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .modal form button {
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .modal form button:hover {
-        background-color: #0056b3;
-    }
-
-    .modal .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-    }
-
-    #authFormsContainer {
-        position: relative;
-        width: 100%;
-        max-width: 450px;
-        margin: 0 auto;
-    }
-
-    .form-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        pointer-events: none; /* Prevent interaction when hidden */
-    }
-    
-    .form-wrapper.active {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: all; /* Allow interaction when active */
-    }
-}
-
-/* navbar when tablet or desktop */
-.navbar {
-    background-image: linear-gradient( to bottom, rgba(15, 20, 19, 1), rgba(15, 20, 19, 0.8), rgba(15, 20, 19, 0.4), rgba(15, 20, 19, 0.2), rgba(15, 20, 19, 0) );
-    height: 100px;
-    margin: 0 auto;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    width: 100%;
-    z-index: 9999;
-}
+/* Modern navbar styling to match the home page design */
+/* Add this to your navbar.css */
 .menu_toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    width: 30px;
-    height: 30px;
+    position: relative !important;
+    z-index: 1600 !important; /* Higher than the menu */
 }
-.logo_div {
-    display: flex;
-    align-items: center;
+
+.logo-container, .logo_div {
+    position: relative !important;
+    z-index: 1600 !important; /* Higher than the menu */
 }
+/* Navbar core styling */
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+    height: 80px !important;
+    padding: 0 !important;
+    transition: background-color 0.3s ease !important;
+    /* Gradient background for navbar */
+    background-image: linear-gradient(
+        to bottom,
+        rgba(15, 16, 19, 1),
+        rgba(15, 16, 19, 0.9),
+        rgba(15, 16, 19, 0.7),
+        rgba(15, 16, 19, 0.3),
+        rgba(15, 16, 19, 0)
+    ) !important;
+}
+
+/* Scrolled state - add this class with JS when page is scrolled */
+.navbar.scrolled {
+    background-color: rgba(15, 16, 19, 0.95) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+    background-image: none !important;
+}
+
+.navbar-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 2rem !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Logo styling */
+.logo-container {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.logo-link {
+    display: block !important;
+}
+
 #logo_image {
-    width: 100px;
+    height: 50px !important;
+    width: auto !important;
+    transition: transform 0.3s ease !important;
 }
+
+#logo_image:hover {
+    transform: scale(1.05) !important;
+}
+
+/* Main nav menu */
+.nav-menu {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+    height: 100% !important;
+}
+
+.nav-item {
+    position: relative !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nav-link {
+    color: #AAAAAA !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    padding: 0.5rem 0 !important;
+    position: relative !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #FFFFFF !important;
+    transform: scaleX(0) !important;
+    transform-origin: right !important;
+    transition: transform 0.3s ease !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #FFFFFF !important;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1) !important;
+    transform-origin: left !important;
+}
+
+/* Contact link with special styling */
+.contact-link {
+    padding: 0.6rem 1.2rem !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.contact-link:hover {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    transform: translateY(-2px) !important;
+}
+
+.contact-link::after {
+    display: none !important;
+}
+
+/* Menu toggle for mobile */
+.menu_toggle {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    width: 30px !important;
+    height: 30px !important;
+    position: relative !important;
+    z-index: 1001 !important;
+}
+
 .bar {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #f2f2f2;
-    margin: 6px 0;
-    transition: all .3s ease;
-    position: absolute;
+    display: block !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #FFFFFF !important;
+    margin: 6px 0 !important;
+    transition: all 0.3s ease !important;
+    position: absolute !important;
 }
+
 .bar1 {
-    top: 0;
+    top: 0 !important;
 }
+
 .bar2 {
-    top: 30%;
-    transform: translateY(-50%);
+    top: 10px !important;
 }
+
 .bar3 {
-    bottom: 0;
+    top: 20px !important;
 }
-/* animation horizontal lines turning into an X */
+
 .menu_toggle.open .bar1 {
-    transform: rotate(45deg);
-    top: 50%;
-    margin-top: -1px;
+    transform: rotate(45deg) !important;
+    top: 10px !important;
 }
+
 .menu_toggle.open .bar2 {
-    opacity: 0;
+    opacity: 0 !important;
 }
+
 .menu_toggle.open .bar3 {
-    transform: rotate(-45deg);
-    bottom: 50%;
-    margin-bottom: -1px;
+    transform: rotate(-45deg) !important;
+    top: 10px !important;
 }
 
-/* Welcome and Logout Styling */
-.logout {
-    margin-left: 10px;
-    color: #f2f2f2 !important;
-    text-decoration: none;
+/* Auth styles */
+.auth-item {
+    position: relative !important;
 }
 
-.logout:hover {
-    color: #e5533d;
-} 
-
-span.welcome_message {
-    color: #e5533d;
+.auth-toggle-btn {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    border: none !important;
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
 }
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    z-index: 9999;
-    display: none;
+.auth-toggle-btn:hover {
+    background-color: #F0F0F0 !important;
+    transform: translateY(-2px) !important;
 }
 
-.modal.hidden {
-    display: none;
+.auth-forms-container {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    width: 300px !important;
+    background-color: #1A1A1D !important;
+    border-radius: 2px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    padding: 1.5rem !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(10px) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
 }
 
-.modal form {
-    display: flex;
-    flex-direction: column;
+.auth-forms-container.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
 }
 
-.modal form label {
-    margin-bottom: 5px;
+.form-wrapper {
+    display: none !important;
 }
 
-.modal form input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.form-wrapper.active {
+    display: block !important;
 }
 
-.modal form button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.auth-form {
+    display: flex !important;
+    flex-direction: column !important;
 }
 
-.modal form button:hover {
-    background-color: #0056b3;
+.auth-form h3 {
+    font-size: 1.2rem !important;
+    color: #FFFFFF !important;
+    margin-bottom: 1.5rem !important;
+    font-weight: 500 !important;
+    text-align: center !important;
 }
 
-.modal .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+.form-group {
+    margin-bottom: 1rem !important;
 }
 
- /* Remember Me Container */
- .remember-me-container {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
+.form-group input {
+    width: 100% !important;
+    padding: 0.8rem !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #303035 !important;
+    border-radius: 2px !important;
+    color: #FFFFFF !important;
+    transition: border-color 0.3s ease !important;
 }
 
-/* Custom Checkbox Styling */
+.form-group input:focus {
+    outline: none !important;
+    border-color: #FFFFFF !important;
+}
+
+.auth-submit-btn {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    border: none !important;
+    padding: 0.8rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    border-radius: 2px !important;
+    cursor: pointer !important;
+    margin-top: 0.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.auth-submit-btn:hover {
+    background-color: #F0F0F0 !important;
+    transform: translateY(-2px) !important;
+}
+
+.switch-text {
+    margin-top: 1.2rem !important;
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+}
+
+.switch-button {
+    background: none !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    text-decoration: underline !important;
+    transition: color 0.3s ease !important;
+    padding: 0 !important;
+}
+
+.switch-button:hover {
+    color: #F0F0F0 !important;
+}
+
+/* Remember me checkbox styling */
+.remember-me-container {
+    margin: 0.8rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
 .remember-me {
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    font-size: 14px;
-    color: #f2f2f2;
-    user-select: none;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+    user-select: none !important;
 }
 
 .remember-me input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+    position: absolute !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
+    height: 0 !important;
+    width: 0 !important;
 }
 
-/* Custom Checkmark */
 .checkmark {
-    position: relative;
-    height: 18px;
-    width: 18px;
-    background-color: transparent;
-    border: 2px solid #de4c36;
-    border-radius: 4px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    position: relative !important;
+    height: 16px !important;
+    width: 16px !important;
+    background-color: transparent !important;
+    border: 1px solid #303035 !important;
+    border-radius: 2px !important;
+    margin-right: 8px !important;
+    transition: all 0.3s ease !important;
 }
 
 .remember-me:hover input ~ .checkmark {
-    border-color: #c43c2a;
+    border-color: #FFFFFF !important;
 }
 
 .remember-me input:checked ~ .checkmark {
-    background-color: #de4c36;
-    border-color: #de4c36;
+    background-color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
 }
 
-/* Checkmark Indicator */
 .checkmark::after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 5px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    content: '' !important;
+    position: absolute !important;
+    display: none !important;
+    left: 5px !important;
+    top: 2px !important;
+    width: 4px !important;
+    height: 8px !important;
+    border: solid #0F1013 !important;
+    border-width: 0 2px 2px 0 !important;
+    transform: rotate(45deg) !important;
 }
 
 .remember-me input:checked ~ .checkmark::after {
-    display: block;
+    display: block !important;
+}
+
+/* User account menu styling */
+.account-item {
+    margin-left: 1rem !important;
+}
+
+.welcome-message {
+    color: #FFFFFF !important;
+    font-size: 0.95rem !important;
+    margin-right: 1rem !important;
+}
+
+.user-menu-container {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.user-menu-link {
+    color: #AAAAAA !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    transition: color 0.3s ease !important;
+    margin-left: 1rem !important;
+}
+
+.user-menu-link:hover {
+    color: #FFFFFF !important;
+}
+
+.logout-link {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    padding: 0.5rem 0.8rem !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.logout-link:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .nav-menu {
+        gap: 1.5rem !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu_toggle {
+        display: block !important;
+    }
+    
+    .nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 300px !important;
+        height: 100vh !important;
+        background-color: #0F1013 !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        gap: 2rem !important;
+        padding: 2rem !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.3s ease-in-out !important;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2) !important;
+        z-index: 999 !important; /* Make sure this is high enough */
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0) !important;
+    }
+    
+    .nav-item {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .nav-link {
+        display: block !important;
+        width: 100% !important;
+        padding: 0.8rem 0 !important;
+    }
+    
+    .contact-link {
+        display: inline-block !important;
+        width: auto !important;
+        margin-top: 1rem !important;
+    }
+    
+    .auth-item,
+    .account-item {
+        width: 100% !important;
+        margin-top: 2rem !important;
+    }
+    
+    .auth-toggle-btn {
+        width: 100% !important;
+    }
+    
+    .auth-forms-container {
+        position: relative !important;
+        top: 1rem !important;
+        right: auto !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
+    
+    .user-menu-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    
+    .welcome-message {
+        margin-right: 0 !important;
+    }
+    
+    .user-menu-link {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-container {
+        padding: 0 1rem !important;
+    }
+    
+    .nav-menu {
+        width: 100% !important;
+        padding: 2rem 1.5rem !important;
+    }
+}
+
+/* Adding a class to prevent scrolling when menu is open */
+body.menu-open {
+    overflow: hidden !important;
 }

@@ -1,92 +1,166 @@
 <?php require_once('config.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
 
-<?php $page_css = 'blog_post.css'; ?>
-
 <?php
-$slug = $_GET['slug'] ?? '';
-
-if (empty($slug)) {
-    header('Location: blog.php');
-    exit;
+// Get blog post by slug
+if (isset($_GET['slug'])) {
+    $slug = $_GET['slug'];
+    $sql = "SELECT post_id, title, content, image_url, created_at, author_id FROM posts WHERE slug = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $slug);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $post = $result->fetch_assoc();
+    } else {
+        // Redirect to blog page if post not found
+        header("Location: blog.php");
+        exit();
+    }
+    $stmt->close();
+} else {
+    // Redirect to blog page if no slug provided
+    header("Location: blog.php");
+    exit();
 }
-
-// Fetch the blog post
-$sql = "SELECT p.post_id, p.title, p.slug, p.content, p.image_url, p.author_id, p.category_id,
-               p.created_at, p.updated_at, u.username AS author_name, c.category_name
-        FROM posts p
-        LEFT JOIN users u ON p.author_id = u.user_id
-        LEFT JOIN categories c ON p.category_id = c.category_id
-        WHERE p.slug = ?";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $slug);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    header('Location: blog.php');
-    exit;
-}
-
-$post = $result->fetch_assoc();
 ?>
+
+<?php $page_css = 'blog_post.css'; ?>
+<title><?php echo htmlspecialchars($post['title']); ?> - Blog</title>
+
+<!-- Meta tags for social sharing -->
+<meta property="og:title" content="<?php echo htmlspecialchars($post['title']); ?>">
+<meta property="og:description" content="<?php echo htmlspecialchars(substr(strip_tags($post['content']), 0, 150)) . '...'; ?>">
+<meta property="og:image" content="<?php echo $post['image_url']; ?>">
+<meta property="og:url" content="<?php echo "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>">
+<meta name="twitter:card" content="summary_large_image">
+
+</head>
+
+<body data-context="blog_post">
 
 <?php include(ROOT_PATH . '/includes/navbar.php'); ?>
 
-<!-- Blog Post Content -->
 <div class="blog_post_page">
-    <section class="blog_post_section">
-    <button id="mode_toggle">🌙</button>
-        <div class="container">
+    <article class="blog_post_section">
+        <!-- Featured Image -->
+        <div class="post_image_container">
+            <img src="<?php echo $post['image_url'] ?: 'static/images/default-blog.jpg'; ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="post_image">
+        </div>
+        
+        <div class="post_content_container">
+            <!-- Blog Title -->
             <h1><?php echo htmlspecialchars($post['title']); ?></h1>
-
+            
+            <!-- Post Meta -->
             <div class="post_meta">
-                <span class="author">By <?php echo htmlspecialchars($post['author_id']); ?></span>
-                <span class="date"><?php echo date('M d, Y', strtotime($post['created_at'])); ?></span>
+                <span>By <?php echo htmlspecialchars($post['author_id']); ?></span>
+                <span><?php echo date('F d, Y', strtotime($post['created_at'])); ?></span>
             </div>
-
-            <?php if (!empty($post['image_url'])) { ?>
-                <img src="<?php echo $post['image_url']; ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="post_image">
-            <?php } else { ?>
-                <img src="/images/default-blog.jpg" alt="Default Blog Image" class="post_image">
-            <?php } ?>
-
+            
+            <!-- Blog Content -->
             <div class="post_content">
-                <?php echo nl2br($post['content']); ?>
+                <?php echo $post['content']; ?>
             </div>
-        </div>
-        <!-- Social Share Section -->
-        <div class="social_share">
-            <p>Share this post:</p>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn facebook">Facebook</a>
-            <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>&text=<?php echo urlencode($post['title']); ?>" target="_blank" class="share_btn twitter">Twitter</a>
-            <a href="https://api.whatsapp.com/send?text=<?php echo urlencode("Check this out: " . $post['title'] . " https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn whatsapp">WhatsApp</a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode("https://hreniucpetrica.ro/blog_post.php?slug=" . $post['slug']); ?>" target="_blank" class="share_btn linkedin">LinkedIn</a>
-        </div>
-
-        <!-- Related Posts Section -->
-        <div class="related_posts">
-            <h2>Related Posts</h2>
-            <div class="related_posts_grid">
-                <?php
-                $related_sql = "SELECT title, slug, image_url FROM posts 
-                                WHERE category_id = ? AND slug != ? 
-                                ORDER BY created_at DESC LIMIT 3";
-                $stmt_related = $conn->prepare($related_sql);
-                $stmt_related->bind_param("is", $post['category_id'], $post['slug']);
-                $stmt_related->execute();
-                $related_result = $stmt_related->get_result();
-
-                while ($related_post = $related_result->fetch_assoc()) { ?>
-                    <a href="blog_post.php?slug=<?php echo $related_post['slug']; ?>" class="related_post_card">
-                        <img src="<?php echo $related_post['image_url'] ?: 'images/default-blog.jpg'; ?>" alt="<?php echo htmlspecialchars($related_post['title']); ?>">
-                        <h3><?php echo htmlspecialchars($related_post['title']); ?></h3>
+            
+            <!-- Social Share -->
+            <div class="social_share">
+                <p>Share this article:</p>
+                <div class="share_buttons">
+                    <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>&text=<?php echo urlencode($post['title']); ?>" target="_blank" rel="noopener noreferrer" class="share_btn">
+                        <i class="fab fa-twitter"></i>
                     </a>
-                <?php } ?>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" target="_blank" rel="noopener noreferrer" class="share_btn">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>&title=<?php echo urlencode($post['title']); ?>" target="_blank" rel="noopener noreferrer" class="share_btn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
+            
+            <!-- Related Posts -->
+            <section class="related_posts">
+                <h2>Related Articles</h2>
+                <div class="related_posts_grid">
+                    <?php
+                    // Get 3 recent posts excluding current post
+                    $sql = "SELECT post_id, title, slug, content, image_url, created_at FROM posts WHERE post_id != ? ORDER BY created_at DESC LIMIT 3";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $post['post_id']);
+                    $stmt->execute();
+                    $related_result = $stmt->get_result();
+                    
+                    while ($related_post = $related_result->fetch_assoc()) {
+                        // Get short excerpt
+                        $excerpt = substr(strip_tags($related_post['content']), 0, 100);
+                        if (strlen(strip_tags($related_post['content'])) > 100) {
+                            $excerpt .= '...';
+                        }
+                    ?>
+                    <a href="blog_post.php?slug=<?php echo $related_post['slug']; ?>" class="related_post_card">
+                        <img src="<?php echo $related_post['image_url'] ?: 'static/images/default-blog.jpg'; ?>" alt="<?php echo htmlspecialchars($related_post['title']); ?>">
+                        <div class="related_post_card_content">
+                            <h3><?php echo htmlspecialchars($related_post['title']); ?></h3>
+                            <p><?php echo $excerpt; ?></p>
+                        </div>
+                    </a>
+                    <?php
+                    }
+                    $stmt->close();
+                    ?>
+                </div>
+            </section>
         </div>
-    </section>
+        
+        <!-- Light/Dark Mode Toggle -->
+        <button id="mode_toggle" aria-label="Toggle Light/Dark Mode">
+            <i class="fas fa-moon dark-icon"></i>
+            <i class="fas fa-sun light-icon" style="display: none;"></i>
+        </button>
+    </article>
 </div>
 
-<?php include('includes/footer.php'); ?>
+<!-- Mode Toggle Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modeToggle = document.getElementById('mode_toggle');
+    const blogPostSection = document.querySelector('.blog_post_section');
+    const darkIcon = document.querySelector('.dark-icon');
+    const lightIcon = document.querySelector('.light-icon');
+    
+    // Check for saved mode preference
+    const savedMode = localStorage.getItem('blogMode');
+    if (savedMode === 'light') {
+        enableLightMode();
+    }
+    
+    // Toggle mode on button click
+    modeToggle.addEventListener('click', function() {
+        if (blogPostSection.classList.contains('light_mode')) {
+            enableDarkMode();
+        } else {
+            enableLightMode();
+        }
+    });
+    
+    function enableLightMode() {
+        blogPostSection.classList.add('light_mode');
+        darkIcon.style.display = 'none';
+        lightIcon.style.display = 'inline-block';
+        localStorage.setItem('blogMode', 'light');
+    }
+    
+    function enableDarkMode() {
+        blogPostSection.classList.remove('light_mode');
+        darkIcon.style.display = 'inline-block';
+        lightIcon.style.display = 'none';
+        localStorage.setItem('blogMode', 'dark');
+    }
+});
+</script>
+
+<?php include(ROOT_PATH . '/includes/footer.php'); ?>
+</body>
+</html>

@@ -12,8 +12,25 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Include config.php
+// Include config.php - make sure this path is correct
 require_once(__DIR__ . '/../config.php');
+
+// Check if environment constant is defined
+if (!defined('ENVIRONMENT')) {
+    // Default to production if not defined
+    define('ENVIRONMENT', 'production');
+}
+
+// Set cache control headers based on environment
+if (ENVIRONMENT === 'staging') {
+    // Disable caching in staging
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+} else {
+    // In production, set reasonable cache times but allow revalidation
+    header("Cache-Control: public, max-age=86400, must-revalidate"); // 1 day
+}
 
 // Debug: Check for output
 if (ob_get_length() > 0) {
@@ -73,7 +90,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Doing important things for important individuals.">
+    <meta name="description" content="Web development and automation solutions for Romanian businesses.">
 
     <!-- Poppins and Reenie Beanie fonts linking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,13 +101,213 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Linking to the stylesheet for the index.php -->
-    <link rel="stylesheet" type="text/css" href="static/css/home.css">
-    <link rel="stylesheet" type="text/css" href="static/css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="static/css/artworks.css">
-    <link rel="stylesheet" type="text/css" href="static/css/automation.css">
-    <link rel="stylesheet" type="text/css" href="static/css/blog.css">
-    <link rel="stylesheet" type="text/css" href="static/css/blog_post.css">
+    <?php
+    // CSS loading based on environment
+    $currentFile = basename($_SERVER['PHP_SELF']);
+    
+    // Directory structure based on environment
+    if (ENVIRONMENT === 'production') {
+        $cssBasePath = 'dist/styles';
+        $jsBasePath = 'dist/scripts';
+        $fileExtension = '.min';
+    } else {
+        $cssBasePath = 'static/css/';
+        $jsBasePath = 'static/js/';
+        $fileExtension = '';
+    }
+    
+    // Map page-specific CSS files
+    $cssMap = [
+        'index.php'       => 'home',
+        'webdev.php'      => 'webdev',
+        'automation.php'  => 'automation',
+        'artworks.php'    => 'artworks',
+        'blog.php'        => 'blog',
+        'blog_post.php'   => 'blog_post'
+        // Add more mappings as needed
+    ];
+    
+    // Common CSS files that should be loaded before page-specific CSS
+    $commonCssFiles = [
+        'navbar'
+    ];
+    
+    // Additional CSS files that should be loaded after page-specific CSS
+    $additionalCssFiles = [
+        'blog',
+        'blog_post',
+        'artworks',
+        'automation'
+    ];
+    
+    // CSS Loading Helper
+    echo '<script>
+    // Simple CSS load helper
+    !function(e){"use strict";var t=function(t,n,r){function o(e){return i.body?e():void setTimeout(function(){o(e)})}function a(){d.addEventListener&&d.removeEventListener("load",a),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var s=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=s[s.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",a),d.onloadcssdefined=f,f(a),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+    </script>';
+    
+    if (ENVIRONMENT === 'production') {
+        // PRODUCTION ENVIRONMENT
+        
+        // 1. Load common CSS files
+        foreach ($commonCssFiles as $cssFile) {
+            $fullPath = $cssBasePath . $cssFile . $fileExtension . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="preload" href="/' . $fullPath . '?v=' . $cssVersion . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+                echo '<noscript><link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '"></noscript>';
+            }
+        }
+        
+        // 2. Load page-specific CSS
+        if (isset($cssMap[$currentFile])) {
+            $pageSpecificCss = $cssMap[$currentFile];
+            $fullPath = $cssBasePath . $pageSpecificCss . $fileExtension . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="preload" href="/' . $fullPath . '?v=' . $cssVersion . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+                echo '<noscript><link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '"></noscript>';
+            }
+        }
+        
+        // 3. Load any manually specified CSS from the page
+        if (isset($page_css)) {
+            $fullPath = $cssBasePath . $page_css . $fileExtension . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="preload" href="/' . $fullPath . '?v=' . $cssVersion . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+                echo '<noscript><link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '"></noscript>';
+            }
+        }
+        
+    } else {
+        // DEVELOPMENT ENVIRONMENT
+        
+        // 1. Load common CSS files
+        foreach ($commonCssFiles as $cssFile) {
+            $fullPath = $cssBasePath . $cssFile . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
+            }
+        }
+        
+        // 2. Load page-specific CSS
+        if (isset($cssMap[$currentFile])) {
+            $pageSpecificCss = $cssMap[$currentFile];
+            $fullPath = $cssBasePath . $pageSpecificCss . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
+            }
+        }
+        
+        // 3. Load any manually specified CSS from the page
+        if (isset($page_css)) {
+            $fullPath = $cssBasePath . $page_css . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
+            }
+        }
+        
+        // 4. Load additional CSS files
+        foreach ($additionalCssFiles as $cssFile) {
+            // Skip if this is the page-specific CSS we already loaded
+            if (isset($cssMap[$currentFile]) && $cssMap[$currentFile] === $cssFile) {
+                continue;
+            }
+            
+            $fullPath = $cssBasePath . $cssFile . '.css';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
+            }
+        }
+    }
+    ?>
+
+    <!-- JavaScript files with versioning -->
+    <?php
+    // Map page-specific JS files
+    $jsMap = [
+        'index.php'       => 'home',
+        'webdev.php'      => 'webdev',
+        'automation.php'  => 'automation',
+        'artworks.php'    => 'artworks',
+        'blog.php'        => 'blog',
+        'blog_post.php'   => 'blog_post'
+        // Add more mappings as needed
+    ];
+    
+    // Public script files shared across multiple pages
+    $publicScriptFiles = [
+        'public_script'
+    ];
+    
+    if (ENVIRONMENT === 'production') {
+        // PRODUCTION ENVIRONMENT
+        
+        // 1. Load public script files (minified)
+        foreach ($publicScriptFiles as $jsFile) {
+            $fullPath = $jsBasePath . $jsFile . $fileExtension . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+        
+        // 2. Load page-specific JS (minified)
+        if (isset($jsMap[$currentFile])) {
+            $pageSpecificJs = $jsMap[$currentFile];
+            $fullPath = $jsBasePath . $pageSpecificJs . $fileExtension . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+        
+        // 3. Load any manually specified JS from the page
+        if (isset($page_js)) {
+            $fullPath = $jsBasePath . $page_js . $fileExtension . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+        
+    } else {
+        // DEVELOPMENT ENVIRONMENT
+        
+        // 1. Load public script files
+        foreach ($publicScriptFiles as $jsFile) {
+            $fullPath = $jsBasePath . $jsFile . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+        
+        // 2. Load page-specific JS
+        if (isset($jsMap[$currentFile])) {
+            $pageSpecificJs = $jsMap[$currentFile];
+            $fullPath = $jsBasePath . $pageSpecificJs . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+        
+        // 3. Load any manually specified JS from the page
+        if (isset($page_js)) {
+            $fullPath = $jsBasePath . $page_js . '.js';
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
+                $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
+                echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+    }
+    ?>
 
     <!-- Define dataLayer and gtag function -->
     <script>
@@ -109,7 +326,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         });
     </script>
 
-    <!-- Load GTAG script -->
+    <!-- Load GTAG script with versioning -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GD3WH3CZ7H"></script>
     <script>
         // Initialize GTAG
@@ -185,7 +402,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         }
 
         #accept-cookies {
-            color:rgb(255, 255, 255);
+            color: rgb(255, 255, 255);
         }
     </style>
 </head>

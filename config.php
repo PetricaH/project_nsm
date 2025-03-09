@@ -13,8 +13,10 @@ if (headers_sent($file, $line)) {
 // Start output buffering
 ob_start();
 
+define('ENVIRONMENT', 'staging');
+
 // Database connection
-$conn = mysqli_connect("localhost", "root", "", "project_nsm", 3310);
+$conn = mysqli_connect("localhost", "root", "", "project_nsm", 3320);
 
 if (!$conn) {
     die("Error connecting to database: " . mysqli_connect_error());

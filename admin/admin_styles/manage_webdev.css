@@ -1,0 +1,273 @@
+/* Styles for managing web development projects */
+
+.dashboard-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.projects-section {
+    background-color: #1A1A1D;
+    padding: 2rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.projects-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #FFFFFF;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #303035;
+}
+
+/* Project Form */
+.project-form-container {
+    background-color: #0F1013;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+}
+
+.project-form-container h2 {
+    border: none;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #AAAAAA;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #303035;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23AAAAAA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1.2rem;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.3rem;
+    color: #707070;
+    font-size: 0.8rem;
+}
+
+.char-count {
+    display: block;
+    text-align: right;
+    color: #707070;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.char-count.exceeded {
+    color: #FF6B6B;
+}
+
+#drop_zone {
+    border: 2px dashed #303035;
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#drop_zone:hover,
+#drop_zone.dragover {
+    border-color: #4682B4;
+    background-color: rgba(70, 130, 180, 0.05);
+}
+
+#drop_zone p {
+    margin: 0;
+    color: #AAAAAA;
+}
+
+#drop_zone input[type="file"] {
+    display: none;
+}
+
+#image_preview {
+    margin-top: 1rem;
+    display: none;
+    text-align: center;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save-btn {
+    background-color: #4682B4;
+    color: #FFFFFF;
+}
+
+.save-btn:hover {
+    background-color: #375F82;
+}
+
+.cancel-btn {
+    background-color: transparent;
+    border: 1px solid #707070;
+    color: #AAAAAA;
+}
+
+.cancel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
+}
+
+/* Projects Table */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.projects-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.projects-table th,
+.projects-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #303035;
+}
+
+.projects-table th {
+    color: #FFFFFF;
+    font-weight: 500;
+    background-color: #0F1013;
+}
+
+.projects-table td {
+    color: #AAAAAA;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.btn-primary {
+    background-color: #4682B4;
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+}
+
+.btn-primary:hover {
+    background-color: #375F82;
+}
+
+.btn-danger {
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: #FF6B6B;
+    padding: 0.5rem 1rem;
+}
+
+.btn-danger:hover {
+    background-color: rgba(255, 107, 107, 0.2);
+}
+
+.no-records {
+    text-align: center;
+    color: #707070;
+    font-style: italic;
+    padding: 2rem !important;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .projects-section {
+        padding: 1.5rem;
+    }
+    
+    .project-form-container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .projects-table th,
+    .projects-table td {
+        padding: 0.8rem;
+    }
+    
+    .thumbnail {
+        width: 50px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .projects-section {
+        padding: 1rem;
+    }
+    
+    .project-form-container {
+        padding: 1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .projects-table th,
+    .projects-table td {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-primary,
+    .btn-danger {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
