@@ -107,8 +107,8 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
     
     // Directory structure based on environment
     if (ENVIRONMENT === 'production') {
-        $cssBasePath = 'dist/styles';
-        $jsBasePath = 'dist/scripts';
+        $cssBasePath = 'dist/styles/';
+        $jsBasePath = 'dist/scripts/';
         $fileExtension = '.min';
     } else {
         $cssBasePath = 'static/css/';
@@ -123,21 +123,14 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         'automation.php'  => 'automation',
         'artworks.php'    => 'artworks',
         'blog.php'        => 'blog',
-        'blog_post.php'   => 'blog_post'
+        'blog_post.php'   => 'blog_post',
+        'webdev.php'      => 'webdev'
         // Add more mappings as needed
     ];
     
     // Common CSS files that should be loaded before page-specific CSS
     $commonCssFiles = [
         'navbar'
-    ];
-    
-    // Additional CSS files that should be loaded after page-specific CSS
-    $additionalCssFiles = [
-        'blog',
-        'blog_post',
-        'artworks',
-        'automation'
     ];
     
     // CSS Loading Helper
@@ -210,20 +203,6 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
                 echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
             }
         }
-        
-        // 4. Load additional CSS files
-        foreach ($additionalCssFiles as $cssFile) {
-            // Skip if this is the page-specific CSS we already loaded
-            if (isset($cssMap[$currentFile]) && $cssMap[$currentFile] === $cssFile) {
-                continue;
-            }
-            
-            $fullPath = $cssBasePath . $cssFile . '.css';
-            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
-                $cssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
-                echo '<link rel="stylesheet" href="/' . $fullPath . '?v=' . $cssVersion . '">';
-            }
-        }
     }
     ?>
 
@@ -236,7 +215,8 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         'automation.php'  => 'automation',
         'artworks.php'    => 'artworks',
         'blog.php'        => 'blog',
-        'blog_post.php'   => 'blog_post'
+        'blog_post.php'   => 'blog_post',
+        'webdev.php'      => 'webdev'
         // Add more mappings as needed
     ];
     

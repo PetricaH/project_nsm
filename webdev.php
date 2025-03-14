@@ -13,7 +13,7 @@
 <main>
     <!-- Hero Section -->
     <section class="hero_webdev_section">
-        <div class="gradient_overlay"></div>
+        <div class="gradient_overlay_webdev"></div>
         
         <div class="webdev_hero_content">
             <h1>Web Development Solutions</h1>
@@ -33,40 +33,56 @@
 
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <span class="material-symbols-outlined">shopping_cart</span>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <span class="material-symbols-outlined">shopping_cart</span>
+                            </div>
+                            <h3>E-commerce Solutions</h3>
+                        </div>
+                        <p>Custom online stores with secure payment processing, inventory management, and optimized user experience for maximum conversions and sales growth.</p>
                     </div>
-                    <h3>E-commerce Solutions</h3>
-                    <p>Custom online stores with secure payment processing, inventory management, and optimized user experience</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon">
-                        <span class="material-symbols-outlined">business</span>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <span class="material-symbols-outlined">business</span>
+                            </div>
+                            <h3>Business Websites</h3>
+                        </div>
+                        <p>Professional web presence for small and medium companies with content management systems that are easy to maintain and update.</p>
                     </div>
-                    <h3>Business Websites</h3>
-                    <p>Professional web presence for small and medium companies with content management systems</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon">
-                        <span class="material-symbols-outlined">dashboard</span>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <span class="material-symbols-outlined">dashboard</span>
+                            </div>
+                            <h3>Administrative Interfaces</h3>
+                        </div>
+                        <p>Custom dashboards and management systems to streamline your business operations, improve workflow efficiency, and provide valuable insights.</p>
                     </div>
-                    <h3>Administrative Interfaces</h3>
-                    <p>Custom dashboards and management systems to streamline your business operations</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon">
-                        <span class="material-symbols-outlined">speed</span>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <span class="material-symbols-outlined">speed</span>
+                            </div>
+                            <h3>Performance Optimization</h3>
+                        </div>
+                        <p>SEO and speed improvements for existing websites to enhance search rankings, increase organic traffic, and create a better user experience.</p>
                     </div>
-                    <h3>Performance Optimization</h3>
-                    <p>SEO and speed improvements for existing websites to enhance search rankings and user engagement</p>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Projects Section -->
     <section class="webdev_projects_section">
         <div class="container">

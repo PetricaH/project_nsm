@@ -1,5 +1,17 @@
-/* Updated Blog Post Page CSS to match home page design */
-/* Blog Post Page Container */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0F1013;
+    color: #FFFFFF !important;
+    line-height: 1.6 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
 .blog_post_page {
     background-color: #0F1013 !important;
     color: #FFFFFF !important;
