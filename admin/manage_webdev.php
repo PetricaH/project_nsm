@@ -8,366 +8,568 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
     exit;
 }
 
-// Include admin header
-require_once('../admin/admin_includes/admin_heading.php');
+// Create webdev_projects table if it doesn't exist
+$createTableQuery = "
+CREATE TABLE IF NOT EXISTS `webdev_projects` (
+  `project_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `client` varchar(100) NOT NULL,
+  `technologies` varchar(255) NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `live_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
 
-// Fetch existing projects
-$sql = "SELECT p.project_id, p.title, p.category, p.short_description, p.client, p.image_url, p.live_url, 
-               p.created_at, p.updated_at
-        FROM webdev_projects p
-        ORDER BY p.created_at DESC";
-
-$result = $conn->query($sql);
-if (!$result) {
-    die("Error executing query: " . $conn->error);
+if ($conn->query($createTableQuery) !== TRUE) {
+    error_log("Error creating webdev_projects table: " . $conn->error);
 }
 
-// Define project categories
-$categories = [
-    'ecommerce' => 'E-commerce',
-    'business' => 'Business Website',
-    'dashboard' => 'Dashboard/Admin',
-    'portfolio' => 'Portfolio',
-    'other' => 'Other'
-];
+// Create the directory for project images if it doesn't exist
+$uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/static/images/webdev_projects/';
+if (!file_exists($uploadDir)) {
+    if (!mkdir($uploadDir, 0755, true)) {
+        error_log("Error creating directory: $uploadDir");
+    }
+}
+
+// Handle form submissions for adding, updating, or deleting projects
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Process the form data
+    if (isset($_POST['action'])) {
+        $action = $_POST['action'];
+        
+        switch ($action) {
+            case 'create':
+                handleCreateProject($conn, $uploadDir);
+                break;
+            case 'update':
+                handleUpdateProject($conn, $uploadDir);
+                break;
+            case 'delete':
+                handleDeleteProject($conn);
+                break;
+        }
+    }
+}
+
+// Get project for editing if ID is provided
+$projectToEdit = null;
+if (isset($_GET['edit']) && !empty($_GET['edit'])) {
+    $projectId = (int)$_GET['edit'];
+    $stmt = $conn->prepare("
+        SELECT * FROM webdev_projects WHERE project_id = ?
+    ");
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result && $result->num_rows > 0) {
+        $projectToEdit = $result->fetch_assoc();
+    }
+    $stmt->close();
+}
+
+// Fetch all projects for the table
+$category = isset($_GET['category']) ? trim($_GET['category']) : '';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+$query = "SELECT * FROM webdev_projects WHERE 1=1";
+$params = [];
+$types = '';
+
+if (!empty($category)) {
+    $query .= " AND category = ?";
+    $params[] = $category;
+    $types .= 's';
+}
+
+if (!empty($search)) {
+    $query .= " AND (
+        title LIKE ? OR 
+        short_description LIKE ? OR
+        description LIKE ? OR
+        client LIKE ? OR
+        technologies LIKE ?
+    )";
+    
+    $searchPattern = "%$search%";
+    $params[] = $searchPattern;
+    $params[] = $searchPattern;
+    $params[] = $searchPattern;
+    $params[] = $searchPattern;
+    $params[] = $searchPattern;
+    
+    $types .= 'sssss';
+}
+
+$query .= " ORDER BY created_at DESC";
+
+$stmt = $conn->prepare($query);
+
+if (!empty($params)) {
+    $bindParams = array_merge([$types], $params);
+    $stmt->bind_param(...$bindParams);
+}
+
+$stmt->execute();
+$projects = $stmt->get_result();
+$stmt->close();
+
+/**
+ * Handle creating a new project
+ */
+function handleCreateProject($conn, $uploadDir) {
+    // Validate required fields
+    $requiredFields = ['title', 'category', 'client', 'short_description', 'description', 'technologies'];
+    foreach ($requiredFields as $field) {
+        if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
+            setStatusMessage('error', "Missing required field: $field");
+            return;
+        }
+    }
+    
+    // Handle image upload
+    $imagePath = '';
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $imagePath = handleImageUpload($_FILES['image'], $uploadDir);
+        if (!$imagePath) {
+            // Error message is set by handleImageUpload
+            return;
+        }
+    } else {
+        setStatusMessage('error', 'Project image is required');
+        return;
+    }
+    
+    // Prepare data for insertion
+    $title = trim($_POST['title']);
+    $category = trim($_POST['category']);
+    $client = trim($_POST['client']);
+    $shortDescription = trim($_POST['short_description']);
+    $description = trim($_POST['description']);
+    $technologies = trim($_POST['technologies']);
+    $liveUrl = isset($_POST['live_url']) ? trim($_POST['live_url']) : null;
+    
+    // Insert the project
+    $stmt = $conn->prepare("
+        INSERT INTO webdev_projects (title, category, short_description, description, client, technologies, image_url, live_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    
+    if (!$stmt) {
+        setStatusMessage('error', 'Database error: ' . $conn->error);
+        return;
+    }
+    
+    $stmt->bind_param("ssssssss", $title, $category, $shortDescription, $description, $client, $technologies, $imagePath, $liveUrl);
+    
+    if (!$stmt->execute()) {
+        setStatusMessage('error', 'Failed to create project: ' . $stmt->error);
+        return;
+    }
+    
+    $stmt->close();
+    setStatusMessage('success', 'Project created successfully');
+    
+    // Redirect to clear form
+    header('Location: admin.php?page=manage_webdev');
+    exit;
+}
+
+/**
+ * Handle updating an existing project
+ */
+function handleUpdateProject($conn, $uploadDir) {
+    // Check project ID
+    if (!isset($_POST['project_id']) || empty($_POST['project_id'])) {
+        setStatusMessage('error', 'Project ID is required');
+        return;
+    }
+    
+    $projectId = (int)$_POST['project_id'];
+    
+    // Validate required fields
+    $requiredFields = ['title', 'category', 'client', 'short_description', 'description', 'technologies'];
+    foreach ($requiredFields as $field) {
+        if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
+            setStatusMessage('error', "Missing required field: $field");
+            return;
+        }
+    }
+    
+    // Handle image upload if a new image is provided
+    $imagePath = isset($_POST['current_image']) ? $_POST['current_image'] : '';
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $newImagePath = handleImageUpload($_FILES['image'], $uploadDir);
+        if ($newImagePath) {
+            // If successful upload, replace the old path
+            $imagePath = $newImagePath;
+            
+            // Delete old image if it exists and is different
+            if (isset($_POST['current_image']) && $_POST['current_image'] && $newImagePath !== $_POST['current_image']) {
+                $oldImagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $_POST['current_image'];
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+        } else {
+            // Error message is set by handleImageUpload
+            return;
+        }
+    }
+    
+    // Prepare data for update
+    $title = trim($_POST['title']);
+    $category = trim($_POST['category']);
+    $client = trim($_POST['client']);
+    $shortDescription = trim($_POST['short_description']);
+    $description = trim($_POST['description']);
+    $technologies = trim($_POST['technologies']);
+    $liveUrl = isset($_POST['live_url']) ? trim($_POST['live_url']) : null;
+    
+    // Update the project
+    $stmt = $conn->prepare("
+        UPDATE webdev_projects
+        SET title = ?, category = ?, short_description = ?, description = ?,
+            client = ?, technologies = ?, image_url = ?, live_url = ?
+        WHERE project_id = ?
+    ");
+    
+    if (!$stmt) {
+        setStatusMessage('error', 'Database error: ' . $conn->error);
+        return;
+    }
+    
+    $stmt->bind_param("ssssssssi", $title, $category, $shortDescription, $description, $client, $technologies, $imagePath, $liveUrl, $projectId);
+    
+    if (!$stmt->execute()) {
+        setStatusMessage('error', 'Failed to update project: ' . $stmt->error);
+        return;
+    }
+    
+    $stmt->close();
+    setStatusMessage('success', 'Project updated successfully');
+    
+    // Redirect to clear form
+    header('Location: admin.php?page=manage_webdev');
+    exit;
+}
+
+/**
+ * Handle deleting a project
+ */
+function handleDeleteProject($conn) {
+    // Check project ID
+    if (!isset($_POST['project_id']) || empty($_POST['project_id'])) {
+        setStatusMessage('error', 'Project ID is required');
+        return;
+    }
+    
+    $projectId = (int)$_POST['project_id'];
+    
+    // Get the image path first to delete the file later
+    $stmt = $conn->prepare("SELECT image_url FROM webdev_projects WHERE project_id = ?");
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $project = $result->fetch_assoc();
+        $imagePath = $project['image_url'];
+    }
+    
+    $stmt->close();
+    
+    // Delete the project from the database
+    $stmt = $conn->prepare("DELETE FROM webdev_projects WHERE project_id = ?");
+    $stmt->bind_param("i", $projectId);
+    
+    if (!$stmt->execute()) {
+        setStatusMessage('error', 'Failed to delete project: ' . $stmt->error);
+        return;
+    }
+    
+    $stmt->close();
+    
+    // Delete the image file if it exists
+    if (isset($imagePath) && $imagePath) {
+        $fullImagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $imagePath;
+        if (file_exists($fullImagePath)) {
+            unlink($fullImagePath);
+        }
+    }
+    
+    setStatusMessage('success', 'Project deleted successfully');
+    
+    // Redirect to update the list
+    header('Location: admin.php?page=manage_webdev');
+    exit;
+}
+
+/**
+ * Handle image upload and return the path
+ */
+function handleImageUpload($file, $uploadDir) {
+    // Validate file
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    $maxSize = 5 * 1024 * 1024; // 5MB
+    
+    if (!in_array($file['type'], $allowedTypes)) {
+        setStatusMessage('error', 'Invalid file type. Allowed: JPG, PNG, GIF, WEBP');
+        return false;
+    }
+    
+    if ($file['size'] > $maxSize) {
+        setStatusMessage('error', 'File too large. Maximum: 5MB');
+        return false;
+    }
+    
+    // Generate unique filename
+    $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $fileName = 'project_' . time() . '_' . mt_rand(1000, 9999) . '.' . $fileExtension;
+    $targetFile = $uploadDir . $fileName;
+    
+    // Move uploaded file
+    if (!move_uploaded_file($file['tmp_name'], $targetFile)) {
+        setStatusMessage('error', 'Error uploading file');
+        return false;
+    }
+    
+    // Return relative path for database storage
+    return 'static/images/webdev_projects/' . $fileName;
+}
+
+/**
+ * Set status message in session
+ */
+function setStatusMessage($type, $message) {
+    $_SESSION['status_type'] = $type;
+    $_SESSION['status_message'] = $message;
+}
 ?>
+
+<!-- Include the CSS file -->
+<link rel="stylesheet" href="../admin/admin_styles/manage_webdev.css">
 
 <h1>Manage Web Development Projects</h1>
 
-<div class="container">
-    <div class="dashboard-container">
-        <!-- Projects Section -->
-        <div class="projects-section">
-            <h2>Web Development Projects</h2>
+<!-- Status Messages -->
+<?php if (isset($_SESSION['status_message'])): ?>
+    <div class="status-message <?php echo $_SESSION['status_type']; ?>">
+        <?php 
+            echo htmlspecialchars($_SESSION['status_message']); 
+            // Clear the messages
+            unset($_SESSION['status_type']);
+            unset($_SESSION['status_message']);
+        ?>
+    </div>
+<?php endif; ?>
+
+<div class="webdev-dashboard">
+    <!-- Project Form Section -->
+    <div class="project-form-container">
+        <h2><?php echo $projectToEdit ? 'Edit Project' : 'Add New Project'; ?></h2>
+        <form id="projectForm" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="<?php echo $projectToEdit ? 'update' : 'create'; ?>">
+            <?php if ($projectToEdit): ?>
+                <input type="hidden" name="project_id" value="<?php echo $projectToEdit['project_id']; ?>">
+                <input type="hidden" name="current_image" value="<?php echo $projectToEdit['image_url']; ?>">
+            <?php endif; ?>
             
-            <!-- New Project / Edit Project Form -->
-            <div class="project-form-container">
-                <h2 id="formTitle">Create New Project</h2>
-                <form method="POST" action="../admin/admin_includes/webdev_actions/process_webdev.php" enctype="multipart/form-data" id="webdevForm">
-                    <input type="hidden" name="action" value="create" id="formAction">
-                    <input type="hidden" name="project_id" value="" id="projectIdField">
-            
-                    <!-- Project Title -->
-                    <div class="form-group">
-                        <label for="titleField">Project Title:</label>
-                        <input type="text" name="title" id="titleField" required>
-                    </div>
-            
-                    <!-- Category -->
-                    <div class="form-group">
-                        <label for="categoryField">Category:</label>
-                        <select name="category" id="categoryField" required>
-                            <option value="">Select Category</option>
-                            <?php foreach ($categories as $key => $value) { ?>
-                                <option value="<?php echo $key; ?>">
-                                    <?php echo htmlspecialchars($value); ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    
-                    <!-- Client Name -->
-                    <div class="form-group">
-                        <label for="clientField">Client:</label>
-                        <input type="text" name="client" id="clientField" required>
-                    </div>
-                    
-                    <!-- Short Description -->
-                    <div class="form-group">
-                        <label for="shortDescField">Short Description (for cards):</label>
-                        <textarea name="short_description" id="shortDescField" rows="3" maxlength="150" required></textarea>
-                        <small class="char-count">0/150 characters</small>
-                    </div>
-            
-                    <!-- Full Description -->
-                    <div class="form-group">
-                        <label for="descriptionField">Full Description:</label>
-                        <textarea name="description" id="descriptionField" rows="6" required></textarea>
-                    </div>
-                    
-                    <!-- Technologies -->
-                    <div class="form-group">
-                        <label for="technologiesField">Technologies (comma separated):</label>
-                        <input type="text" name="technologies" id="technologiesField" placeholder="HTML, CSS, JavaScript, PHP" required>
-                        <small>Enter technologies separated by commas</small>
-                    </div>
-                    
-                    <!-- Live URL -->
-                    <div class="form-group">
-                        <label for="liveUrlField">Live Website URL (optional):</label>
-                        <input type="url" name="live_url" id="liveUrlField" placeholder="https://example.com">
-                    </div>
-            
-                    <!-- Project Image -->
-                    <div class="form-group">
-                        <label for="imageField">Project Image:</label>
-                        <div id="drop_zone">
-                            <p>Drag & drop your image here, or click to select a file</p>
-                            <input type="file" name="image" id="imageField" accept="image/*">
-                        </div>
-                        <div id="image_preview"></div>
-                        <div id="current_image" style="display: none;">
-                            <p>Current image:</p>
-                            <img src="" alt="Current project image" style="max-width: 200px; margin-top: 10px;">
-                            <input type="hidden" name="current_image" id="currentImageField" value="">
-                        </div>
-                    </div>
-            
-                    <div class="form-buttons">
-                        <button type="submit" class="btn save-btn" id="saveBtn">Save Project</button>
-                        <button type="button" class="btn cancel-btn" id="cancelBtn">Cancel</button>
-                    </div>
-                </form>
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">Project Title:</label>
+                <input type="text" id="title" name="title" required value="<?php echo $projectToEdit ? htmlspecialchars($projectToEdit['title']) : ''; ?>">
             </div>
             
-            <!-- Table of Existing Projects -->
-            <div class="table-wrapper">
-                <table class="projects-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Client</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if ($result && $result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <tr data-id="<?php echo $row['project_id']; ?>">
-                                    <td><?php echo $row['project_id']; ?></td>
-                                    <td>
-                                        <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Project thumbnail" class="thumbnail">
-                                    </td>
-                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                    <td><?php echo htmlspecialchars($categories[$row['category']] ?? $row['category']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['client']); ?></td>
-                                    <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
-                                    <td><?php echo $row['updated_at'] ? date('Y-m-d', strtotime($row['updated_at'])) : 'N/A'; ?></td>
-                                    <td>
-                                        <button class="btn btn-primary edit-btn" data-project-id="<?php echo $row['project_id']; ?>">
-                                            Edit
-                                        </button>
-                                        <button class="btn btn-danger delete-project-btn" data-project-id="<?php echo $row['project_id']; ?>">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php }
-                        } else { ?>
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <?php
+                    $categories = ['E-commerce', 'Corporate', 'Landing Page', 'Web Application', 'Portfolio', 'Blog', 'Dashboard', 'Other'];
+                    foreach ($categories as $cat) {
+                        $selected = ($projectToEdit && $projectToEdit['category'] === $cat) ? 'selected' : '';
+                        echo "<option value=\"$cat\" $selected>$cat</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            
+            <!-- Client -->
+            <div class="form-group">
+                <label for="client">Client:</label>
+                <input type="text" id="client" name="client" required value="<?php echo $projectToEdit ? htmlspecialchars($projectToEdit['client']) : ''; ?>">
+            </div>
+            
+            <!-- Short Description -->
+            <div class="form-group">
+                <label for="shortDescription">Short Description:</label>
+                <textarea id="shortDescription" name="short_description" rows="2" maxlength="255" required><?php echo $projectToEdit ? htmlspecialchars($projectToEdit['short_description']) : ''; ?></textarea>
+                <small>Brief overview for project listing (max 255 characters)</small>
+            </div>
+            
+            <!-- Full Description -->
+            <div class="form-group">
+                <label for="description">Full Description:</label>
+                <textarea id="description" name="description" rows="6" required><?php echo $projectToEdit ? htmlspecialchars($projectToEdit['description']) : ''; ?></textarea>
+            </div>
+            
+            <!-- Technologies Used -->
+            <div class="form-group">
+                <label for="technologies">Technologies Used:</label>
+                <input type="text" id="technologies" name="technologies" required value="<?php echo $projectToEdit ? htmlspecialchars($projectToEdit['technologies']) : ''; ?>">
+                <small>Separate with commas (e.g., HTML, CSS, JavaScript, PHP)</small>
+            </div>
+            
+            <!-- Live URL -->
+            <div class="form-group">
+                <label for="liveUrl">Live URL (optional):</label>
+                <input type="url" id="liveUrl" name="live_url" placeholder="https://" value="<?php echo $projectToEdit ? htmlspecialchars($projectToEdit['live_url']) : ''; ?>">
+            </div>
+            
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label for="projectImage">Project Image:</label>
+                <div id="imagePreviewContainer" class="image-preview-container">
+                    <div id="imagePreview" class="image-preview <?php echo $projectToEdit ? 'has-image' : ''; ?>">
+                        <?php if ($projectToEdit && $projectToEdit['image_url']): ?>
+                            <img src="/<?php echo htmlspecialchars($projectToEdit['image_url']); ?>" alt="<?php echo htmlspecialchars($projectToEdit['title']); ?>">
+                        <?php endif; ?>
+                    </div>
+                    <input type="file" id="projectImage" name="image" accept="image/*" <?php echo $projectToEdit ? '' : 'required'; ?>>
+                    <label for="projectImage" class="upload-label">Choose File</label>
+                </div>
+                <small>Recommended size: 1200x800px, Max size: 5MB<?php echo $projectToEdit ? ' (upload a new image only if you want to replace the current one)' : ''; ?></small>
+            </div>
+            
+            <!-- Form Buttons -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><?php echo $projectToEdit ? 'Update Project' : 'Save Project'; ?></button>
+                <?php if ($projectToEdit): ?>
+                    <a href="admin.php?page=manage_webdev" class="btn btn-secondary">Cancel</a>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+
+    <!-- Projects List Section -->
+    <div class="projects-list-container">
+        <h2>Existing Projects</h2>
+        
+        <!-- Filters -->
+        <form method="GET" class="filters">
+            <input type="hidden" name="page" value="manage_webdev">
+            <div class="filter-group">
+                <label for="categoryFilter">Filter by Category:</label>
+                <select id="categoryFilter" name="category" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    <?php
+                    foreach ($categories as $cat) {
+                        $selected = ($category === $cat) ? 'selected' : '';
+                        echo "<option value=\"$cat\" $selected>$cat</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="searchFilter">Search:</label>
+                <input type="text" id="searchFilter" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search projects...">
+                <button type="submit" class="btn">Search</button>
+                <?php if (!empty($category) || !empty($search)): ?>
+                    <a href="admin.php?page=manage_webdev" class="btn btn-secondary">Clear Filters</a>
+                <?php endif; ?>
+            </div>
+        </form>
+        
+        <!-- Projects Table -->
+        <div class="table-responsive">
+            <table class="projects-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($projects && $projects->num_rows > 0): ?>
+                        <?php while ($project = $projects->fetch_assoc()): ?>
                             <tr>
-                                <td colspan="8" class="no-records">No projects found. Add your first project!</td>
+                                <td><?php echo $project['project_id']; ?></td>
+                                <td>
+                                    <div class="project-thumbnail">
+                                        <img src="/<?php echo htmlspecialchars($project['image_url']); ?>" 
+                                             alt="<?php echo htmlspecialchars($project['title']); ?>"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23cccccc%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'; this.onerror=null;">
+                                    </div>
+                                </td>
+                                <td><?php echo htmlspecialchars($project['title']); ?></td>
+                                <td><?php echo htmlspecialchars($project['category']); ?></td>
+                                <td><?php echo htmlspecialchars(substr($project['short_description'], 0, 100)) . (strlen($project['short_description']) > 100 ? '...' : ''); ?></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="admin.php?page=manage_webdev&edit=<?php echo $project['project_id']; ?>" class="btn btn-edit">Edit</a>
+                                        <form method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');" style="display: inline;">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
+                                            <button type="submit" class="btn btn-delete">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">No projects found</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 <script>
+// Simple JavaScript for image preview
 document.addEventListener('DOMContentLoaded', function() {
-    // Character counter for short description
-    const shortDescField = document.getElementById('shortDescField');
-    const charCount = document.querySelector('.char-count');
+    const projectImageInput = document.getElementById('projectImage');
+    const imagePreview = document.getElementById('imagePreview');
     
-    if (shortDescField && charCount) {
-        shortDescField.addEventListener('input', function() {
-            const currentLength = this.value.length;
-            charCount.textContent = `${currentLength}/150 characters`;
+    if (projectImageInput && imagePreview) {
+        projectImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
             
-            if (currentLength > 150) {
-                charCount.classList.add('exceeded');
-            } else {
-                charCount.classList.remove('exceeded');
-            }
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+                imagePreview.classList.add('has-image');
+            };
+            reader.readAsDataURL(file);
         });
     }
     
-    // Image preview functionality
-    const imageField = document.getElementById('imageField');
-    const imagePreview = document.getElementById('image_preview');
-    const dropZone = document.getElementById('drop_zone');
-    
-    if (imageField && imagePreview && dropZone) {
-        // File input change handler
-        imageField.addEventListener('change', function() {
-            previewImage(this.files[0]);
-        });
-        
-        // Drag and drop handlers
-        dropZone.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.classList.add('dragover');
-        });
-        
-        dropZone.addEventListener('dragleave', function() {
-            this.classList.remove('dragover');
-        });
-        
-        dropZone.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.classList.remove('dragover');
-            
-            if (e.dataTransfer.files.length) {
-                imageField.files = e.dataTransfer.files;
-                previewImage(e.dataTransfer.files[0]);
-            }
-        });
-        
-        // Click to select file
-        dropZone.addEventListener('click', function() {
-            imageField.click();
-        });
-    }
-    
-    function previewImage(file) {
-        if (!file || !file.type.match('image.*')) return;
-        
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image preview" style="max-width: 100%; max-height: 200px;">`;
-            dropZone.style.display = 'none';
-            imagePreview.style.display = 'block';
-        }
-        
-        reader.readAsDataURL(file);
-    }
-    
-    // Edit project functionality
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const formTitle = document.getElementById('formTitle');
-    const formAction = document.getElementById('formAction');
-    const projectIdField = document.getElementById('projectIdField');
-    const webdevForm = document.getElementById('webdevForm');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const currentImage = document.getElementById('current_image');
-    const currentImageField = document.getElementById('currentImageField');
-    
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const projectId = this.dataset.projectId;
-            
-            // Fetch project details
-            fetch(`../admin/admin_includes/webdev_actions/get_project.php?id=${projectId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update form title and action
-                        formTitle.textContent = 'Edit Project';
-                        formAction.value = 'update';
-                        projectIdField.value = projectId;
-                        
-                        // Populate form fields
-                        document.getElementById('titleField').value = data.project.title;
-                        document.getElementById('categoryField').value = data.project.category;
-                        document.getElementById('clientField').value = data.project.client;
-                        document.getElementById('shortDescField').value = data.project.short_description;
-                        document.getElementById('descriptionField').value = data.project.description;
-                        document.getElementById('technologiesField').value = data.project.technologies;
-                        document.getElementById('liveUrlField').value = data.project.live_url || '';
-                        
-                        // Update character count for short description
-                        const currentLength = data.project.short_description.length;
-                        charCount.textContent = `${currentLength}/150 characters`;
-                        
-                        // Handle image
-                        dropZone.style.display = 'none';
-                        imagePreview.style.display = 'none';
-                        currentImage.style.display = 'block';
-                        currentImage.querySelector('img').src = data.project.image_url;
-                        currentImageField.value = data.project.image_url;
-                        
-                        // Scroll to form
-                        webdevForm.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        alert('Failed to load project details');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while loading project details');
-                });
-        });
-    });
-    
-    // Cancel editing
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', function() {
-            // Reset form
-            webdevForm.reset();
-            formTitle.textContent = 'Create New Project';
-            formAction.value = 'create';
-            projectIdField.value = '';
-            
-            // Reset image section
-            dropZone.style.display = 'block';
-            imagePreview.style.display = 'none';
-            imagePreview.innerHTML = '';
-            currentImage.style.display = 'none';
-            currentImageField.value = '';
-            
-            // Reset character count
-            charCount.textContent = '0/150 characters';
-            charCount.classList.remove('exceeded');
-        });
-    }
-    
-    // Delete project confirmation
-    const deleteButtons = document.querySelectorAll('.delete-project-btn');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const projectId = this.dataset.projectId;
-            const confirmDelete = confirm('Are you sure you want to delete this project? This action cannot be undone.');
-            
-            if (confirmDelete) {
-                // Create a form and submit it
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '../admin/admin_includes/webdev_actions/process_webdev.php';
-                
-                const actionInput = document.createElement('input');
-                actionInput.type = 'hidden';
-                actionInput.name = 'action';
-                actionInput.value = 'delete';
-                
-                const idInput = document.createElement('input');
-                idInput.type = 'hidden';
-                idInput.name = 'project_id';
-                idInput.value = projectId;
-                
-                form.appendChild(actionInput);
-                form.appendChild(idInput);
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    });
-    
-    // Initialize CKEDITOR for the description field
-    if (typeof CKEDITOR !== 'undefined') {
-        CKEDITOR.replace('descriptionField', {
-            height: 300,
-            removePlugins: 'elementspath',
-            resize_enabled: false,
-            toolbar: [
-                ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'],
-                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-                ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-                ['Link', 'Unlink'],
-                ['Styles', 'Format'],
-                ['Source']
-            ]
-        });
+    // Auto-hide status message after 5 seconds
+    const statusMessage = document.querySelector('.status-message');
+    if (statusMessage) {
+        setTimeout(() => {
+            statusMessage.style.opacity = '0';
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 500);
+        }, 5000);
     }
 });
 </script>
-
-<?php include('../admin/admin_includes/admin_footer.php'); ?>

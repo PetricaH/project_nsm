@@ -1,64 +1,322 @@
-.user-form, .user-table-div {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+/**
+ * Users Manager Styles
+ * Consistent with admin panel design
+ */
+
+/* User form container */
+.user-form {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
-form#createUserForm label {
+.user-form h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* User form inputs */
+#createUserForm {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+#createUserForm label {
     display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
-form#createUserForm input, select {
+#createUserForm input,
+#createUserForm select {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: border-color var(--transition-speed) ease;
 }
 
-form#createUserForm button {
-    padding: 10px 20px;
-    background-color: #007bff;
+#createUserForm input:focus,
+#createUserForm select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+#createUserForm button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--accent-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+    font-size: 0.95rem;
+    justify-self: start;
+    grid-column: 1;
 }
 
-form#createUserForm button:hover {
-    background-color: #0056b3;
+#createUserForm button:hover {
+    background-color: var(--accent-hover);
 }
 
-.user-table-div > table {
+/* Users table container */
+.user-table-div {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.user-table-div h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Users table */
+.user-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.user-table-div > table th, 
-.user-table-div > table td {
-    padding: 10px;
+.user-table th,
+.user-table td {
+    padding: var(--spacing-md);
     text-align: left;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.user-table-div .message {
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 4px;
+.user-table th {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
-.user-table-div .message.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+.user-table td {
+    color: var(--text-secondary);
 }
 
-.user-table-div .message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+.user-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* User roles styling */
+.user-role {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 3px;
+    font-size: 0.85rem;
+}
+
+.user-role:empty::before {
+    content: "user";
+    color: var(--text-muted);
+}
+
+.user-role:contains("admin") {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
+
+.user-role:contains("author") {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.user-role:contains("user") {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Delete button */
+.user-table form {
+    display: inline;
+}
+
+.user-table button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 0.85rem;
+}
+
+.user-table button:hover {
+    background-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Status messages */
+.message {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--border-radius);
+    border-left: 4px solid;
+}
+
+.message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left-color: #4CAF50;
+    color: #A5D6A7;
+}
+
+.message.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border-left-color: #F44336;
+    color: #EF9A9A;
+}
+
+.message.hidden {
+    display: none;
+}
+
+/* User details modal */
+.user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 16, 19, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed) ease;
+}
+
+.user-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-modal-content {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+.user-modal-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-modal-header h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.user-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+
+.user-modal-close:hover {
+    color: var(--text-primary);
+}
+
+.user-modal-body {
+    padding: var(--spacing-lg);
+}
+
+.user-detail {
+    margin-bottom: var(--spacing-md);
+}
+
+.user-detail-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.user-detail-value {
+    color: var(--text-primary);
+}
+
+.user-modal-footer {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+}
+
+.user-modal-footer button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+/* Edit mode enhancements */
+.edit-user-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.edit-user-form .form-group:last-child {
+    grid-column: span 2;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    #createUserForm {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .user-table th:nth-child(5),
+    .user-table td:nth-child(5) {
+        display: none;
+    }
+    
+    .edit-user-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .edit-user-form .form-group:last-child {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .user-table th:nth-child(3),
+    .user-table td:nth-child(3) {
+        display: none;
+    }
 }

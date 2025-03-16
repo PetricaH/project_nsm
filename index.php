@@ -1,6 +1,11 @@
 <?php require_once('config.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/heading.php'); ?>
 <?php $page_css = 'home.css';?>
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache"); // HTTP 1.0
+header("Expires: 0"); // Proxies
+?>
 <title>Hreniuc Petrică | Web Development & Automation Services</title>
 </head>
 <body>

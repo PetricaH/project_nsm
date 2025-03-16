@@ -1,82 +1,336 @@
-/* Table Styles */
+/**
+ * Bookings Manager Styles
+ * Consistent with admin panel design
+ */
+
+/* Table container */
+.table-container {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Table styles */
 table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: #333;
 }
 
-/* Table Header */
-thead th {
-    background-color: #f4f4f4;
-    color: #333;
+table th,
+table td {
+    padding: var(--spacing-md);
     text-align: left;
-    padding: 10px;
-    font-weight: 600;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
 }
 
-/* Table Rows */
-tbody tr {
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease;
+table th {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-/* Hover Effect */
-tbody tr:hover {
-    background-color: #f9f9f9;
+table td {
+    color: var(--text-secondary);
 }
 
-/* Table Data Cells */
-tbody td {
-    padding: 10px;
-    text-align: left;
-    vertical-align: middle;
+table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
-/* Responsive Adjustments */
-tbody td:nth-child(4),
-tbody td:nth-child(5) {
-    word-break: break-word;
+table td.editable {
+    position: relative;
+    transition: background-color var(--transition-speed) ease;
+    cursor: text;
 }
 
-/* No Bookings Message */
-tbody td[colspan] {
+table td.editable:hover {
+    background-color: rgba(70, 130, 180, 0.1);
+}
+
+table td.editable:focus {
+    outline: 2px solid var(--accent-color);
+    background-color: rgba(70, 130, 180, 0.15);
+}
+
+/* Checkbox styling */
+table td input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
+/* Select styling */
+table td select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: border-color var(--transition-speed) ease;
+}
+
+table td select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Status indicators */
+table td select option[value="Pending"] {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+table td select option[value="Approved"] {
+    background-color: var(--success-color);
+    color: white;
+}
+
+table td select option[value="Rejected"] {
+    background-color: var(--error-color);
+    color: white;
+}
+
+/* Delete button */
+.delete-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Filters section */
+.bookings-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.filter-group label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.filter-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.filter-buttons button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.filter-buttons .apply-filters {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+}
+
+.filter-buttons .apply-filters:hover {
+    background-color: var(--accent-hover);
+}
+
+.filter-buttons .reset-filters {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.filter-buttons .reset-filters:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+/* Booking details modal */
+.booking-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 16, 19, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.booking-details-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+.modal-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.booking-detail {
+    margin-bottom: var(--spacing-md);
+}
+
+.booking-detail-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.booking-detail-value {
+    color: var(--text-primary);
+}
+
+.booking-actions {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.booking-actions button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.approve-btn {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.approve-btn:hover {
+    background-color: rgba(76, 175, 80, 0.2);
+}
+
+.reject-btn {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.reject-btn:hover {
+    background-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Empty state */
+.empty-state {
+    padding: var(--spacing-xl);
     text-align: center;
-    font-style: italic;
-    color: #666;
-    padding: 20px;
+    color: var(--text-muted);
 }
 
-/* Mobile Styles */
+/* Responsive design */
+@media (max-width: 992px) {
+    .bookings-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
-    thead {
-        display: none;
+    .bookings-filters {
+        grid-template-columns: 1fr;
     }
-
-    tbody tr {
+    
+    table {
         display: block;
-        margin-bottom: 15px;
-        border-bottom: 2px solid #ddd;
+        overflow-x: auto;
     }
-
-    tbody td {
-        display: block;
-        text-align: right;
-        padding: 8px 5px;
-        border-bottom: 1px solid #eee;
+    
+    table th,
+    table td {
+        min-width: 120px;
     }
+}
 
-    tbody td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #666;
+@media (max-width: 576px) {
+    .filter-buttons {
+        flex-direction: column;
+        align-items: stretch;
     }
-
-    tbody td:last-child {
-        border-bottom: 0;
+    
+    .booking-actions {
+        flex-direction: column;
     }
 }

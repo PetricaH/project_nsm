@@ -124,7 +124,8 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         'artworks.php'    => 'artworks',
         'blog.php'        => 'blog',
         'blog_post.php'   => 'blog_post',
-        'webdev.php'      => 'webdev'
+        'webdev.php'      => 'webdev',
+        'resource-thank-you.php' => 'thank-you'
         // Add more mappings as needed
     ];
     
@@ -284,6 +285,47 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath)) {
                 $jsVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $fullPath);
                 echo '<script src="/' . $fullPath . '?v=' . $jsVersion . '" defer></script>';
+            }
+        }
+    }
+    
+    // Define additional script files needed for specific pages
+    $additionalScripts = [
+        'artworks.php' => ['artworks'],
+        'bookings.php' => ['bookings']
+        // Add more page-specific scripts as needed
+    ];
+
+    // Check if current page needs additional scripts
+    if (isset($additionalScripts[$currentFile])) {
+        foreach ($additionalScripts[$currentFile] as $scriptName) {
+            if (ENVIRONMENT === 'production') {
+                $scriptPath = $jsBasePath . $scriptName . $fileExtension . '.js';
+            } else {
+                $scriptPath = $jsBasePath . $scriptName . '.js';
+            }
+            
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptPath)) {
+                $scriptVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptPath);
+                echo '<script src="/' . $scriptPath . '?v=' . $scriptVersion . '" defer></script>';
+            }
+        }
+    }
+
+    // Handle any other required scripts that might be needed globally but aren't in the main list
+    $globalScripts = ['bookings']; // Scripts that might be needed on multiple pages
+    foreach ($globalScripts as $scriptName) {
+        // Only add if not already added for the current page
+        if (!isset($additionalScripts[$currentFile]) || !in_array($scriptName, $additionalScripts[$currentFile])) {
+            if (ENVIRONMENT === 'production') {
+                $scriptPath = $jsBasePath . $scriptName . $fileExtension . '.js';
+            } else {
+                $scriptPath = $jsBasePath . $scriptName . '.js';
+            }
+            
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptPath)) {
+                $scriptVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptPath);
+                echo '<script src="/' . $scriptPath . '?v=' . $scriptVersion . '" defer></script>';
             }
         }
     }

@@ -1,61 +1,78 @@
-/* Styles for managing web development projects */
+/**
+ * Web Development Projects Manager Styles
+ * Consistent with admin panel design
+ */
 
-.dashboard-container {
-    width: 100%;
-    margin: 0 auto;
+/* Webdev dashboard layout */
+.webdev-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
-.projects-section {
-    background-color: #1A1A1D;
-    padding: 2rem;
-    border-radius: 4px;
-    margin-bottom: 2rem;
+@media (max-width: 1200px) {
+    .webdev-dashboard {
+        grid-template-columns: 1fr;
+    }
 }
 
-.projects-section h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #FFFFFF;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #303035;
-}
-
-/* Project Form */
+/* Project form container */
 .project-form-container {
-    background-color: #0F1013;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 4px;
+    background-color: var(--primary-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
 }
 
 .project-form-container h2 {
-    border: none;
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
 }
 
+/* Projects list container */
+.projects-list-container {
+    background-color: var(--primary-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.projects-list-container h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Form elements */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    color: #AAAAAA;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
-.form-group input[type="text"],
-.form-group input[type="url"],
-.form-group textarea,
-.form-group select {
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
-    padding: 0.8rem;
+    padding: var(--spacing-md);
     background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid #303035;
-    color: #FFFFFF;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    transition: all var(--transition-speed) ease;
 }
 
 .form-group select {
@@ -66,208 +83,343 @@
     background-size: 1.2rem;
 }
 
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
 .form-group small {
     display: block;
-    margin-top: 0.3rem;
-    color: #707070;
+    margin-top: var(--spacing-xs);
+    color: var(--text-muted);
     font-size: 0.8rem;
 }
 
-.char-count {
-    display: block;
-    text-align: right;
-    color: #707070;
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
-}
-
-.char-count.exceeded {
-    color: #FF6B6B;
-}
-
-#drop_zone {
-    border: 2px dashed #303035;
-    border-radius: 4px;
-    padding: 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#drop_zone:hover,
-#drop_zone.dragover {
-    border-color: #4682B4;
-    background-color: rgba(70, 130, 180, 0.05);
-}
-
-#drop_zone p {
-    margin: 0;
-    color: #AAAAAA;
-}
-
-#drop_zone input[type="file"] {
-    display: none;
-}
-
-#image_preview {
-    margin-top: 1rem;
-    display: none;
-    text-align: center;
-}
-
-.form-buttons {
+/* Image Preview */
+.image-preview-container {
+    width: 100%;
+    min-height: 150px;
+    margin-bottom: var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 
-.btn {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 4px;
+.image-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-preview.has-image {
+    background-color: transparent;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+#projectImage {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.upload-label {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    z-index: 1;
 }
 
-.save-btn {
-    background-color: #4682B4;
-    color: #FFFFFF;
+/* Form actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
 }
 
-.save-btn:hover {
-    background-color: #375F82;
+/* Buttons */
+.btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.cancel-btn {
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn-secondary {
     background-color: transparent;
-    border: 1px solid #707070;
-    color: #AAAAAA;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
 }
 
-.cancel-btn:hover {
+.btn-secondary:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
     background-color: rgba(255, 255, 255, 0.05);
-    color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
 }
 
-/* Projects Table */
-.table-wrapper {
+/* Projects table */
+.table-responsive {
     overflow-x: auto;
+    margin-top: var(--spacing-md);
 }
 
 .projects-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
 }
 
 .projects-table th,
 .projects-table td {
-    padding: 1rem;
+    padding: var(--spacing-md);
     text-align: left;
-    border-bottom: 1px solid #303035;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .projects-table th {
-    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
     font-weight: 500;
-    background-color: #0F1013;
 }
 
 .projects-table td {
-    color: #AAAAAA;
+    color: var(--text-secondary);
 }
 
-.thumbnail {
-    width: 60px;
-    height: 40px;
+.projects-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Project thumbnail */
+.project-thumbnail {
+    width: 80px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.project-thumbnail img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 2px;
 }
 
-.btn-primary {
-    background-color: #4682B4;
-    color: #FFFFFF;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
+/* Button styles */
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
 }
 
-.btn-primary:hover {
-    background-color: #375F82;
+.btn-edit {
+    background-color: rgba(70, 130, 180, 0.2);
+    color: var(--text-secondary);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
 }
 
-.btn-danger {
-    background-color: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    color: #FF6B6B;
-    padding: 0.5rem 1rem;
+.btn-edit:hover {
+    background-color: rgba(70, 130, 180, 0.4);
+    color: var(--text-primary);
 }
 
-.btn-danger:hover {
-    background-color: rgba(255, 107, 107, 0.2);
+.btn-delete {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: var(--text-secondary);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
 }
 
-.no-records {
+.btn-delete:hover {
+    background-color: rgba(244, 67, 54, 0.4);
+    color: var(--text-primary);
+}
+
+/* Delete Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 16, 19, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed) ease;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.modal-content h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-content p {
+    padding: 0 var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.modal-actions {
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Status messages */
+.status-message {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    position: relative;
+    transition: opacity var(--transition-speed) ease;
+    border-left: 4px solid;
+}
+
+.status-message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left-color: #4CAF50;
+    color: #A5D6A7;
+}
+
+.status-message.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border-left-color: #F44336;
+    color: #EF9A9A;
+}
+
+/* Loading state */
+.loading-row td {
     text-align: center;
-    color: #707070;
-    font-style: italic;
-    padding: 2rem !important;
+    color: var(--text-secondary);
+    padding: var(--spacing-xl) !important;
 }
 
-/* Media Queries */
+/* Responsive design */
 @media (max-width: 992px) {
-    .projects-section {
-        padding: 1.5rem;
+    .filters {
+        flex-direction: column;
     }
     
-    .project-form-container {
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .form-buttons {
+    .form-actions {
         flex-direction: column;
     }
     
     .btn {
         width: 100%;
     }
-    
-    .projects-table th,
-    .projects-table td {
-        padding: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .projects-table th:nth-child(4),
+    .projects-table td:nth-child(4),
+    .projects-table th:nth-child(5),
+    .projects-table td:nth-child(5) {
+        display: none;
     }
     
-    .thumbnail {
-        width: 50px;
-        height: 35px;
+    .project-thumbnail {
+        width: 60px;
+        height: 45px;
     }
 }
 
 @media (max-width: 576px) {
-    .projects-section {
-        padding: 1rem;
-    }
-    
-    .project-form-container {
-        padding: 1rem;
-    }
-    
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    
-    .projects-table th,
-    .projects-table td {
-        padding: 0.6rem;
-        font-size: 0.8rem;
-    }
-    
-    .btn-primary,
-    .btn-danger {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+    .projects-table th:nth-child(1),
+    .projects-table td:nth-child(1) {
+        display: none;
     }
 }

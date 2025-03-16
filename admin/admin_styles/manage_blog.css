@@ -1,210 +1,328 @@
-/* Container */
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-}
+/**
+ * Blog Manager Styles
+ * Consistent with admin panel design
+ */
 
-/* Headings */
-h1, h2, h3 {
-    margin-bottom: 1rem;
-    color: #333333;
-}
-
-/* Dashboard Container */
+/* Dashboard layout */
 .dashboard-container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 3fr;
+    gap: var(--spacing-lg);
 }
 
-/* Categories Section */
-.categories-section {
-    flex: 1 1 10%;
-    max-height: fit-content;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+@media (max-width: 992px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
 }
 
-.categories-section h2 {
-    margin-bottom: 1rem;
-}
-
-/* Posts Section */
+/* Section containers */
+.categories-section,
 .posts-section {
-    flex: 1 1 65%;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
 }
 
+.categories-section h2,
 .posts-section h2 {
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
 }
 
-/* Table Styles */
-.table-wrapper {
-    overflow-x: auto;
-    margin-bottom: 1.5rem;
-}
-
-table {
+/* Categories Table */
+.categories-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th, td {
-    padding: 0.75rem 1rem;
+.categories-table th,
+.categories-table td {
+    padding: var(--spacing-md);
     text-align: left;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-color);
 }
 
-thead {
-    background-color: #007BFF;
-    color: #ffffff;
+.categories-table th {
+    color: var(--text-primary);
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+.categories-table td {
+    color: var(--text-secondary);
 }
 
-tbody tr:hover {
-    background-color: #f1f1f1;
+/* Category Form */
+.category-form-container {
+    padding: var(--spacing-lg);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-lg);
 }
 
-/* Buttons */
-.btn {
-    padding: 0.4rem 0.8rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+.category-form-container h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
 }
 
-.btn-primary {
-    background-color: #17a2b8;
-    color: #ffffff;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    background-color: #138496;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-/* Form Styles */
-.form-group {
+#addCategoryForm {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    gap: var(--spacing-md);
+}
+
+.add-category-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+    align-self: flex-start;
+    font-size: 0.9rem;
+}
+
+.add-category-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Blog Form */
+.blog-form-container {
+    padding: var(--spacing-lg);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.blog-form-container h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#blogForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+#blogForm .form-group:nth-child(3),
+#blogForm .form-group:nth-child(4),
+#blogForm .form-group:nth-child(5) {
+    grid-column: span 2;
+}
+
+.form-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.save-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+    font-size: 0.9rem;
+}
+
+.save-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.cancel-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 0.9rem;
+}
+
+.cancel-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+/* Blog Posts Table */
+.blog-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.blog-table th,
+.blog-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.blog-table th {
+    color: var(--text-primary);
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.blog-table td {
+    color: var(--text-secondary);
+}
+
+.blog-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Action Buttons */
+.btn-primary,
+.edit-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(70, 130, 180, 0.2);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 0.85rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary:hover,
+.edit-btn:hover {
+    background-color: rgba(70, 130, 180, 0.4);
+    color: var(--text-primary);
+}
+
+.btn-danger,
+.delete-post-btn,
+.delete-category-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(244, 67, 54, 0.2);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 0.85rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-danger:hover,
+.delete-post-btn:hover,
+.delete-category-btn:hover {
+    background-color: rgba(244, 67, 54, 0.4);
+    color: var(--text-primary);
+}
+
+/* CKEditor customization */
+.cke_top,
+.cke_bottom,
+.cke_chrome {
+    background-color: var(--primary-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+.cke_chrome {
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+}
+
+.cke_toolgroup,
+.cke_combo_button {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--border-color) !important;
+}
+
+.cke_dialog_body,
+.cke_dialog_footer,
+.cke_dialog_contents,
+.cke_dialog_title {
+    background-color: var(--secondary-bg) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Form controls */
+.form-group {
+    margin-bottom: var(--spacing-md);
 }
 
 .form-group label {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
+    width: 100%;
+    padding: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-speed) ease;
 }
 
-.category-form-container,
-.blog-form-container {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 1rem;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
 }
 
-.category-form-container h3,
-.blog-form-container h2 {
-    margin-bottom: 1rem;
-}
-
-.add-category-btn,
-.save-btn,
-.cancel-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-}
-
-.add-category-btn {
-    background-color: #007BFF;
-    color: #ffffff;
-}
-
-.add-category-btn:hover {
-    background-color: #0056b3;
-}
-
-.save-btn {
-    background-color: #28a745;
-    color: #ffffff;
-    margin-right: 0.5rem;
-}
-
-.save-btn:hover {
-    background-color: #218838;
-}
-
-.cancel-btn {
-    background-color: #6c757d;
-    color: #ffffff;
-}
-
-.cancel-btn:hover {
-    background-color: #5a6268;
-}
-
-/* Form Buttons Container */
-.form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 992px) {
-    .categories-section,
-    .posts-section {
-        flex: 1 1 100%;
-    }
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
+    #blogForm {
+        grid-template-columns: 1fr;
     }
-
-    .container {
-        padding: 0;
+    
+    #blogForm .form-group:nth-child(3),
+    #blogForm .form-group:nth-child(4),
+    #blogForm .form-group:nth-child(5) {
+        grid-column: span 1;
     }
-
-    th, td {
-        padding: 0.5rem 0.75rem;
+    
+    .blog-table th:nth-child(3),
+    .blog-table th:nth-child(4),
+    .blog-table th:nth-child(5),
+    .blog-table th:nth-child(6),
+    .blog-table td:nth-child(3),
+    .blog-table td:nth-child(4),
+    .blog-table td:nth-child(5),
+    .blog-table td:nth-child(6) {
+        display: none;
     }
+}
 
-    .btn {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
+@media (max-width: 576px) {
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
     }
 }

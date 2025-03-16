@@ -1,60 +1,49 @@
 <?php
-// This file should be placed in includes/get_project_details.php
-
-require_once('../config.php');
-
-// Set response header
-header('Content-Type: application/json');
+require_once('../../config.php');
 
 // Check if project ID is provided
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    echo json_encode(['success' => false, 'error' => 'Project ID is required']);
-    exit;
+if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $project_id = intval($_GET['id']);
+    
+    // Prepare SQL query to get project details
+    $sql = "SELECT * FROM webdev_projects WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $project_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if($result->num_rows > 0) {
+        // Fetch project data
+        $project = $result->fetch_assoc();
+        
+        // Format data for response
+        $response = [
+            'success' => true,
+            'project' => $project
+        ];
+        
+        // Output as JSON
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    } else {
+        // Project not found
+        $response = [
+            'success' => false,
+            'message' => 'Project not found'
+        ];
+        
+        // Output as JSON
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+} else {
+    // Invalid or missing project ID
+    $response = [
+        'success' => false,
+        'message' => 'Invalid project ID'
+    ];
+    
+    // Output as JSON
+    header('Content-Type: application/json');
+    echo json_encode($response);
 }
-
-$projectId = (int)$_GET['id'];
-
-// Fetch project details
-$stmt = $conn->prepare("
-    SELECT project_id, title, category, short_description, description, client, 
-           technologies, image_url, live_url, created_at, updated_at
-    FROM webdev_projects
-    WHERE project_id = ?
-");
-
-$stmt->bind_param("i", $projectId);
-
-if (!$stmt->execute()) {
-    echo json_encode(['success' => false, 'error' => 'Failed to fetch project details: ' . $stmt->error]);
-    exit;
-}
-
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    echo json_encode(['success' => false, 'error' => 'Project not found']);
-    exit;
-}
-
-$project = $result->fetch_assoc();
-
-// Convert dates to readable format
-$project['created_at'] = date('Y-m-d', strtotime($project['created_at']));
-if ($project['updated_at']) {
-    $project['updated_at'] = date('Y-m-d', strtotime($project['updated_at']));
-}
-
-// Map category to display name
-$categoryDisplay = [
-    'ecommerce' => 'E-commerce',
-    'business' => 'Business Website',
-    'dashboard' => 'Dashboard/Admin',
-    'portfolio' => 'Portfolio',
-    'other' => 'Other'
-];
-
-$project['category_display'] = $categoryDisplay[$project['category']] ?? $project['category'];
-
-echo json_encode(['success' => true, 'project' => $project]);
-$stmt->close();
-?>

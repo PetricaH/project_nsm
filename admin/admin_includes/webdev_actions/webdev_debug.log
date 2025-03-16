@@ -1,0 +1,513 @@
+Array
+(
+    [timestamp] => 2025-03-15 11:04:57
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => rweasd
+            [category] => Web Application
+            [client] => dqwq
+            [short_description] => dwqdq
+            [description] => dwqdq
+            [technologies] => 3213
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 4.jpg
+            [full_path] => 4.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\petri\AppData\Local\Temp\php1375.tmp
+            [error] => 0
+            [size] => 135774
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+Starting uploadImage function
+Created directory: C:\xampp\htdocs\project_nsm/static/images/webdev_projects
+Attempting to move uploaded file to: C:\xampp\htdocs\project_nsm/static/images/webdev_projects/67d55ed943f15_4.jpg
+File uploaded successfully to: static/images/webdev_projects/67d55ed943f15_4.jpg
+About to execute insert query
+Insert successful
+Array
+(
+    [timestamp] => 2025-03-15 11:05:35
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => test
+            [category] => Landing Page
+            [client] => test
+            [short_description] => test
+            [description] => test
+            [technologies] => test
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 6.jpg
+            [full_path] => 6.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\petri\AppData\Local\Temp\phpA9BB.tmp
+            [error] => 0
+            [size] => 907956
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+Starting uploadImage function
+Attempting to move uploaded file to: C:\xampp\htdocs\project_nsm/static/images/webdev_projects/67d55effb0357_6.jpg
+File uploaded successfully to: static/images/webdev_projects/67d55effb0357_6.jpg
+About to execute insert query
+Insert successful
+Array
+(
+    [timestamp] => 2025-03-15 11:20:28
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => test 2
+            [category] => Corporate
+            [client] => test 2
+            [short_description] => test 2
+            [description] => test 2
+            [technologies] => test 2
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 6.jpg
+            [full_path] => 6.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\petri\AppData\Local\Temp\php48AC.tmp
+            [error] => 0
+            [size] => 907956
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+Starting uploadImage function
+Attempting to move uploaded file to: C:\xampp\htdocs\project_nsm/static/images/webdev_projects/67d5627c5cd7f_6.jpg
+File uploaded successfully to: static/images/webdev_projects/67d5627c5cd7f_6.jpg
+About to execute insert query
+Insert successful
+Array
+(
+    [timestamp] => 2025-03-15 11:21:37
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => 321313
+            [category] => Web Application
+            [client] => 321313
+            [short_description] => 321313
+            [description] => 321313
+            [technologies] => 321313
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+No image uploaded
+Array
+(
+    [timestamp] => 2025-03-15 11:21:57
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => 321312
+            [category] => E-commerce
+            [client] => 321312
+            [short_description] => 321312
+            [description] => 321312
+            [technologies] => 321312
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 5e798f34-2695-44a4-a6a9-552a9226d508.jpg
+            [full_path] => 5e798f34-2695-44a4-a6a9-552a9226d508.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\petri\AppData\Local\Temp\phpA38A.tmp
+            [error] => 0
+            [size] => 320305
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+Starting uploadImage function
+Attempting to move uploaded file to: C:\xampp\htdocs\project_nsm/static/images/webdev_projects/67d562d52d5e7_5e798f34_2695_44a4_a6a9_552a9226d508.jpg
+File uploaded successfully to: static/images/webdev_projects/67d562d52d5e7_5e798f34_2695_44a4_a6a9_552a9226d508.jpg
+About to execute insert query
+Insert successful
+Array
+(
+    [timestamp] => 2025-03-15 11:28:47
+    [POST] => Array
+        (
+            [action] => create
+            [project_id] => 
+            [current_image] => 
+            [title] => 321312
+            [category] => Web Application
+            [client] => 515215
+            [short_description] => 515215
+            [description] => 515215
+            [technologies] => 515215
+            [live_url] => 
+        )
+
+    [FILES] => Array
+(
+    [image] => Array
+        (
+            [name] => 5e798f34-2695-44a4-a6a9-552a9226d508.jpg
+            [full_path] => 5e798f34-2695-44a4-a6a9-552a9226d508.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\Users\petri\AppData\Local\Temp\phpE682.tmp
+            [error] => 0
+            [size] => 320305
+        )
+
+)
+
+    [SESSION] => Array
+        (
+            [user_id] => 102
+            [username] => 
+            [role] => admin
+            [logged_in] => 1
+        )
+
+)
+
+
+Action received: create
+
+Starting createProject function
+Starting uploadImage function
+Attempting to move uploaded file to: C:\xampp\htdocs\project_nsm/static/images/webdev_projects/67d5646f84ac6_5e798f34_2695_44a4_a6a9_552a9226d508.jpg
+File uploaded successfully to: static/images/webdev_projects/67d5646f84ac6_5e798f34_2695_44a4_a6a9_552a9226d508.jpg
+About to execute insert query
+Insert successful
+List projects request received: 2025-03-15 11:56:42
+GET: Array
+(
+    [_] => 1742039802935
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:56:42
+GET: Array
+(
+    [_] => 1742039802936
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:57:46
+GET: Array
+(
+    [_] => 1742039866326
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:57:46
+GET: Array
+(
+    [_] => 1742039866327
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:58:39
+GET: Array
+(
+    [_] => 1742039919616
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:58:39
+GET: Array
+(
+    [_] => 1742039919618
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:59:15
+GET: Array
+(
+    [_] => 1742039955234
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 11:59:15
+GET: Array
+(
+    [_] => 1742039955235
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:00:04
+GET: Array
+(
+    [_] => 1742040004900
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:00:04
+GET: Array
+(
+    [_] => 1742040004901
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:02:02
+GET: Array
+(
+    [_] => 1742040122123
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:02:02
+GET: Array
+(
+    [_] => 1742040122122
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:02:11
+GET: Array
+(
+    [_] => 1742040131555
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:02:11
+GET: Array
+(
+    [_] => 1742040131557
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:05:27
+GET: Array
+(
+    [_] => 1742040327199
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:05:27
+GET: Array
+(
+    [_] => 1742040327198
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:08:31
+GET: Array
+(
+    [_] => 1742040511549
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:08:31
+GET: Array
+(
+    [_] => 1742040511550
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:09:11
+GET: Array
+(
+    [_] => 1742040551669
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:09:11
+GET: Array
+(
+    [_] => 1742040551670
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:11:24
+GET: Array
+(
+    [_] => 1742040684919
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:11:24
+GET: Array
+(
+    [_] => 1742040684919
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:12:27
+GET: Array
+(
+    [_] => 1742040747960
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:12:27
+GET: Array
+(
+    [_] => 1742040747960
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:13:37
+GET: Array
+(
+    [_] => 1742040817361
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:13:44
+GET: Array
+(
+    [_] => 1742040824895
+)
+
+
+Successfully fetched 8 projects
+List projects request received: 2025-03-15 12:14:22
+GET: Array
+(
+    [_] => 1742040862320
+)
+
+
+Successfully fetched 4 projects

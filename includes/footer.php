@@ -1,9 +1,4 @@
-<!-- linking to the stylesheet for the index.php -->
-<script src="static/js/public_script.js"></script>
-
-<script src="static/js/artworks.js"></script>
-
-<script src="static/js/bookings.js"></script>
+<!-- Footer Section with proper versioning -->
 <footer class="site-footer">
     <div class="footer-content">
         <!-- Footer Links -->
@@ -43,32 +38,52 @@
         <p>&copy; <?php echo date("Y"); ?> Hreniuc Petrică. All rights reserved.</p>
     </div>
 </footer>
-<link rel="stylesheet" type="text/css" href="static/css/footer.css">
+
+<?php
+// Load footer CSS with proper versioning based on environment
+if (ENVIRONMENT === 'production') {
+    $footerCssPath = 'dist/styles/footer.min.css';
+} else {
+    $footerCssPath = 'static/css/footer.css';
+}
+
+if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $footerCssPath)) {
+    $footerCssVersion = filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $footerCssPath);
+    
+    if (ENVIRONMENT === 'production') {
+        echo '<link rel="preload" href="/' . $footerCssPath . '?v=' . $footerCssVersion . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+        echo '<noscript><link rel="stylesheet" href="/' . $footerCssPath . '?v=' . $footerCssVersion . '"></noscript>';
+    } else {
+        echo '<link rel="stylesheet" href="/' . $footerCssPath . '?v=' . $footerCssVersion . '">';
+    }
+}
+?>
+
+<!-- Blog post theme toggle script -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const modeToggle = document.getElementById("mode_toggle");
-    const postSection = document.querySelector(".blog_post_section");
+    if (modeToggle) {
+        const postSection = document.querySelector(".blog_post_section");
+        if (postSection) {
+            // Check for saved theme preference for blog post section
+            if (localStorage.getItem("blog_theme") === "light") {
+                postSection.classList.add("light_mode");
+                modeToggle.innerText = "☀️";
+            }
 
-    // Check for saved theme preference for blog post section
-    if (localStorage.getItem("blog_theme") === "light") {
-        postSection.classList.add("light_mode");
-        modeToggle.innerText = "☀️";
-    }
+            modeToggle.addEventListener("click", function () {
+                postSection.classList.toggle("light_mode");
 
-    modeToggle.addEventListener("click", function () {
-        postSection.classList.toggle("light_mode");
-
-        if (postSection.classList.contains("light_mode")) {
-            localStorage.setItem("blog_theme", "light");
-            modeToggle.innerText = "☀️";
-        } else {
-            localStorage.setItem("blog_theme", "dark");
-            modeToggle.innerText = "🌙";
+                if (postSection.classList.contains("light_mode")) {
+                    localStorage.setItem("blog_theme", "light");
+                    modeToggle.innerText = "☀️";
+                } else {
+                    localStorage.setItem("blog_theme", "dark");
+                    modeToggle.innerText = "🌙";
+                }
+            });
         }
-    });
+    }
 });
 </script>
-
-</body>
-
-</html>
