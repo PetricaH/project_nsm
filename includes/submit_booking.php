@@ -99,6 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                      $date, $time, $website, $description, $budget, $timeline, $privacy_policy, 
                      $ip_address, $user_agent, $source, $utm_source, $utm_medium, $utm_campaign);
     
+    $time = date('H:i:s', strtotime($time));
+
     if ($stmt->execute()) {
         $booking_id = $conn->insert_id;
         
