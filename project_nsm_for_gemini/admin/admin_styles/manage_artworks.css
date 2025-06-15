@@ -1,0 +1,311 @@
+/**
+ * Artwork Manager Styles
+ * Consistent with admin panel design
+ */
+
+/* Form Layout */
+#manage_artwork_form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--spacing-xl);
+}
+
+#manage_artwork_h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    font-weight: 500;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Form Inputs */
+.first_manage_artwork_form_input,
+.second_manage_artwork_form_input,
+.third_manage_artwork_form_input {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+#manage_artwork_form label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#manage_artwork_form input[type="text"],
+#manage_artwork_form input[type="date"] {
+    width: 100%;
+    padding: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-speed) ease;
+}
+
+#manage_artwork_form input[type="text"]:focus,
+#manage_artwork_form input[type="date"]:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* Submit Button */
+#manage_artwork_form button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#manage_artwork_form button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* File Drop Zone */
+#drop_zone {
+    border: 2px dashed var(--border-color);
+    padding: var(--spacing-xl);
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.02);
+    transition: all var(--transition-speed) ease;
+    border-radius: var(--border-radius);
+    position: relative;
+}
+
+#drop_zone:hover,
+#drop_zone.dragover {
+    border-color: var(--accent-color);
+    background-color: rgba(70, 130, 180, 0.05);
+}
+
+#drop_zone.dragging {
+    transform: scale(1.02);
+}
+
+#drop_zone p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+#drop_zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Image Preview */
+#preview {
+    margin-top: var(--spacing-md);
+    max-width: 100%;
+}
+
+#preview img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Artwork Gallery */
+#artworks_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.artwork_card {
+    background-color: var(--primary-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    border: 1px solid var(--border-color);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.artwork_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.artwork_card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artwork_card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(15, 16, 19, 0.9),
+        rgba(15, 16, 19, 0.7),
+        rgba(15, 16, 19, 0.5),
+        rgba(15, 16, 19, 0.3),
+        rgba(15, 16, 19, 0)
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+.artwork_title {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    color: var(--text-primary);
+    font-weight: 500;
+    z-index: 2;
+    font-size: 1rem;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.artwork_overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-md);
+    background-color: rgba(15, 16, 19, 0.8);
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.artwork_category {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.artwork_date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.delete_button {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    background-color: rgba(244, 67, 54, 0.9);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    z-index: 3;
+    font-size: 0.8rem;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.delete_button:hover {
+    background-color: rgba(244, 67, 54, 1);
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    max-width: 350px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.notification.success {
+    background-color: rgba(76, 175, 80, 0.9);
+    border-left: 4px solid #4CAF50;
+}
+
+.notification.error {
+    background-color: rgba(244, 67, 54, 0.9);
+    border-left: 4px solid #F44336;
+}
+
+.notification .close {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.notification .close:hover {
+    opacity: 1;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #manage_artwork_form {
+        max-width: 100%;
+    }
+    
+    #artworks_container {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .artwork_card {
+        height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    #artworks_container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .artwork_card {
+        height: 200px;
+    }
+    
+    .artwork_title {
+        font-size: 0.9rem;
+    }
+}

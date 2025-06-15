@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div class="logo-container">
             <a href="index.php" class="logo-link">
-                <img src="static/images/hreniuc_logo.png" id="logo_image" alt="Hreniuc Petrică Logo">
+                <img src="static/images/notso-white.png" id="logo_image" alt="NOTSO Logo">
             </a>
         </div>
         
@@ -20,8 +20,8 @@
             <li class="nav-item"><a href="index.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">Home</a></li>
             <li class="nav-item"><a href="webdev.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'webdev.php') ? 'active' : ''; ?>">Web Development</a></li>
             <li class="nav-item"><a href="automation.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'automation.php') ? 'active' : ''; ?>">Automation</a></li>
-            <li class="nav-item"><a href="artworks.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'artworks.php') ? 'active' : ''; ?>">Digital Art</a></li>
-            <li class="nav-item"><a href="blog.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'blog.php' || basename($_SERVER['PHP_SELF']) == 'blog_post.php') ? 'active' : ''; ?>">Blog</a></li>
+            <!-- <li class="nav-item"><a href="artworks.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'artworks.php') ? 'active' : ''; ?>">Digital Art</a></li> -->
+            <!-- <li class="nav-item"><a href="blog.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'blog.php' || basename($_SERVER['PHP_SELF']) == 'blog_post.php') ? 'active' : ''; ?>">Blog</a></li> -->
             <li class="nav-item"><a href="#" onclick="openBookingModal()" class="nav-link contact-link">Contact</a></li>
             
             <?php if (isset($_SESSION['user_id'])): ?>

@@ -1,0 +1,206 @@
+/**
+ * Dashboard Styles
+ * Consistent with admin panel design
+ */
+
+/* Dashboard specific styles */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-lg);
+    background-color: rgba(70, 130, 180, 0.1);
+    color: var(--accent-color);
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-primary);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Recent Activity Section */
+.recent-activity {
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-xl);
+    overflow: hidden;
+}
+
+.section-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.activity-list {
+    padding: var(--spacing-md) var(--spacing-lg);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.activity-list::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.activity-list::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+.activity-list::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+    background-color: rgba(70, 130, 180, 0.1);
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.activity-time {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Empty state */
+.empty-state {
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-decoration: none;
+}
+
+.quick-action-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.quick-action-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-item {
+        flex-direction: column;
+    }
+    
+    .activity-icon {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-action-btn {
+        width: 100%;
+    }
+}

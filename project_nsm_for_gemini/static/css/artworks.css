@@ -1,0 +1,593 @@
+/* Updated artworks.css to match home page design */
+
+body[data-context="artworks"] {
+    background-color: #0F1013 !important;
+    color: #FFFFFF !important;
+    font-family: 'Poppins', sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+}
+
+/* Page container */
+.page-container {
+    padding-top: 80px !important; /* Space for navbar */
+    min-height: 100vh !important;
+}
+
+/* Hero section */
+.gallery-hero {
+    position: relative !important;
+    height: 40vh !important;
+    min-height: 300px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background-color: #1A1A1D !important;
+    margin-bottom: 4rem !important;
+}
+
+.gallery-hero::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-image: 
+        radial-gradient(#303035 1px, transparent 1px), 
+        radial-gradient(#303035 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
+    background-position: 0 0, 20px 20px !important;
+    opacity: 0.3 !important;
+    z-index: 1 !important;
+}
+
+.gallery-hero-content {
+    position: relative !important;
+    z-index: 2 !important;
+    text-align: center !important;
+    max-width: 800px !important;
+    padding: 0 2rem !important;
+}
+
+.gallery-hero-content h1 {
+    font-size: 3.5rem !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.5rem !important;
+    color: #FFFFFF !important;
+}
+
+.gallery-hero-content p {
+    font-size: 1.2rem !important;
+    color: #AAAAAA !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+    line-height: 1.6 !important;
+}
+
+/* Gallery container */
+.gallery-container {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 2rem 5rem !important;
+}
+
+.gallery-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 2rem !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+.gallery-title {
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+    color: #FFFFFF !important;
+}
+
+.gallery-filters {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex-wrap: wrap !important;
+}
+
+.filter-button {
+    background-color: transparent !important;
+    border: 1px solid #303035 !important;
+    padding: 0.6rem 1.2rem !important;
+    color: #AAAAAA !important;
+    font-size: 0.95rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-radius: 2px !important;
+}
+
+.filter-button:hover,
+.filter-button.active {
+    background-color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+    color: #0F1013 !important;
+}
+
+/* Gallery grid */
+#galleryContainer {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 2rem !important;
+}
+
+/* Artwork card */
+.artwork_card {
+    position: relative !important;
+    border-radius: 2px !important;
+    overflow: hidden !important;
+    background-color: #1A1A1D !important;
+    height: 0 !important;
+    padding-bottom: 125% !important; /* 4:5 aspect ratio */
+    transition: transform 0.3s ease !important;
+}
+
+.artwork_card:hover {
+    transform: translateY(-5px) !important;
+}
+
+.artwork_card::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 50% !important;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(15, 16, 19, 0.8),
+        rgba(15, 16, 19, 0.6),
+        rgba(15, 16, 19, 0.4),
+        rgba(15, 16, 19, 0.2),
+        rgba(15, 16, 19, 0)
+    ) !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+}
+
+.artwork_card img {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.5s ease !important;
+}
+
+.artwork_card:hover img {
+    transform: scale(1.05) !important;
+}
+
+.artwork_title {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+    color: #FFFFFF !important;
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+    z-index: 3 !important;
+}
+
+.artwork_overlay {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+    background-image: linear-gradient(
+        to top,
+        rgba(15, 16, 19, 0.8),
+        rgba(15, 16, 19, 0.6),
+        rgba(15, 16, 19, 0.4),
+        rgba(15, 16, 19, 0.2),
+        rgba(15, 16, 19, 0)
+    ) !important;
+    z-index: 3 !important;
+    transition: opacity 0.3s ease !important;
+    opacity: 0 !important;
+}
+
+.artwork_card:hover .artwork_overlay {
+    opacity: 1 !important;
+}
+
+.artwork_category {
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.artwork_date {
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+}
+
+/* Pagination */
+.gallery-pagination {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 3rem !important;
+    gap: 0.5rem !important;
+}
+
+.pagination-button {
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: transparent !important;
+    border: 1px solid #303035 !important;
+    color: #AAAAAA !important;
+    font-size: 0.95rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-radius: 2px !important;
+}
+
+.pagination-button:hover,
+.pagination-button.active {
+    background-color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+    color: #0F1013 !important;
+}
+
+.pagination-button.disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Lightbox */
+.artwork-lightbox {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(15, 16, 19, 0.95) !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.artwork-lightbox.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.lightbox-content {
+    max-width: 90% !important;
+    max-height: 90% !important;
+    position: relative !important;
+}
+
+.lightbox-image {
+    max-width: 100% !important;
+    max-height: 90vh !important;
+    display: block !important;
+    border-radius: 2px !important;
+}
+
+.lightbox-close {
+    position: absolute !important;
+    top: -40px !important;
+    right: 0 !important;
+    background: none !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    transition: color 0.3s ease !important;
+}
+
+.lightbox-close:hover {
+    color: #AAAAAA !important;
+}
+
+.lightbox-nav {
+    position: absolute !important;
+    top: 50% !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    transform: translateY(-50%) !important;
+}
+
+.lightbox-nav-button {
+    background: rgba(15, 16, 19, 0.5) !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    font-size: 2rem !important;
+    padding: 0.5rem 1rem !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+    border-radius: 2px !important;
+}
+
+.lightbox-nav-button:hover {
+    background-color: rgba(15, 16, 19, 0.8) !important;
+}
+
+.lightbox-caption {
+    position: absolute !important;
+    bottom: -40px !important;
+    left: 0 !important;
+    width: 100% !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+}
+
+/* Loading indicator */
+.loading-indicator {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 2rem !important;
+    color: #AAAAAA !important;
+}
+
+.loading-spinner {
+    width: 40px !important;
+    height: 40px !important;
+    border: 3px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    border-top-color: #FFFFFF !important;
+    animation: spin 1s linear infinite !important;
+    margin-right: 1rem !important;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg) !important;
+    }
+}
+
+/* Empty state */
+.empty-gallery {
+    text-align: center !important;
+    padding: 3rem !important;
+    color: #AAAAAA !important;
+}
+
+.empty-gallery h3 {
+    font-size: 1.5rem !important;
+    color: #FFFFFF !important;
+    margin-bottom: 1rem !important;
+}
+
+.empty-gallery p {
+    font-size: 1rem !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+}
+
+/* Booking Modal */
+.booking-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(15, 16, 19, 0.9) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1000 !important;
+}
+
+.booking-modal.hidden {
+    display: none !important;
+}
+
+.booking-modal-content {
+    background-color: #1A1A1D !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 3rem !important;
+    position: relative !important;
+    border-radius: 2px !important;
+}
+
+.booking-modal-close {
+    position: absolute !important;
+    top: 1.5rem !important;
+    right: 1.5rem !important;
+    background: none !important;
+    border: none !important;
+    color: #AAAAAA !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    transition: color 0.3s ease !important;
+}
+
+.booking-modal-close:hover {
+    color: #FFFFFF !important;
+}
+
+.booking-modal-content h2 {
+    font-size: 2rem !important;
+    color: #FFFFFF !important;
+    margin-bottom: 2rem !important;
+    font-weight: 500 !important;
+}
+
+.booking-form-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.booking-form-group label {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    color: #AAAAAA !important;
+    font-size: 0.95rem !important;
+}
+
+.booking-form-group input,
+.booking-form-group select,
+.booking-form-group textarea {
+    width: 100% !important;
+    padding: 12px !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #303035 !important;
+    border-radius: 2px !important;
+    color: #FFFFFF !important;
+    font-size: 1rem !important;
+    transition: border-color 0.3s ease !important;
+}
+
+.booking-form-group input:focus,
+.booking-form-group select:focus,
+.booking-form-group textarea:focus {
+    outline: none !important;
+    border-color: #FFFFFF !important;
+}
+
+.booking-form-group input[type="checkbox"] {
+    width: auto !important;
+    margin-right: 0.5rem !important;
+}
+
+.booking-form-group label a {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    position: relative !important;
+}
+
+.booking-form-group label a::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 1px !important;
+    background-color: #FFFFFF !important;
+    transform: scaleX(0) !important;
+    transform-origin: right !important;
+    transition: transform 0.3s ease !important;
+}
+
+.booking-form-group label a:hover::after {
+    transform: scaleX(1) !important;
+    transform-origin: left !important;
+}
+
+.booking-submit-btn {
+    padding: 14px 30px !important;
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    border: none !important;
+    border-radius: 2px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.booking-submit-btn:hover {
+    transform: translateY(-2px) !important;
+    background-color: #F0F0F0 !important;
+}
+
+/* Notification */
+#notification {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    padding: 15px 20px !important;
+    border-radius: 2px !important;
+    z-index: 1000 !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(100px) !important;
+    transition: transform 0.3s ease !important;
+}
+
+#notification.shown {
+    transform: translateY(0) !important;
+}
+
+#notification.hidden {
+    display: none !important;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    #galleryContainer {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-hero-content h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .gallery-hero-content p {
+        font-size: 1rem !important;
+    }
+    
+    .gallery-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    #galleryContainer {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    }
+    
+    .booking-modal-content {
+        padding: 2rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-hero-content h1 {
+        font-size: 2rem !important;
+    }
+    
+    .gallery-container {
+        padding: 0 1rem 3rem !important;
+    }
+    
+    #galleryContainer {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+    
+    .gallery-filters {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    
+    .filter-button {
+        flex-grow: 1 !important;
+        text-align: center !important;
+        padding: 0.6rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+}

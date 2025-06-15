@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Debug: Check if headers are already sent
 if (headers_sent($file, $line)) {
     die("Headers already sent in $file on line $line");

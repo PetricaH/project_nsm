@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{window.openBookingModal=function(){document.getElementById("bookingModal").classList.remove("hidden")},window.closeBookingModal=function(){document.getElementById("bookingModal").classList.add("hidden")}});

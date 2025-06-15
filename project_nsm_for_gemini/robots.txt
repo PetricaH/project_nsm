@@ -1,0 +1,6 @@
+# Allow all reputable web crawlers to access the site
+User-agent: *
+Allow: /
+
+# Provide the location of the XML sitemap
+Sitemap: https://hreniucpetrica.ro/sitemap.xml

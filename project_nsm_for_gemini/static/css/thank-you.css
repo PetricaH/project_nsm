@@ -1,0 +1,458 @@
+/* Confirmation and Thank You page styles */
+:root {
+    --black: #0F1013;
+    --dark-gray: #1A1A1D;
+    --medium-gray: #303035;
+    --light-gray: #707070;
+    --lighter-gray: #AAAAAA;
+    --white: #FFFFFF;
+    --primary-color: #4682B4; /* Steel Blue */
+    --primary-dark: #375F82;
+    --primary-light: #6E9FC7;
+    --success-color: #4CAF50; /* Green */
+    --accent-color: #FF6B6B; /* Coral Red */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0F1013;
+    color: #FFFFFF !important;
+    line-height: 1.6 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.confirmation-page, .thank-you-page {
+    background-color: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    padding: 4rem 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.confirmation-container, .thank-you-container {
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Section */
+.confirmation-header, .thank-you-header {
+    background-color: var(--primary-dark);
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.check-icon, .resource-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.check-icon span, .resource-icon span {
+    font-size: 4rem;
+    color: var(--success-color);
+}
+
+.resource-icon span {
+    color: var(--primary-light);
+}
+
+.confirmation-header h1, .thank-you-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+}
+
+.confirmation-header p, .thank-you-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Confirmation Details Section */
+.confirmation-details {
+    padding: 3rem 2rem;
+    background-color: rgba(70, 130, 180, 0.05);
+}
+
+.details-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.details-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    color: var(--lighter-gray);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.detail-value {
+    font-size: 1.2rem;
+    color: var(--white);
+    font-weight: 500;
+}
+
+/* Add to Calendar Section */
+.add-to-calendar {
+    margin-top: 2.5rem;
+}
+
+.add-to-calendar h3 {
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.calendar-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.calendar-button {
+    padding: 12px 20px;
+    background-color: var(--dark-gray);
+    border: 1px solid var(--medium-gray);
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.calendar-button:hover {
+    background-color: var(--medium-gray);
+    transform: translateY(-3px);
+}
+
+.google-calendar {
+    border-color: #4285F4;
+}
+
+.outlook-calendar {
+    border-color: #0078D4;
+}
+
+.ical-calendar {
+    border-color: #FF9500;
+}
+
+/* Next Steps Section */
+.confirmation-next-steps, .email-instructions {
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.confirmation-next-steps h2, .email-instructions h2,
+.bonus-content h2, .next-steps-cta h2 {
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.step-item {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+}
+
+.step-content p {
+    color: var(--lighter-gray);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Resource Section */
+.confirmation-resource {
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--medium-gray);
+    background-color: rgba(70, 130, 180, 0.05);
+}
+
+.confirmation-resource > p {
+    text-align: center;
+    color: var(--lighter-gray);
+    margin-bottom: 2rem;
+}
+
+.resource-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background-color: var(--dark-gray);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.resource-image {
+    flex-shrink: 0;
+}
+
+.resource-image img {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.resource-image img:hover {
+    transform: translateY(-5px) rotate(2deg);
+}
+
+.resource-content h3 {
+    font-size: 1.4rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.resource-content p {
+    color: var(--lighter-gray);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.resource-button, .resource-submit, .cta-button {
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.resource-button:hover, .resource-submit:hover, .cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Resource Form */
+.resource-form-container {
+    padding: 2rem;
+    margin: 2rem 0;
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--lighter-gray);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--medium-gray);
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.form-checkbox input {
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.form-checkbox label {
+    color: var(--lighter-gray);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.resource-submit {
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Need Help Section */
+.need-help {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.need-help h3 {
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.need-help p {
+    color: var(--lighter-gray);
+    font-size: 1rem;
+}
+
+.need-help a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.need-help a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Bonus Content Section */
+.bonus-content {
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.bonus-tip {
+    background-color: rgba(70, 130, 180, 0.05);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.bonus-tip h3 {
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.bonus-tip p {
+    color: var(--lighter-gray);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Next Steps CTA Section */
+.next-steps-cta {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: var(--primary-dark);
+}
+
+.next-steps-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.cta-button {
+    background-color: var(--white);
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.cta-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .confirmation-header h1, .thank-you-header h1 {
+        font-size: 2rem;
+    }
+    
+    .details-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .resource-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .step-number {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-header, .thank-you-header,
+    .confirmation-details, .confirmation-next-steps,
+    .confirmation-resource, .email-instructions,
+    .bonus-content, .next-steps-cta {
+        padding: 2rem 1.5rem;
+    }
+    
+    .resource-container {
+        padding: 1.5rem;
+    }
+}

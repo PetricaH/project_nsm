@@ -1,0 +1,142 @@
+[07-Dec-2024 10:39:12 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'db81fxbpm4iycs.artworks' doesn't exist in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/get_artworks.php:10
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/get_artworks.php(10): mysqli->query('SELECT id, titl...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/get_artworks.php on line 10
+[07-Dec-2024 10:54:16 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 10:54:24 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 10:54:42 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 10:54:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 10:56:44 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 11:06:34 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:6
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(6): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue), 'project_nsm', 3310)
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 6
+[07-Dec-2024 19:53:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:46 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:47 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:49 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:49 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:50 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:53:52 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:54:19 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 19:54:26 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'date' in 'field list' in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php:29
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(29): mysqli_query(Object(mysqli), 'INSERT INTO art...')
+#1 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php on line 29
+[07-Dec-2024 20:06:03 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'ux7zizemfdtwd'@'localhost' (using password: YES) in /home/customer/www/hreniucpetrica.ro/public_html/config.php:4
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/config.php(4): mysqli_connect('localhost', 'ux7zizemfdtwd', Object(SensitiveParameterValue), 'db81fxbpm4iycs')
+#1 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(2): require_once('/home/customer/...')
+#2 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/config.php on line 4
+[07-Dec-2024 20:06:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'ux7zizemfdtwd'@'localhost' (using password: YES) in /home/customer/www/hreniucpetrica.ro/public_html/config.php:4
+Stack trace:
+#0 /home/customer/www/hreniucpetrica.ro/public_html/config.php(4): mysqli_connect('localhost', 'ux7zizemfdtwd', Object(SensitiveParameterValue), 'db81fxbpm4iycs')
+#1 /home/customer/www/hreniucpetrica.ro/public_html/admin/admin_includes/post_artwork.php(2): require_once('/home/customer/...')
+#2 {main}
+  thrown in /home/customer/www/hreniucpetrica.ro/public_html/config.php on line 4

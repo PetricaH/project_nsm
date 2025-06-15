@@ -17,7 +17,7 @@
         <div class="footer-section">
             <h3 class="footer-heading">Follow Me</h3>
             <ul class="social-links">
-                <li><a href="https://www.instagram.com/petrica_hreniuc/" target="_blank">Instagram</a></li>
+                <li><a href="https://www.instagram.com/notsomarketing/" target="_blank">Instagram</a></li>
                 <li><a href="https://github.com/PetricaH" target="_blank">GitHub</a></li>
             </ul>
         </div>

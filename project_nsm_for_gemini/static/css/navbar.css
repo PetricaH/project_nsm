@@ -1,0 +1,513 @@
+/* Modern navbar styling to match the home page design */
+/* Add this to your navbar.css */
+.menu_toggle {
+    position: relative !important;
+    z-index: 1600 !important; /* Higher than the menu */
+}
+
+.logo-container, .logo_div {
+    position: relative !important;
+    z-index: 1600 !important; /* Higher than the menu */
+}
+/* Navbar core styling */
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 99 !important;
+    height: 80px !important;
+    padding: 0 !important;
+    transition: background-color 0.3s ease !important;
+    /* Gradient background for navbar */
+    background-image: linear-gradient(
+        to bottom,
+        rgba(15, 16, 19, 1),
+        rgba(15, 16, 19, 0.9),
+        rgba(15, 16, 19, 0.7),
+        rgba(15, 16, 19, 0.3),
+        rgba(15, 16, 19, 0)
+    ) !important;
+}
+
+/* Scrolled state - add this class with JS when page is scrolled */
+.navbar.scrolled {
+    background-color: rgba(15, 16, 19, 0.95) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+    background-image: none !important;
+}
+
+.navbar-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 2rem !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Logo styling */
+.logo-container {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.logo-link {
+    display: block !important;
+}
+
+#logo_image {
+    height: 50px !important;
+    width: auto !important;
+    transition: transform 0.3s ease !important;
+}
+
+#logo_image:hover {
+    transform: scale(1.05) !important;
+}
+
+/* Main nav menu */
+.nav-menu {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+    height: 100% !important;
+}
+
+.nav-item {
+    position: relative !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nav-link {
+    color: #AAAAAA !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    padding: 0.5rem 0 !important;
+    position: relative !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #FFFFFF !important;
+    transform: scaleX(0) !important;
+    transform-origin: right !important;
+    transition: transform 0.3s ease !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #FFFFFF !important;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1) !important;
+    transform-origin: left !important;
+}
+
+/* Contact link with special styling */
+.contact-link {
+    padding: 0.6rem 1.2rem !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.contact-link:hover {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    transform: translateY(-2px) !important;
+}
+
+.contact-link::after {
+    display: none !important;
+}
+
+/* Menu toggle for mobile */
+.menu_toggle {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    width: 30px !important;
+    height: 30px !important;
+    position: relative !important;
+    z-index: 1001 !important;
+}
+
+.bar {
+    display: block !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #FFFFFF !important;
+    margin: 6px 0 !important;
+    transition: all 0.3s ease !important;
+    position: absolute !important;
+}
+
+.bar1 {
+    top: 0 !important;
+}
+
+.bar2 {
+    top: 10px !important;
+}
+
+.bar3 {
+    top: 20px !important;
+}
+
+.menu_toggle.open .bar1 {
+    transform: rotate(45deg) !important;
+    top: 10px !important;
+}
+
+.menu_toggle.open .bar2 {
+    opacity: 0 !important;
+}
+
+.menu_toggle.open .bar3 {
+    transform: rotate(-45deg) !important;
+    top: 10px !important;
+}
+
+/* Auth styles */
+.auth-item {
+    position: relative !important;
+}
+
+.auth-toggle-btn {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    border: none !important;
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.auth-toggle-btn:hover {
+    background-color: #F0F0F0 !important;
+    transform: translateY(-2px) !important;
+}
+
+.auth-forms-container {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    width: 300px !important;
+    background-color: #1A1A1D !important;
+    border-radius: 2px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    padding: 1.5rem !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(10px) !important;
+    transition: all 0.3s ease !important;
+    z-index: 1000 !important;
+}
+
+.auth-forms-container.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+.form-wrapper {
+    display: none !important;
+}
+
+.form-wrapper.active {
+    display: block !important;
+}
+
+.auth-form {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.auth-form h3 {
+    font-size: 1.2rem !important;
+    color: #FFFFFF !important;
+    margin-bottom: 1.5rem !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+}
+
+.form-group {
+    margin-bottom: 1rem !important;
+}
+
+.form-group input {
+    width: 100% !important;
+    padding: 0.8rem !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #303035 !important;
+    border-radius: 2px !important;
+    color: #FFFFFF !important;
+    transition: border-color 0.3s ease !important;
+}
+
+.form-group input:focus {
+    outline: none !important;
+    border-color: #FFFFFF !important;
+}
+
+.auth-submit-btn {
+    background-color: #FFFFFF !important;
+    color: #0F1013 !important;
+    border: none !important;
+    padding: 0.8rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    border-radius: 2px !important;
+    cursor: pointer !important;
+    margin-top: 0.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.auth-submit-btn:hover {
+    background-color: #F0F0F0 !important;
+    transform: translateY(-2px) !important;
+}
+
+.switch-text {
+    margin-top: 1.2rem !important;
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+}
+
+.switch-button {
+    background: none !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    text-decoration: underline !important;
+    transition: color 0.3s ease !important;
+    padding: 0 !important;
+}
+
+.switch-button:hover {
+    color: #F0F0F0 !important;
+}
+
+/* Remember me checkbox styling */
+.remember-me-container {
+    margin: 0.8rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.remember-me {
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    color: #AAAAAA !important;
+    user-select: none !important;
+}
+
+.remember-me input {
+    position: absolute !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
+.checkmark {
+    position: relative !important;
+    height: 16px !important;
+    width: 16px !important;
+    background-color: transparent !important;
+    border: 1px solid #303035 !important;
+    border-radius: 2px !important;
+    margin-right: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.remember-me:hover input ~ .checkmark {
+    border-color: #FFFFFF !important;
+}
+
+.remember-me input:checked ~ .checkmark {
+    background-color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+.checkmark::after {
+    content: '' !important;
+    position: absolute !important;
+    display: none !important;
+    left: 5px !important;
+    top: 2px !important;
+    width: 4px !important;
+    height: 8px !important;
+    border: solid #0F1013 !important;
+    border-width: 0 2px 2px 0 !important;
+    transform: rotate(45deg) !important;
+}
+
+.remember-me input:checked ~ .checkmark::after {
+    display: block !important;
+}
+
+/* User account menu styling */
+.account-item {
+    margin-left: 1rem !important;
+}
+
+.welcome-message {
+    color: #FFFFFF !important;
+    font-size: 0.95rem !important;
+    margin-right: 1rem !important;
+}
+
+.user-menu-container {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.user-menu-link {
+    color: #AAAAAA !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    transition: color 0.3s ease !important;
+    margin-left: 1rem !important;
+}
+
+.user-menu-link:hover {
+    color: #FFFFFF !important;
+}
+
+.logout-link {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    padding: 0.5rem 0.8rem !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.logout-link:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .nav-menu {
+        gap: 1.5rem !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu_toggle {
+        display: block !important;
+    }
+    
+    .nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 300px !important;
+        height: 100vh !important;
+        background-color: #0F1013 !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        gap: 2rem !important;
+        padding: 2rem !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.3s ease-in-out !important;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2) !important;
+        z-index: 999 !important; /* Make sure this is high enough */
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0) !important;
+    }
+    
+    .nav-item {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .nav-link {
+        display: block !important;
+        width: 100% !important;
+        padding: 0.8rem 0 !important;
+    }
+    
+    .contact-link {
+        display: inline-block !important;
+        width: auto !important;
+        margin-top: 1rem !important;
+    }
+    
+    .auth-item,
+    .account-item {
+        width: 100% !important;
+        margin-top: 2rem !important;
+    }
+    
+    .auth-toggle-btn {
+        width: 100% !important;
+    }
+    
+    .auth-forms-container {
+        position: relative !important;
+        top: 1rem !important;
+        right: auto !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
+    
+    .user-menu-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    
+    .welcome-message {
+        margin-right: 0 !important;
+    }
+    
+    .user-menu-link {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-container {
+        padding: 0 1rem !important;
+    }
+    
+    .nav-menu {
+        width: 100% !important;
+        padding: 2rem 1.5rem !important;
+    }
+}
+
+/* Adding a class to prevent scrolling when menu is open */
+body.menu-open {
+    overflow: hidden !important;
+}
