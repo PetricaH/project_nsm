@@ -128,7 +128,8 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
         'blog.php'        => 'blog',
         'blog_post.php'   => 'blog_post',
         'webdev.php'      => 'webdev',
-        'resource-thank-you.php' => 'thank-you'
+        'resource-thank-you.php' => 'thank-you',
+        'booking-confirmation.php' => 'booking-confirmation'
         // Add more mappings as needed
     ];
     
@@ -352,11 +353,14 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember'])) {
     </script>
 
     <!-- Load GTAG script with versioning -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GD3WH3CZ7H"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-KFNRZ3RV"></script>
     <script>
-        // Initialize GTAG
-        gtag('js', new Date());
-        gtag('config', 'G-GD3WH3CZ7H');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'GT-KFNRZ3RV');
+    gtag('config', 'AW-17115045461');
     </script>
 
     <style>

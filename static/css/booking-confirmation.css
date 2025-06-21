@@ -1,4 +1,4 @@
-/* Confirmation and Thank You page styles */
+/* Stiluri pentru pagina de confirmare */
 :root {
     --black: #0F1013;
     --dark-gray: #1A1A1D;
@@ -20,14 +20,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-    background-color: #0F1013; 
-    color: #FFFFFF !important;
+body[data-context="confirmation"] {
+    background-color: var(--black); 
+    color: var(--white) !important;
     line-height: 1.6 !important;
     font-family: 'Poppins', sans-serif !important;
 }
 
-.confirmation-page, .thank-you-page {
+.confirmation-page {
     background-color: var(--black);
     color: var(--white);
     min-height: 100vh;
@@ -41,49 +41,45 @@ body {
     padding: 0 2rem;
 }
 
-.confirmation-container, .thank-you-container {
+.confirmation-container {
     background-color: var(--dark-gray);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* Header Section */
-.confirmation-header, .thank-you-header {
+/* Secțiunea Header */
+.confirmation-header {
     background-color: var(--primary-dark);
     padding: 3rem 2rem;
     text-align: center;
 }
 
-.check-icon, .resource-icon {
+.check-icon {
     display: flex;
     justify-content: center;
     margin-bottom: 1.5rem;
 }
 
-.check-icon span, .resource-icon span {
+.check-icon span {
     font-size: 4rem;
     color: var(--success-color);
 }
 
-.resource-icon span {
-    color: var(--primary-light);
-}
-
-.confirmation-header h1, .thank-you-header h1 {
+.confirmation-header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--white);
 }
 
-.confirmation-header p, .thank-you-header p {
+.confirmation-header p {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
     max-width: 600px;
     margin: 0 auto;
 }
 
-/* Confirmation Details Section */
+/* Secțiunea Detalii Confirmare */
 .confirmation-details {
     padding: 3rem 2rem;
     background-color: rgba(70, 130, 180, 0.05);
@@ -117,7 +113,7 @@ body {
     font-weight: 500;
 }
 
-/* Add to Calendar Section */
+/* Secțiunea Adaugă în Calendar */
 .add-to-calendar {
     margin-top: 2.5rem;
 }
@@ -152,26 +148,13 @@ body {
     transform: translateY(-3px);
 }
 
-.google-calendar {
-    border-color: #4285F4;
-}
-
-.outlook-calendar {
-    border-color: #0078D4;
-}
-
-.ical-calendar {
-    border-color: #FF9500;
-}
-
-/* Next Steps Section */
-.confirmation-next-steps, .email-instructions {
+/* Secțiunea Pașii Următori */
+.confirmation-next-steps {
     padding: 3rem 2rem;
     border-top: 1px solid var(--medium-gray);
 }
 
-.confirmation-next-steps h2, .email-instructions h2,
-.bonus-content h2, .next-steps-cta h2 {
+.confirmation-next-steps h2 {
     font-size: 2rem;
     color: var(--white);
     margin-bottom: 2rem;
@@ -187,6 +170,7 @@ body {
 .step-item {
     display: flex;
     gap: 1.5rem;
+    align-items: flex-start;
 }
 
 .step-number {
@@ -215,17 +199,25 @@ body {
     line-height: 1.6;
 }
 
-/* Resource Section */
+/* Secțiunea Resurse */
 .confirmation-resource {
     padding: 3rem 2rem;
     border-top: 1px solid var(--medium-gray);
     background-color: rgba(70, 130, 180, 0.05);
 }
 
+.confirmation-resource > h2 {
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
 .confirmation-resource > p {
     text-align: center;
     color: var(--lighter-gray);
     margin-bottom: 2rem;
+    font-size: 1.1rem;
 }
 
 .resource-container {
@@ -267,7 +259,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.resource-button, .resource-submit, .cta-button {
+.resource-button, .resource-submit {
     padding: 12px 24px;
     background-color: var(--primary-color);
     color: var(--white);
@@ -281,19 +273,19 @@ body {
     display: inline-block;
 }
 
-.resource-button:hover, .resource-submit:hover, .cta-button:hover {
+.resource-button:hover, .resource-submit:hover {
     background-color: var(--primary-dark);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Resource Form */
+/* Formular Resursă */
 .resource-form-container {
-    padding: 2rem;
-    margin: 2rem 0;
+    padding: 2.5rem 2rem;
+    margin: 3rem 0 1rem 0;
     background-color: var(--dark-gray);
     border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--medium-gray);
 }
 
 .form-group {
@@ -307,7 +299,8 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.form-group input {
+.form-group input[type="text"],
+.form-group input[type="email"] {
     width: 100%;
     padding: 12px;
     background-color: rgba(255, 255, 255, 0.05);
@@ -323,9 +316,12 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.form-checkbox input {
-    margin-right: 10px;
+.form-checkbox input[type="checkbox"] {
+    margin-right: 12px;
     margin-top: 5px;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
 }
 
 .form-checkbox label {
@@ -339,9 +335,9 @@ body {
     font-size: 1rem;
 }
 
-/* Need Help Section */
+/* Secțiunea Ai nevoie de ajutor? */
 .need-help {
-    padding: 2rem;
+    padding: 3rem 2rem;
     text-align: center;
     border-top: 1px solid var(--medium-gray);
 }
@@ -368,58 +364,9 @@ body {
     text-decoration: underline;
 }
 
-/* Bonus Content Section */
-.bonus-content {
-    padding: 3rem 2rem;
-    border-top: 1px solid var(--medium-gray);
-}
-
-.bonus-tip {
-    background-color: rgba(70, 130, 180, 0.05);
-    padding: 2rem;
-    border-radius: 8px;
-    border-left: 3px solid var(--primary-color);
-}
-
-.bonus-tip h3 {
-    font-size: 1.3rem;
-    color: var(--white);
-    margin-bottom: 1rem;
-}
-
-.bonus-tip p {
-    color: var(--lighter-gray);
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-/* Next Steps CTA Section */
-.next-steps-cta {
-    padding: 3rem 2rem;
-    text-align: center;
-    background-color: var(--primary-dark);
-}
-
-.next-steps-cta p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-}
-
-.cta-button {
-    background-color: var(--white);
-    color: var(--primary-dark);
-    font-weight: 600;
-}
-
-.cta-button:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-}
-
-/* Responsive Styles */
+/* Stiluri Responsive */
 @media (max-width: 768px) {
-    .confirmation-header h1, .thank-you-header h1 {
+    .confirmation-header h1 {
         font-size: 2rem;
     }
     
@@ -445,10 +392,19 @@ body {
 }
 
 @media (max-width: 480px) {
-    .confirmation-header, .thank-you-header,
-    .confirmation-details, .confirmation-next-steps,
-    .confirmation-resource, .email-instructions,
-    .bonus-content, .next-steps-cta {
+    .confirmation-page {
+        padding: 2rem 0;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .confirmation-header,
+    .confirmation-details,
+    .confirmation-next-steps,
+    .confirmation-resource,
+    .need-help {
         padding: 2rem 1.5rem;
     }
     

@@ -56,6 +56,35 @@
     </div>
 </section>
 
+<section class="trusted_by_section">
+    <div class="container">
+        <div class="trusted_by_content">
+            <h3>De Încredere Pentru</h3>
+            <div class="client_logos_grid">
+                <div class="client_logo">
+                    <img src="static/images/client_logos/logo1.png" alt="Client Logo 1">
+                </div>
+                <div class="client_logo">
+                    <img src="static/images/client_logos/logo2.svg" alt="Client Logo 2">
+                </div>
+                <!-- <div class="client_logo">
+                    <img src="static/images/client_logos/logo3.png" alt="Client Logo 3">
+                </div>
+                <div class="client_logo">
+                    <img src="static/images/client_logos/logo4.png" alt="Client Logo 4">
+                </div>
+                <div class="client_logo">
+                    <img src="static/images/client_logos/logo5.png" alt="Client Logo 5">
+                </div>
+                <div class="client_logo">
+                    <img src="static/images/client_logos/logo6.png" alt="Client Logo 6">
+                </div> -->
+            </div>
+            <p class="trusted_by_subtitle">Alătură-te afacerilor care și-au automatizat procesele cu ajutorul nostru</p>
+        </div>
+    </div>
+</section>
+
 <!-- Automation ROI Calculator Section -->
 <section id="automation_calculator_section" class="calculator_section">
     <div class="container">
@@ -460,6 +489,76 @@
         <div class="case-study-cta">
             <p>Ești pregătit să vezi rezultate similare pentru afacerea ta?</p>
             <button onclick="openBookingModal()" class="case-study-button">Programează o Evaluare Gratuită de Automatizare</button>
+        </div>
+    </div>
+</section>
+
+<section class="our_process_section">
+    <div class="container">
+        <div class="process_content">
+            <div class="section_header">
+                <h2>Procesul <span>Nostru</span></h2>
+                <p>Cum transformăm procesele tale manuale în automatizări eficiente în doar 4 pași simpli</p>
+            </div>
+            
+            <div class="process_steps_grid">
+                <div class="process_step">
+                    <div class="step_number">1</div>
+                    <div class="step_content">
+                        <h3>Audit & Strategie</h3>
+                        <p>Analizăm procesele tale actuale într-o sesiune gratuită de 30 de minute și identificăm cele mai mari oportunități de automatizare pentru afacerea ta.</p>
+                        <div class="step_feature">
+                            <span class="feature_icon">✓</span>
+                            <span>Sesiune gratuită de 30 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process_step">
+                    <div class="step_number">2</div>
+                    <div class="step_content">
+                        <h3>Plan de Acțiune Personalizat</h3>
+                        <p>Îți prezentăm soluția personalizată, roadmap-ul de implementare și costurile exacte. Totul transparent, fără surprize neplăcute.</p>
+                        <div class="step_feature">
+                            <span class="feature_icon">✓</span>
+                            <span>Preț fix, fără costuri ascunse</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process_step">
+                    <div class="step_number">3</div>
+                    <div class="step_content">
+                        <h3>Implementare & Integrare</h3>
+                        <p>Construim și lansăm automatizările, integrându-le perfect cu sistemele tale existente. Echipa ta este instruită pentru utilizare optimă.</p>
+                        <div class="step_feature">
+                            <span class="feature_icon">✓</span>
+                            <span>Instruire completă echipă</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process_step">
+                    <div class="step_number">4</div>
+                    <div class="step_content">
+                        <h3>Suport & Optimizare</h3>
+                        <p>Asigurăm funcționarea perfectă și îmbunătățirea continuă a sistemelor. Suport tehnic dedicat și actualizări regulate incluse.</p>
+                        <div class="step_feature">
+                            <span class="feature_icon">✓</span>
+                            <span>Suport tehnic dedicat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process_cta">
+                <h3>Gata să Începi?</h3>
+                <p>Programează sesiunea gratuită de audit și descoperă cum poți economisi peste 10 ore pe săptămână</p>
+                <button onclick="openBookingModal()" class="process_cta_button">
+                    Programează Sesiunea Gratuită
+                    <span class="arrow-right">→</span>
+                </button>
+            </div>
         </div>
     </div>
 </section>

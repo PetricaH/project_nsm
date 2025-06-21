@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['booking_success'] = "Your strategy session has been booked successfully! A confirmation email has been sent to " . $email;
         
         // Redirect to thank you page
-        header("Location: ../../booking-confirmation.php?id=" . $booking_id);
+        header("Location: booking-confirmation.php?id=" . $booking_id);
         exit();
     } else {
         // Database error

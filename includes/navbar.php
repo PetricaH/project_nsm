@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div class="logo-container">
             <a href="index.php" class="logo-link">
-                <img src="static/images/notso-white.png" id="logo_image" alt="NOTSO Logo">
+                <img src="/static/images/notso-white.png" id="logo_image" alt="NOTSO Logo">
             </a>
         </div>
         
