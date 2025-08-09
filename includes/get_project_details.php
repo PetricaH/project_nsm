@@ -1,5 +1,5 @@
 <?php
-require_once('../../config.php');
+require_once(dirname(__DIR__) . '/config.php');
 
 // Check if project ID is provided
 if(isset($_GET['id']) && is_numeric($_GET['id'])) {
