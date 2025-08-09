@@ -976,22 +976,26 @@
             const question = item.querySelector('.faq-question');
             const answer = item.querySelector('.faq-answer');
             const icon = item.querySelector('.toggle-icon');
-            
+
             question.addEventListener('click', () => {
                 // Hide all other answers
                 faqItems.forEach(otherItem => {
                     if (otherItem !== item) {
-                        otherItem.querySelector('.faq-answer').style.display = 'none';
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        otherAnswer.style.display = 'none';
+                        otherAnswer.style.maxHeight = null;
                         otherItem.querySelector('.toggle-icon').textContent = '+';
                     }
                 });
-                
+
                 // Toggle current answer
                 if (answer.style.display === 'block') {
                     answer.style.display = 'none';
+                    answer.style.maxHeight = null;
                     icon.textContent = '+';
                 } else {
                     answer.style.display = 'block';
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
                     icon.textContent = '−';
                 }
             });
