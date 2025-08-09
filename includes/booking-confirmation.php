@@ -11,7 +11,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $booking_id = intval($_GET['id']);
 
 // Get booking details
-$sql = "SELECT * FROM bookings WHERE id = ?";
+$sql = "SELECT * FROM bookings WHERE booking_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $booking_id);
 $stmt->execute();

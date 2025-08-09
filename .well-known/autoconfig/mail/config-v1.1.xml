@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <clientConfig version="1.1">
-    <emailProvider id="hreniucpetrica.ro">
-        <domain>hreniucpetrica.ro</domain>
+    <emailProvider id="notsomarketing.com">
+        <domain>notsomarketing.com</domain>
         <displayName>mail</displayName>
         <displayShortName>mail</displayShortName>
 
         <incomingServer type="imap">
-            <hostname>mail.hreniucpetrica.ro</hostname>
+            <hostname>mail.notsomarketing.com</hostname>
             <port>993</port>
             <socketType>SSL</socketType>
             <authentication>password-cleartext</authentication>
@@ -14,7 +14,7 @@
         </incomingServer>
 
         <outgoingServer type="smtp">
-            <hostname>mail.hreniucpetrica.ro</hostname>
+            <hostname>mail.notsomarketing.com</hostname>
             <port>465</port>
             <socketType>SSL</socketType>
             <authentication>password-cleartext</authentication>
